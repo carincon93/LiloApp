@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<Application xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:LiloApp"
+             x:Class="LiloApp.App">
+    <Application.MainPage>
+        <Shell>
+            <ShellContent>
+                <ShellContent.ContentTemplate>
+                    <DataTemplate>
+                        <ContentPage>
+                            <ContentPage.MenuBarItems>
+                                <MenuBarItem Text="Content">
+                                    <MenuFlyoutItem Text="Home" Command="{Binding NavigateCommand}" CommandParameter="home" />
+                                    <MenuFlyoutItem Text="English" Command="{Binding NavigateCommand}" CommandParameter="english" />
+                                </MenuBarItem>
+                            </ContentPage.MenuBarItems>
+                            <BlazorWebView x:Name="blazorWebView1" HostPage="wwwroot/index.html">
+                                <BlazorWebView.RootComponents>
+                                    <RootComponent Selector="#app" ComponentType="{x:Type local:Components.Routes}" />
+                                </BlazorWebView.RootComponents>
+                            </BlazorWebView>
+                        </ContentPage>
+                    </DataTemplate>
+                </ShellContent.ContentTemplate>
+            </ShellContent>
+        </Shell>
+    </Application.MainPage>
+</Application>

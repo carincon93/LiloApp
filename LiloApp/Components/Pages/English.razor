@@ -1,0 +1,16 @@
+﻿@page "/english"
+
+@inject LiloApp.Services.NavigatorService NavigatorService
+
+<h1 class="text-center text-2xl font-medium my-10">Inglés</h1>
+
+<p class="text-justify">
+    Con un vocabulario de 2.500 a 3.000 palabras, podrás comprender el 90% de las conversaciones cotidianas en inglés, así como los artículos de periódicos y revistas, y el inglés utilizado en el entorno laboral. El 10% restante lo podrás aprender a través del contexto o formulando preguntas. Sin embargo, es crucial aprender las palabras adecuadas para no perder tiempo memorizando una cantidad enorme de palabras con poco beneficio.
+</p>
+
+@code {
+    protected override void OnInitialized()
+    {
+        NavigatorService.NavigateTo("EnglishPage");
+    }
+}

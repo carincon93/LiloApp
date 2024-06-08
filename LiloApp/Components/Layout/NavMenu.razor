@@ -1,0 +1,50 @@
+﻿@inject LiloApp.Services.NavigatorService NavigatorService
+@inject IServiceProvider ServiceProvider
+
+@code {
+    private bool isPopupVisible = false;
+
+    protected override void OnInitialized()
+    {
+        NavigatorService.OnPageChanged += UpdateState;
+    }
+
+    private void UpdateState()
+    {
+        InvokeAsync(() => StateHasChanged());
+    }
+
+    public void Dispose()
+    {
+        NavigatorService.OnPageChanged -= UpdateState;
+    }
+
+    private void TogglePopup()
+    {
+        isPopupVisible = !isPopupVisible;
+    }
+}
+
+<div class="relative @(NavigatorService.CurrentPage == "HomePage" ? "top-28" : "")">
+    <div class="text-center bg-white p-2 rounded-xl relative z-[9999] text-2xl flex items-center justify-between">
+        <img src="/images/logo.png" alt="Logo" class="w-12" />
+        Cristian
+        <img src="/images/hamburger.png" alt="Hamburger" class="w-10" @onclick="TogglePopup" />
+    </div>
+    <div class="text-center bg-lilo p-2 rounded-xl relative z-[9998] -top-4">
+        <span class="relative top-2">
+            ¡Bienvenido/a!
+        </span>
+    </div>
+</div>
+
+@if (isPopupVisible)
+{
+    <div class="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-[10000]">
+        <div class="bg-white p-6 rounded-lg shadow-lg">
+            <h2 class="text-2xl mb-4">Popup Title</h2>
+            <p class="mb-4">This is a sample popup content.</p>
+            <button class="bg-blue-500 text-white px-4 py-2 rounded" @onclick="TogglePopup">Close</button>
+        </div>
+    </div>
+}

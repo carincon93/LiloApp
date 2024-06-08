@@ -1,0 +1,69 @@
+﻿@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    :root {
+        --background-rgb: 242 242 247;
+        --foreground-rgb: 0 0 0;
+
+        --card-rgb: 255 255 255;
+        --card-foreground-rgb: 0 0 0;
+
+        --popover-rgb: 255 255 255;
+        --popover-foreground-rgb: 0 0 0;
+
+        --primary-rgb: 205 7 242;
+        --primary-foreground-rgb: 255 255 255;
+
+        --secondary-rgb: 56 189 248;
+        --secondary-foreground-rgb: 21 21 21;
+
+        --muted-rgb: 242 242 242;
+        --muted-foreground-rgb: 115 115 115;
+
+        --accent-rgb: 242 242 242;
+        --accent-foreground-rgb: 21 21 21;
+
+        --destructive-rgb: 170 60 98;
+        --destructive-foreground-rgb: 255 255 255;
+
+        --border: 229 229 229;
+        --input: 229 229 229;
+        --ring: 242 98 255;
+
+        --radius: 0.5rem;
+    }
+
+    .dark {
+        --background-rgb: 15 15 15;
+        --foreground-rgb: 255 255 255;
+        --card-rgb: 15 15 15;
+        --card-foreground-rgb: 255 255 255;
+        --popover-rgb: 255 255 255;
+        --popover-foreground-rgb: 15 15 15;
+        --primary-rgb: 205 7 242;
+        --primary-foreground-rgb: 255 255 255;
+        --secondary-rgb: 56 189 248;
+        --secondary-foreground-rgb: 255 255 255;
+        --muted-rgb: 38 38 38;
+        --muted-foreground-rgb: 163 163 163;
+        --accent-rgb: 38 38 38;
+        --accent-foreground-rgb: 255 255 255;
+        --destructive-rgb: 174 69 97;
+        --destructive-foreground-rgb: 255 255 255;
+        --border: 38 38 38;
+        --input: 38 38 38;
+        --ring: 242 98 255;
+    }
+}
+
+@layer base {
+    * {
+        @apply border-border;
+    }
+
+    body {
+        @apply bg-background text-foreground;
+    }
+}

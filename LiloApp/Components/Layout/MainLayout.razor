@@ -1,0 +1,24 @@
+﻿@inherits LayoutComponentBase
+@inject LiloApp.Services.NavigatorService NavigatorService
+@inject NavigationManager NavigationManager
+
+<div class="p-4">
+    <div>
+        <NavMenu />
+    </div>
+
+    <main>
+         <article>
+            @Body
+        </article>
+    </main>
+</div>
+
+@code {
+    protected override void OnInitialized()
+    {
+        NavigatorService.NavigationManager = NavigationManager;
+
+        base.OnInitialized();
+    }
+}
