@@ -25,26 +25,57 @@
     }
 }
 
-<div class="relative @(NavigatorService.CurrentPage == "HomePage" ? "top-28" : "")">
-    <div class="text-center bg-white p-2 rounded-xl relative z-[9999] text-2xl flex items-center justify-between">
-        <img src="/images/logo.png" alt="Logo" class="w-12" />
-        Cristian
-        <img src="/images/hamburger.png" alt="Hamburger" class="w-10" @onclick="TogglePopup" />
-    </div>
-    <div class="text-center bg-lilo p-2 rounded-xl relative z-[9998] -top-4">
-        <span class="relative top-2">
-            ¡Bienvenido/a!
-        </span>
+<div>
+    <div class="p-2 relative z-[9999] flex items-center justify-between">
+        <div class="text-left leading-6 text-[20px]">
+            <small>¡Hola!</small>
+            <br />
+            <strong>Vanessa</strong>
+        </div>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor" class="size-10 text-purple-500" @onclick="TogglePopup">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+        </svg>
     </div>
 </div>
 
 @if (isPopupVisible)
 {
-    <div class="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-[10000]">
-        <div class="bg-white p-6 rounded-lg shadow-lg">
-            <h2 class="text-2xl mb-4">Popup Title</h2>
-            <p class="mb-4">This is a sample popup content.</p>
-            <button class="bg-blue-500 text-white px-4 py-2 rounded" @onclick="TogglePopup">Close</button>
+    <div class="fixed inset-0 backdrop-blur-sm bg-white/30 flex items-center justify-center z-[10000]">
+        <div class="bg-white rounded-2xl shadow-lg w-9/12">
+
+            <div class="p-3 flex justify-between">
+                <span></span>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6" @onclick="TogglePopup">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                </svg>
+            </div>
+
+            <div class="p-6">
+                <p class="text-center">Mi perfil</p>
+            </div>
+            <hr />
+            <div class="p-6">
+                <p class="text-center">Calificar</p>
+            </div>
+            <hr />
+            <div class="px-6 py-2 flex bg-gray-100">
+                <div>
+                    <img src="/images/pig_pixelart.png" class="w-14 mx-auto" />
+                    <img src="/images/cat_pixelart.png" class="w-10 mt-2 mx-auto" />
+                </div>
+                <div class="flex flex-col justify-center">
+                    <p class="text-left ml-6 leading-4 -mt-1"><strong>10x</strong><br /> Cerditos completados</p>
+                    <p class="text-left ml-6 mt-8">¡Tengo hambre!</p>
+                </div>
+            </div>
+            <hr />
+            <div class="p-6">
+                <NavLink href="/" @onclick="TogglePopup">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 mx-auto">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+                    </svg>
+                </NavLink>
+            </div>
         </div>
     </div>
 }
