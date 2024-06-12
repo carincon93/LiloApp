@@ -1,0 +1,29 @@
+﻿@page "/dreams-board/list"
+
+@inject LiloApp.Services.NavigatorService NavigatorService
+
+<h1 class="text-5xl font-medium my-12 mx-10 text-center">Mapa de sueños</h1>
+
+<div class="grid h-full w-full grid-cols-2 gap-4">
+    <NavLink href="/dreams-board/list/aprender-ingles" class="w-full flex bg-white h-32 items-center justify-center font-medium rounded-xl shadow-xl">Aprender inglés</NavLink>
+    <NavLink href="/dreams-board/list/aprender-origami" class="w-full flex bg-white h-32 items-center justify-center font-medium rounded-xl shadow-xl">Aprender origami</NavLink>
+    <NavLink href="/dreams-board/list/aprender-origami" class="w-full flex bg-white h-20 items-center justify-center font-medium rounded-xl shadow-xl col-span-2">Lectura</NavLink>
+</div>
+
+<div class="p-6 mt-4">
+    <button class="block w-full relative p-[0.7em] text-lg">
+        <svg class="button__shape w-full" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+            <path class="button__path" d="M0,0 C0,-5 100,-5 100,0 C105,0 105,100 100,100 C100,105 0,105 0,100 C-5,100 -5,0 0,0 z" />
+        </svg>
+        <span class="block relative text-center text-white">
+            Agregar sueño
+        </span>
+    </button>
+</div>
+
+@code {
+    protected override void OnInitialized()
+    {
+        NavigatorService.NavigateTo("DreamsBoardListPage");
+    }
+}

@@ -9,22 +9,41 @@
     }
 }
 
-<div class="bg-[url(/images/figure.svg)] bg-[center_-8.12rem] bg-no-repeat bg-cover absolute top-0 left-0 right-0 h-[40vh]">
-    <img src="/images/pet.png" class="w-36 mx-auto" alt="Pet" />
-</div>
+<div class="top-8 relative">
+    <h1 class="text-5xl font-semibold text-center mb-8">¿Qué deseas hacer hoy?</h1>
 
-<div class="top-[11rem] relative">
-    <h1 class="text-5xl font-bold text-center mb-10">¿Qué deseas hacer hoy?</h1>
+    <img src="/images/cat_3d.png" class="m-auto block mb-10 w-[180px]" />
 
-    <ul class="space-y-8">
+    <ul class="space-y-8 px-8">
         <li>
-            <NavLink href="/english" class="w-full block bg-white p-4 rounded-xl shadow-xl">Aprender inglés</NavLink>
+            <NavLink href="/english" class="block relative p-[0.7em] text-lg">
+                <svg class="button__shape w-full" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+                    <path class="button__path" d="M0,0 C0,-5 100,-5 100,0 C105,0 105,100 100,100 C100,105 0,105 0,100 C-5,100 -5,0 0,0 z" />
+                </svg>
+                <span class="block relative text-center text-white">
+                    Aprender inglés
+                </span>
+            </NavLink>
         </li>
-        <li class="bg-white p-4 rounded-xl shadow-xl">
-            Añadir materia
+        <li>
+            <NavLink href="/dreams-board" class="block relative p-[0.7em] text-lg">
+                <svg class="button__shape w-full" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+                    <path class="button__path" d="M0,0 C0,-5 100,-5 100,0 C105,0 105,100 100,100 C100,105 0,105 0,100 C-5,100 -5,0 0,0 z" />
+                </svg>
+                <span class="block relative text-center text-white">
+                    Mapa de sueños
+                </span>
+            </NavLink>
         </li>
-        <li class="bg-white p-4 rounded-xl shadow-xl">
-            My Gym Progress
+        <li>
+            <NavLink href="/workout" class="block relative p-[0.7em] text-lg">
+                <svg class="button__shape w-full" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+                    <path class="button__path" d="M0,0 C0,-5 100,-5 100,0 C105,0 105,100 100,100 C100,105 0,105 0,100 C-5,100 -5,0 0,0 z" />
+                </svg>
+                <span class="block relative text-center text-white">
+                    Mi progreso físico
+                </span>
+            </NavLink>
         </li>
     </ul>
 

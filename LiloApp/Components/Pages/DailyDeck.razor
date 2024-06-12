@@ -1,0 +1,12 @@
+﻿@page "/english/daily-deck"
+
+@inject LiloApp.Services.NavigatorService NavigatorService
+
+<h3>DailyDeck</h3>
+
+@code {
+    protected override void OnInitialized()
+    {
+        NavigatorService.NavigateTo("DailyDeckPage");
+    }
+}

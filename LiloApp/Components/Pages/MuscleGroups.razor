@@ -1,0 +1,14 @@
+﻿@page "/workout/muscle-groups"
+
+@inject LiloApp.Services.NavigatorService NavigatorService
+
+<h3>MuscleGroups</h3>
+
+<NavLink href="/workout/muscle-groups/Pectorales" class="w-full block bg-white p-4 rounded-xl shadow-xl">Pectorales</NavLink>
+
+@code {
+	protected override void OnInitialized()
+	{
+		NavigatorService.NavigateTo("MuscleGroupsPage");
+	}
+}

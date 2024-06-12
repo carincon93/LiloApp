@@ -1,0 +1,29 @@
+﻿@page "/workout"
+
+@inject LiloApp.Services.NavigatorService NavigatorService
+
+<h1 class="text-5xl font-medium my-16">Mi progreso físico</h1>
+
+<article class="px-2 mt-10">
+    <h3 class="text-3xl font-medium my-4">¿Sabías qué?</h3>
+
+    <p class="text-left">
+        Ser constante en ir al gimnasio y hacer ejercicio transforma tu vida de maneras increíbles. No solo mejoras tu salud física, fortaleciendo músculos y aumentando tu resistencia, sino que también beneficias tu bienestar mental. La disciplina diaria reduce el estrés, mejora el estado de ánimo y fomenta una actitud positiva. Además, alcanzar tus metas de fitness te proporciona una sensación de logro y confianza. ¡Recuerda, cada pequeño paso en el gimnasio te acerca a una vida más saludable y feliz!
+    </p>
+
+    <NavLink href="/workout/muscle-groups" class="block relative p-[0.7em] text-lg mt-8">
+        <svg class="button__shape w-full" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+            <path class="button__path" d="M0,0 C0,-5 100,-5 100,0 C105,0 105,100 100,100 C100,105 0,105 0,100 C-5,100 -5,0 0,0 z" />
+        </svg>
+        <span class="block relative text-center text-white">
+            Empezar rutina
+        </span>
+    </NavLink>
+</article>
+
+@code {
+    protected override void OnInitialized()
+    {
+        NavigatorService.NavigateTo("WorkoutPage");
+    }
+}

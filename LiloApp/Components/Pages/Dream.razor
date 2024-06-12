@@ -1,0 +1,15 @@
+﻿@page "/dreams-board/list/{dreamparam}"
+
+@inject LiloApp.Services.NavigatorService NavigatorService
+
+<h3>Dream @Dreamparam</h3>
+
+@code {
+	[Parameter]
+	public string Dreamparam { get; set; }
+
+	protected override void OnInitialized()
+	{
+		NavigatorService.NavigateTo("DreamPage");
+	}
+}
