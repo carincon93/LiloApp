@@ -2,23 +2,25 @@
 
 @inject LiloApp.Services.NavigatorService NavigatorService
 
-<h1 class="text-5xl font-medium my-16">Inglés</h1>
+<h1 class="text-5xl font-medium my-16 text-center">Inglés</h1>
 
 <article class="px-2">
     <h3 class="text-3xl font-medium my-4">¿Sabías qué?</h3>
 
-    <p class="text-left">
+    <p class="text-left text-[16px] leading-5">
         Con un vocabulario de 2.500 a 3.000 palabras, podrás comprender el 90% de las conversaciones cotidianas en inglés, así como los artículos de periódicos y revistas, y el inglés utilizado en el entorno laboral. El 10% restante lo podrás aprender a través del contexto o formulando preguntas. Sin embargo, es crucial aprender las palabras adecuadas para no perder tiempo memorizando una cantidad enorme de palabras con poco beneficio.
     </p>
 
-    <NavLink href="/english/daily-deck" class="block relative p-[0.7em] text-lg mt-8">
-        <svg class="button__shape w-full" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-            <path class="button__path" d="M0,0 C0,-5 100,-5 100,0 C105,0 105,100 100,100 C100,105 0,105 0,100 C-5,100 -5,0 0,0 z" />
-        </svg>
-        <span class="block relative text-center text-white">
-            Continuar aprendiendo
-        </span>
-    </NavLink>
+    <div class="px-6">
+        <NavLink href="/english/daily-deck" class="block relative p-[0.7em] text-lg mt-8">
+            <svg class="button__shape w-full" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+                <path class="button__path" d="M0,0 C0,-5 100,-5 100,0 C105,0 105,100 100,100 C100,105 0,105 0,100 C-5,100 -5,0 0,0 z" />
+            </svg>
+            <span class="block relative text-center text-white">
+                Continuar aprendiendo
+            </span>
+        </NavLink>
+    </div>
 </article>
 
 @code {
