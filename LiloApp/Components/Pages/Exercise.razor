@@ -5,11 +5,11 @@
 <h2 class="font-medium text-3xl text-center my-10">@Exerciseparam</h2>
 
 <div class="grid h-full w-full grid-cols-2 gap-4">
-	<button class="w-full flex bg-white h-32 items-center justify-center font-medium rounded-xl shadow-xl">Press en banco plano</button>
-	<button class="w-full flex bg-white h-32 items-center justify-center font-medium rounded-xl shadow-xl">Pec Deck</button>
-	<button class="w-full flex bg-white h-20 items-center justify-center font-medium rounded-xl shadow-xl">Fondos en barra paralelas</button>
-	<button class="w-full flex bg-white h-20 items-center justify-center font-medium rounded-xl shadow-xl">Press en máquina</button>
-	<button class="w-full flex bg-white h-20 items-center justify-center font-medium rounded-xl shadow-xl col-span-2">Press en banco inclinado</button>
+	<button class="w-full flex bg-white h-32 items-center justify-center rounded-xl shadow-xl px-3" onclick="@(() => ToggleExercisePopup("Press en banco plano"))">Press en banco plano</button>
+	<button class="w-full flex bg-white h-32 items-center justify-center rounded-xl shadow-xl px-3" onclick="@(() => ToggleExercisePopup("Pec Deck"))">Pec Deck</button>
+	<button class="w-full flex bg-white h-20 items-center justify-center rounded-xl shadow-xl px-3" onclick="@(() => ToggleExercisePopup("Fondos en barra paralelas"))">Fondos en barra paralelas</button>
+	<button class="w-full flex bg-white h-20 items-center justify-center rounded-xl shadow-xl px-3" onclick="@(() => ToggleExercisePopup("Press en máquina"))">Press en máquina</button>
+	<button class="w-full flex bg-white h-20 items-center justify-center rounded-xl shadow-xl col-span-2 px-3" onclick="@(() => ToggleExercisePopup("Press en banco inclinado"))">Press en banco inclinado</button>
 </div>
 
 <div class="p-6 mt-4">
@@ -41,7 +41,7 @@
   
             <div class="p-6">
                 <form>
-					<input name="nombre" placeholder="Nombre del ejercicio" class="bg-gray-100 p-2 rounded-sm text-center" />
+					<input name="nombre" placeholder="Nombre del ejercicio" class="bg-gray-100 p-2 rounded-md text-center" />
 
 					<button class="block w-full relative p-[0.3em] mt-8 text-lg">
 						<svg class="button__shape w-full" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
@@ -57,11 +57,49 @@
     </div>
 }
 
+@if (isExercisePopupVisible)
+{
+	<div class="fixed inset-0 backdrop-blur-sm bg-white/30 flex items-center justify-center z-[10000]">
+		<div class="bg-white rounded-2xl shadow-lg w-9/12">
+
+			<div class="p-3 flex justify-between">
+				<span></span>
+				<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6" @onclick="@(() => ToggleExercisePopup(""))">
+					<path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+				</svg>
+			</div>
+
+			<div>
+				<h1 class="text-center font-medium text-2xl px-4">@titleExercise</h1>
+			</div>
+
+			<div class="p-6">
+				<form>
+					<input name="serie" placeholder="Serie" class="bg-gray-100 p-2 rounded-md mb-2" />
+					<input name="reps" placeholder="Reps" class="bg-gray-100 p-2 rounded-md mb-2" />
+					<input name="peso" placeholder="Peso" class="bg-gray-100 p-2 rounded-md mb-2" />
+
+					<button class="block w-full relative p-[0.3em] mt-8 text-lg">
+						<svg class="button__shape w-full" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+							<path class="button__path" d="M0,0 C0,-5 100,-5 100,0 C105,0 105,100 100,100 C100,105 0,105 0,100 C-5,100 -5,0 0,0 z" />
+						</svg>
+						<span class="block relative text-center text-white">
+							Guardar
+						</span>
+					</button>
+				</form>
+			</div>
+		</div>
+	</div>
+}
+
 @code {
 	private bool isNewExercisePopupVisible = false;
+	private bool isExercisePopupVisible = false;
 
 	[Parameter]
 	public string Exerciseparam { get; set; }
+	public string titleExercise { get; set; }
 
 	protected override void OnInitialized()
 	{
@@ -71,5 +109,11 @@
 	private void ToggleNewExercisePopup()
 	{
 		isNewExercisePopupVisible = !isNewExercisePopupVisible;
+	}
+
+	private void ToggleExercisePopup(String excerciseName)
+	{
+		titleExercise = excerciseName;
+		isExercisePopupVisible = !isExercisePopupVisible;
 	}
 }
