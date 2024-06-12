@@ -1,5 +1,14 @@
+html {
+    height: 100%;
+}
+
 body {
     color: #263945;
+    min-height: 100%;
+}
+
+div {
+    height: inherit !important;
 }
 
 valid.modified:not([type=checkbox]) {
