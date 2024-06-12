@@ -25,9 +25,9 @@
     }
 }
 
-<div>
+<div class="@(NavigatorService.CurrentPage == "WorkoutPage" || NavigatorService.CurrentPage == "DreamsBoardPage" || NavigatorService.CurrentPage == "EnglishPage" ? "hidden" : "")">
     <div class="p-2 relative z-[9999] flex items-center justify-between">
-        <div class="text-left leading-6 text-[20px]">
+        <div class="text-left leading-6 text-[20px] @(NavigatorService.CurrentPage == "DreamsBoardListPage" ? "text-white" : "")">
             <small>¡Hola!</small>
             <br />
             <strong>Vanessa</strong>
@@ -50,14 +50,6 @@
                 </svg>
             </div>
 
-            <div class="p-6">
-                <p class="text-center">Mi perfil</p>
-            </div>
-            <hr />
-            <div class="p-6">
-                <p class="text-center">Calificar</p>
-            </div>
-            <hr />
             <div class="px-6 py-2 flex bg-gray-100">
                 <div>
                     <img src="/images/pig_pixelart.png" class="w-14 mx-auto" />
