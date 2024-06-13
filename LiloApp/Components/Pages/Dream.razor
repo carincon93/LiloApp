@@ -21,7 +21,7 @@
 				{
 					<div class="text-transparent p-2">NA</div>
 				}
-				<div class="text-[#251555] p-2 font-medium">@day</div>
+				<div class="text-[#251555] p-2 font-medium" @onclick="@(() => ToggleDayPopup(day))">@day</div>
 				indexSundays++;
 			}
 		</div>
@@ -36,7 +36,7 @@
 				{
 					<div class="text-transparent p-2">NA</div>
 				}
-				<div class="text-[#251555] p-2 font-medium">@day</div>
+				<div class="text-[#251555] p-2 font-medium" @onclick="@(() => ToggleDayPopup(day))">@day</div>
 				indexMondays++;
 			}
 		</div>
@@ -51,7 +51,7 @@
 				{
 					<div class="text-transparent p-2">NA</div>
 				}
-				<div class="text-[#251555] p-2 font-medium">@day</div>
+				<div class="text-[#251555] p-2 font-medium" @onclick="@(() => ToggleDayPopup(day))">@day</div>
 				indexTuesdays++;
 			}
 		</div>
@@ -66,7 +66,7 @@
 				{
 					<div class="text-transparent p-2">NA</div>
 				}
-				<div class="text-[#251555] p-2 font-medium">@day</div>
+				<div class="text-[#251555] p-2 font-medium" @onclick="@(() => ToggleDayPopup(day))">@day</div>
 				indexWednesdays++;
 			}
 		</div>
@@ -81,7 +81,7 @@
 				{
 					<div class="text-transparent p-2">NA</div>
 				}
-				<div class="text-[#251555] p-2 font-medium">@day</div>
+				<div class="text-[#251555] p-2 font-medium" @onclick="@(() => ToggleDayPopup(day))">@day</div>
 				indexThursdays++;
 			}
 		</div>
@@ -96,7 +96,7 @@
 				{
 					<div class="text-transparent p-2">NA</div>
 				}
-				<div class="text-[#251555] p-2 font-medium">@day</div>
+				<div class="text-[#251555] p-2 font-medium" @onclick="@(() => ToggleDayPopup(day))">@day</div>
 				indexFridays++;
 			}
 		</div>
@@ -107,7 +107,7 @@
 			}
 			@foreach (var day in SaturdaysNumbers)
 			{
-				<div class="text-[#251555] p-2 font-medium">@day</div>
+				<div class="text-[#251555] p-2 font-medium" @onclick="@(() => ToggleDayPopup(day))">@day</div>
 				indexStaurdays++;
 			}
 		</div>
@@ -116,6 +116,44 @@
 	<img src="/images/pig_pixelart.png" class="mx-auto mt-1" />
 	<p class="text-white text-sm text-center mt-2">Cada que completas un día el cerdito se irá llenando.</p>
 </div>
+
+@if (isDayPopupVisible)
+{
+	<div class="fixed inset-0 backdrop-blur-sm bg-white/30 flex items-center justify-center z-[10000]">
+		<div class="bg-white rounded-2xl shadow-lg w-9/12">
+
+			<div class="p-3 flex justify-between">
+				<span></span>
+				<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6" @onclick="@(() => ToggleDayPopup(0))">
+					<path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+				</svg>
+			</div>
+
+			<div>
+				<h1 class="text-center font-medium text-2xl px-4">@daySelected de @MonthName de @Year</h1>
+			</div>
+
+			<div class="p-6 ">
+				<form>
+					<select class="bg-gray-100 p-2 rounded-md text-center w-full">
+						<option>Registrar comentario o valor</option>
+						<option>Valor</option>
+						<option>Comentario</option>
+					</select>
+
+					<button class="block w-full relative p-[0.3em] mt-8 text-lg">
+						<svg class="button__shape w-full" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+							<path class="button__path" d="M0,0 C0,-5 100,-5 100,0 C105,0 105,100 100,100 C100,105 0,105 0,100 C-5,100 -5,0 0,0 z" />
+						</svg>
+						<span class="block relative text-center text-white">
+							Guardar
+						</span>
+					</button>
+				</form>
+			</div>
+		</div>
+	</div>
+}
 
 @code {
 	[Parameter]
@@ -135,6 +173,8 @@
 	public int FirstFridayNumber { get; set; }
 	public int FirstSaturdayNumber { get; set; }
 	public int FirstSundayNumber { get; set; }
+	public bool isDayPopupVisible = false;
+	public int daySelected = 0;
 
 	public List<int> MondaysNumbers { get; private set; }
 	public List<int> TuesdaysNumbers { get; private set; }
@@ -216,5 +256,11 @@
 			days.Add(day);
 		}
 		return days;
+	}
+
+	protected void ToggleDayPopup(int day)
+	{
+		isDayPopupVisible = !isDayPopupVisible;
+		daySelected = day;
 	}
 }
