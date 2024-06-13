@@ -1,15 +1,44 @@
-﻿@page "/dreams-board/list/{dreamparam}"
+﻿@page "/dreams-board/list/{dreamparam}/{monthparam}"
 
 @inject LiloApp.Services.NavigatorService NavigatorService
 
-<h3>Dream @Dreamparam</h3>
+@using System.Globalization
+
+<h2 class="font-medium text-5xl text-center my-10 text-white mx-10">@Dreamparam</h2>
+
+<p>El primer día de @MonthName de @Year es @FirstDayOfMonth.</p>
+<p>@MonthName tiene @DaysInMonth días.</p>
 
 @code {
 	[Parameter]
 	public string Dreamparam { get; set; }
 
+	[Parameter]
+	public string Monthparam { get; set; }
+
+	public string FirstDayOfMonth { get; set; }
+	public int DaysInMonth { get; set; }
+	public int Year { get; set; }
+	public string MonthName { get; set; }
+
 	protected override void OnInitialized()
 	{
 		NavigatorService.NavigateTo("DreamPage");
+		CalculateDates();
+	}
+
+	public void CalculateDates()
+	{
+		Year = DateTime.Now.Year;
+		int monthNumber = int.Parse(Monthparam);
+
+		// Obtener el primer día del mes
+		DateTime firstDayOfMonth = new DateTime(Year, monthNumber, 1);
+		FirstDayOfMonth = firstDayOfMonth.DayOfWeek.ToString();
+
+		// Obtener el último día del mes
+		DaysInMonth = DateTime.DaysInMonth(Year, monthNumber);
+
+		MonthName = CultureInfo.GetCultureInfo("es-ES").DateTimeFormat.GetMonthName(monthNumber);
 	}
 }
