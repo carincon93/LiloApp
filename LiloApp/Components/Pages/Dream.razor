@@ -7,7 +7,7 @@
 <h2 class="font-medium text-5xl text-center my-10 text-white mx-10">@Dreamparam</h2>
 
 <div class="rounded-md shadow-inner shadow-white p-4" style="background-color: rgba(71, 56, 133, 0.6);">
-	<h2 class="text-center font-medium text-3xl text-white/50"><span class="capitalize">@MonthName</span> de @Year</h2>
+	<h2 class="text-center font-medium text-3xl text-white/50 mt-2"><span class="capitalize">@MonthName</span> de @Year</h2>
 
 	<div class="flex justify-around mt-10 text-center text-lg">
 		<div>
@@ -19,9 +19,9 @@
 			{
 				@if (indexSundays == 0 && FirstSaturdayNumber >= 1 && day != 1)
 				{
-					<div class="text-transparent">NA</div>
+					<div class="text-transparent p-2">NA</div>
 				}
-				<div class="day">@day</div>
+				<div class="text-[#251555] p-2 font-medium">@day</div>
 				indexSundays++;
 			}
 		</div>
@@ -34,9 +34,9 @@
 			{
 				@if (indexMondays == 0 && FirstSaturdayNumber <= 5)
 				{
-					<div class="text-transparent">NA</div>
+					<div class="text-transparent p-2">NA</div>
 				}
-				<div class="day">@day</div>
+				<div class="text-[#251555] p-2 font-medium">@day</div>
 				indexMondays++;
 			}
 		</div>
@@ -49,9 +49,9 @@
 			{
 				@if (indexTuesdays == 0 && FirstSaturdayNumber <= 4)
 				{
-					<div class="text-transparent">NA</div>
+					<div class="text-transparent p-2">NA</div>
 				}
-				<div class="day">@day</div>
+				<div class="text-[#251555] p-2 font-medium">@day</div>
 				indexTuesdays++;
 			}
 		</div>
@@ -64,9 +64,9 @@
 			{
 				@if (indexWednesdays == 0 && FirstSaturdayNumber <= 3)
 				{
-					<div class="text-transparent">NA</div>
+					<div class="text-transparent p-2">NA</div>
 				}
-				<div class="day">@day</div>
+				<div class="text-[#251555] p-2 font-medium">@day</div>
 				indexWednesdays++;
 			}
 		</div>
@@ -79,9 +79,9 @@
 			{
 				@if (indexThursdays == 0 && FirstSaturdayNumber <= 2)
 				{
-					<div class="text-transparent">NA</div>
+					<div class="text-transparent p-2">NA</div>
 				}
-				<div class="day">@day</div>
+				<div class="text-[#251555] p-2 font-medium">@day</div>
 				indexThursdays++;
 			}
 		</div>
@@ -94,9 +94,9 @@
 			{
 				@if (indexFridays == 0 && FirstSaturdayNumber == 1)
 				{
-					<div class="text-transparent">NA</div>
+					<div class="text-transparent p-2">NA</div>
 				}
-				<div class="day">@day</div>
+				<div class="text-[#251555] p-2 font-medium">@day</div>
 				indexFridays++;
 			}
 		</div>
@@ -107,17 +107,14 @@
 			}
 			@foreach (var day in SaturdaysNumbers)
 			{
-				<div class="day">@day</div>
+				<div class="text-[#251555] p-2 font-medium">@day</div>
 				indexStaurdays++;
 			}
 		</div>
 	</div>
 
-	<img src="/images/pig_pixelart.png" class="mx-auto" />
+	<img src="/images/pig_pixelart.png" class="mx-auto mt-1" />
 	<p class="text-white text-sm text-center mt-2">Cada que completas un día el cerdito se irá llenando.</p>
-	<div class="days">
-		
-	</div>
 </div>
 
 @code {
@@ -167,6 +164,7 @@
 		// Obtener el último día del mes
 		DaysInMonth = DateTime.DaysInMonth(Year, monthNumber);
 
+		// Obtener el nombre del mes
 		MonthName = CultureInfo.GetCultureInfo("es-ES").DateTimeFormat.GetMonthName(monthNumber);
 	}
 
