@@ -6,8 +6,119 @@
 
 <h2 class="font-medium text-5xl text-center my-10 text-white mx-10">@Dreamparam</h2>
 
-<p>El primer día de @MonthName de @Year es @FirstDayOfMonth.</p>
-<p>@MonthName tiene @DaysInMonth días.</p>
+<div class="rounded-md shadow-inner shadow-white p-4" style="background-color: rgba(71, 56, 133, 0.6);">
+	<h2 class="text-center font-medium text-3xl text-white/50"><span class="capitalize">@MonthName</span> de @Year</h2>
+
+	<div class="flex justify-around mt-10 text-center text-lg">
+		<div>
+			<div class="text-white/50 font-medium">D</div>
+			@{
+				int indexSundays = 0;
+			}
+			@foreach (var day in SundaysNumbers)
+			{
+				@if (indexSundays == 0 && FirstSaturdayNumber >= 1 && day != 1)
+				{
+					<div class="text-transparent">NA</div>
+				}
+				<div class="day">@day</div>
+				indexSundays++;
+			}
+		</div>
+		<div>
+			<div class="text-white/50 font-medium">L</div>
+			@{
+				int indexMondays = 0;
+			}
+			@foreach (var day in MondaysNumbers)
+			{
+				@if (indexMondays == 0 && FirstSaturdayNumber <= 5)
+				{
+					<div class="text-transparent">NA</div>
+				}
+				<div class="day">@day</div>
+				indexMondays++;
+			}
+		</div>
+		<div>
+			<div class="text-white/50 font-medium">MA</div>
+			@{
+				int indexTuesdays = 0;
+			}
+			@foreach (var day in TuesdaysNumbers)
+			{
+				@if (indexTuesdays == 0 && FirstSaturdayNumber <= 4)
+				{
+					<div class="text-transparent">NA</div>
+				}
+				<div class="day">@day</div>
+				indexTuesdays++;
+			}
+		</div>
+		<div>
+			<div class="text-white/50 font-medium">MI</div>
+			@{
+				int indexWednesdays = 0;
+			}
+			@foreach (var day in WednesdaysNumbers)
+			{
+				@if (indexWednesdays == 0 && FirstSaturdayNumber <= 3)
+				{
+					<div class="text-transparent">NA</div>
+				}
+				<div class="day">@day</div>
+				indexWednesdays++;
+			}
+		</div>
+		<div>
+			<div class="text-white/50 font-medium">J</div>
+			@{
+				int indexThursdays = 0;
+			}
+			@foreach (var day in ThursdaysNumbers)
+			{
+				@if (indexThursdays == 0 && FirstSaturdayNumber <= 2)
+				{
+					<div class="text-transparent">NA</div>
+				}
+				<div class="day">@day</div>
+				indexThursdays++;
+			}
+		</div>
+		<div>
+			<div class="text-white/50 font-medium">V</div>
+			@{
+				int indexFridays = 0;
+			}
+			@foreach (var day in FridaysNumbers)
+			{
+				@if (indexFridays == 0 && FirstSaturdayNumber == 1)
+				{
+					<div class="text-transparent">NA</div>
+				}
+				<div class="day">@day</div>
+				indexFridays++;
+			}
+		</div>
+		<div>
+			<div class="text-white/50 font-medium">S</div>
+			@{
+				int indexStaurdays = 0;
+			}
+			@foreach (var day in SaturdaysNumbers)
+			{
+				<div class="day">@day</div>
+				indexStaurdays++;
+			}
+		</div>
+	</div>
+
+	<img src="/images/pig_pixelart.png" class="mx-auto" />
+	<p class="text-white text-sm text-center mt-2">Cada que completas un día el cerdito se irá llenando.</p>
+	<div class="days">
+		
+	</div>
+</div>
 
 @code {
 	[Parameter]
@@ -20,11 +131,28 @@
 	public int DaysInMonth { get; set; }
 	public int Year { get; set; }
 	public string MonthName { get; set; }
+	public int FirstMondayNumber { get; set; }
+	public int FirstTuesDayNumber { get; set; }
+	public int FirstWednesdayNumber { get; set; }
+	public int FirstThursdayNumber { get; set; }
+	public int FirstFridayNumber { get; set; }
+	public int FirstSaturdayNumber { get; set; }
+	public int FirstSundayNumber { get; set; }
+
+	public List<int> MondaysNumbers { get; private set; }
+	public List<int> TuesdaysNumbers { get; private set; }
+	public List<int> WednesdaysNumbers { get; private set; }
+	public List<int> ThursdaysNumbers { get; private set; }
+	public List<int> FridaysNumbers { get; private set; }
+	public List<int> SaturdaysNumbers { get; private set; }
+	public List<int> SundaysNumbers { get; private set; }
 
 	protected override void OnInitialized()
 	{
 		NavigatorService.NavigateTo("DreamPage");
 		CalculateDates();
+		CreateCalendar();
+		GenerateDaysArrays();
 	}
 
 	public void CalculateDates()
@@ -40,5 +168,55 @@
 		DaysInMonth = DateTime.DaysInMonth(Year, monthNumber);
 
 		MonthName = CultureInfo.GetCultureInfo("es-ES").DateTimeFormat.GetMonthName(monthNumber);
+	}
+
+	private static readonly Dictionary<string, int> dayOfWeekOffsets = new Dictionary<string, int>
+	{
+		{ "monday", 0 },
+		{ "tuesday", 6 },
+		{ "wednesday", 5 },
+		{ "thursday", 4 },
+		{ "friday", 3 },
+		{ "saturday", 2 },
+		{ "sunday", 1 }
+	};
+
+	public void CreateCalendar()
+	{
+		if (dayOfWeekOffsets.TryGetValue(FirstDayOfMonth.ToLower(), out int offset))
+		{
+			FirstMondayNumber = (1 + offset) % 7 == 0 ? 7 : (1 + offset) % 7;
+			FirstTuesDayNumber = (2 + offset) % 7 == 0 ? 7 : (2 + offset) % 7;
+			FirstWednesdayNumber = (3 + offset) % 7 == 0 ? 7 : (3 + offset) % 7;
+			FirstThursdayNumber = (4 + offset) % 7 == 0 ? 7 : (4 + offset) % 7;
+			FirstFridayNumber = (5 + offset) % 7 == 0 ? 7 : (5 + offset) % 7;
+			FirstSaturdayNumber = (6 + offset) % 7 == 0 ? 7 : (6 + offset) % 7;
+			FirstSundayNumber = (7 + offset) % 7 == 0 ? 7 : (7 + offset) % 7;
+		}
+		else
+		{
+			throw new ArgumentException("Invalid day of the week");
+		}
+	}
+
+	private void GenerateDaysArrays()
+	{
+		MondaysNumbers = GenerateDayNumbers(FirstMondayNumber);
+		TuesdaysNumbers = GenerateDayNumbers(FirstTuesDayNumber);
+		WednesdaysNumbers = GenerateDayNumbers(FirstWednesdayNumber);
+		ThursdaysNumbers = GenerateDayNumbers(FirstThursdayNumber);
+		FridaysNumbers = GenerateDayNumbers(FirstFridayNumber);
+		SaturdaysNumbers = GenerateDayNumbers(FirstSaturdayNumber);
+		SundaysNumbers = GenerateDayNumbers(FirstSundayNumber);
+	}
+
+	private List<int> GenerateDayNumbers(int startDay)
+	{
+		List<int> days = new List<int>();
+		for (int day = startDay; day <= DaysInMonth; day += 7)
+		{
+			days.Add(day);
+		}
+		return days;
 	}
 }
