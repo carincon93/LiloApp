@@ -27,7 +27,7 @@
 
 <div class="@(NavigatorService.CurrentPage == "WorkoutPage" || NavigatorService.CurrentPage == "DreamsBoardPage" || NavigatorService.CurrentPage == "EnglishPage" ? "hidden" : "")">
     <div class="p-2 relative z-[9999] flex items-center justify-between">
-        <div class="text-left leading-6 text-[20px] @(NavigatorService.CurrentPage == "DreamsBoardListPage" ? "text-white" : "")">
+        <div class="text-left leading-6 text-[20px] @(NavigatorService.CurrentPage == "DreamsBoardListPage" || NavigatorService.CurrentPage == "DreamPage" ? "text-white" : "")">
             <small>¡Hola!</small>
             <br />
             <strong>Vanessa</strong>

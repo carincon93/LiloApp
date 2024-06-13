@@ -23,7 +23,7 @@
     }
 }
 
-<div class="p-4 bg-cover bg-no-repeat h-full min-h-[100vh] bg-fixed @(NavigatorService.CurrentPage == "DreamsBoardListPage" ? "bg-[url('/images/dreamboard_screen.webp')]" : "bg-[url('/images/background.webp')]")">
+<div class="p-4 bg-cover bg-no-repeat h-full min-h-[100vh] bg-fixed @(NavigatorService.CurrentPage == "DreamsBoardListPage" || NavigatorService.CurrentPage == "DreamPage" ? "bg-[url('/images/dreamboard_screen.webp')]" : "bg-[url('/images/background.webp')]")">
     <div>
         <NavMenu />
     </div>
