@@ -5,9 +5,9 @@
 <h1 class="text-5xl font-medium my-12 mx-10 text-center text-white">Mapa de sueños</h1>
 
 <div class="grid h-full w-full grid-cols-2 gap-4">
-    <NavLink href="@($"/dreams-board/list/Aprender%20Inglés/{Month}")" class="w-full flex bg-white h-32 items-center justify-center font-medium rounded-xl shadow-xl">Aprender inglés</NavLink>
-    <NavLink href="@($"/dreams-board/list/Aprender%20Origami/{Month}")" class="w-full flex bg-white h-32 items-center justify-center font-medium rounded-xl shadow-xl">Aprender origami</NavLink>
-    <NavLink href="@($"/dreams-board/list/Lectura/{Month}")" class="w-full flex bg-white h-20 items-center justify-center font-medium rounded-xl shadow-xl col-span-2">Lectura</NavLink>
+    <button @onclick="@(() => ToggleMonthsPopup("Aprender%20Inglés"))" class="w-full flex bg-white h-32 items-center justify-center font-medium rounded-xl shadow-xl">Aprender inglés</button>
+    <button @onclick="@(() => ToggleMonthsPopup("Aprender%20Origami"))" class="w-full flex bg-white h-32 items-center justify-center font-medium rounded-xl shadow-xl">Aprender origami</button>
+    <button @onclick="@(() => ToggleMonthsPopup("Lectura"))" class="w-full flex bg-white h-20 items-center justify-center font-medium rounded-xl shadow-xl col-span-2">Lectura</button>
 </div>
 
 <div class="p-6 mt-4">
@@ -55,8 +55,44 @@
     </div>
 }
 
+@if (isMonthsPopupVisible)
+{
+    <div class="fixed inset-0 backdrop-blur-sm bg-white/30 flex items-center justify-center z-[10000]">
+        <div class="bg-white rounded-2xl shadow-lg w-9/12">
+
+            <div class="p-3 flex justify-between">
+                <span></span>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6" @onclick="@(() => ToggleMonthsPopup(""))">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                </svg>
+            </div>
+
+            <div>
+                <h1 class="text-center font-medium text-2xl">Seleccione un mes</h1>
+            </div>
+
+            <div class="p-6 grid grid-cols-2 gap-4">
+                <NavLink href="@($"/dreams-board/list/{Dreamparam}/1")" class="block w-full shadow p-2">Enero</NavLink>
+                <NavLink href="@($"/dreams-board/list/{Dreamparam}/2")" class="block w-full shadow p-2">Febrero</NavLink>
+                <NavLink href="@($"/dreams-board/list/{Dreamparam}/3")" class="block w-full shadow p-2">Marzo</NavLink>
+                <NavLink href="@($"/dreams-board/list/{Dreamparam}/4")" class="block w-full shadow p-2">Abril</NavLink>
+                <NavLink href="@($"/dreams-board/list/{Dreamparam}/5")" class="block w-full shadow p-2">Mayo</NavLink>
+                <NavLink href="@($"/dreams-board/list/{Dreamparam}/6")" class="block w-full shadow p-2">Junio</NavLink>
+                <NavLink href="@($"/dreams-board/list/{Dreamparam}/7")" class="block w-full shadow p-2">Julio</NavLink>
+                <NavLink href="@($"/dreams-board/list/{Dreamparam}/8")" class="block w-full shadow p-2">Agosto</NavLink>
+                <NavLink href="@($"/dreams-board/list/{Dreamparam}/9")" class="block w-full shadow p-2">Septiembre</NavLink>
+                <NavLink href="@($"/dreams-board/list/{Dreamparam}/10")" class="block w-full shadow p-2">Octubre</NavLink>
+                <NavLink href="@($"/dreams-board/list/{Dreamparam}/11")" class="block w-full shadow p-2">Noviembre</NavLink>
+                <NavLink href="@($"/dreams-board/list/{Dreamparam}/12")" class="block w-full shadow p-2">Diciembre</NavLink>
+            </div>
+        </div>
+    </div>
+}
+
 @code {
     private bool isNewDreamPopupVisible = false;
+    private bool isMonthsPopupVisible = false;
+    private string Dreamparam = "";
 
     public int Month = DateTime.Now.Month;
 
@@ -70,4 +106,9 @@
         isNewDreamPopupVisible = !isNewDreamPopupVisible;
     }
 
+    protected void ToggleMonthsPopup(string dream)
+    {
+        isMonthsPopupVisible = !isMonthsPopupVisible;
+        Dreamparam = dream;
+    }
 }
