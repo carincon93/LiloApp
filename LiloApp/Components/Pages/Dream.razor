@@ -113,7 +113,7 @@
 		</div>
 	</div>
 
-	<img src="/images/pig_pixelart.png" class="mx-auto mt-1" />
+	<img src="/images/pig_pixelart.png" class="mx-auto" />
 	<p class="text-white text-sm text-center mt-2">Cada que completas un día el cerdito se irá llenando.</p>
 </div>
 
@@ -133,13 +133,22 @@
 				<h1 class="text-center font-medium text-2xl px-4">@daySelected de @MonthName de @Year</h1>
 			</div>
 
-			<div class="p-6 ">
+			<div class="p-6">
 				<form>
-					<select class="bg-gray-100 p-2 rounded-md text-center w-full">
-						<option>Registrar comentario o valor</option>
-						<option>Valor</option>
-						<option>Comentario</option>
+					<select class="bg-gray-100 p-2 rounded-md text-center w-full" @onchange="HandleChange">
+						<option value="">Seleccione una opción</option>
+						<option value="valor">Registar un valor</option>
+						<option value="comentario">Registrar un comentario</option>
 					</select>
+
+					@if (SelectedValue == "valor")
+					{
+						<input name="valor" type="number" class="bg-gray-100 p-2 rounded-md text-center mt-2" placeholder="200.000" />
+					}
+					else if (SelectedValue == "comentario")
+					{
+						<textarea name="comentario" class="bg-gray-100 p-2 rounded-md mt-2"></textarea>
+					}
 
 					<button class="block w-full relative p-[0.3em] mt-8 text-lg">
 						<svg class="button__shape w-full" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
@@ -174,7 +183,8 @@
 	public int FirstSaturdayNumber { get; set; }
 	public int FirstSundayNumber { get; set; }
 	public bool isDayPopupVisible = false;
-	public int daySelected = 0;
+	public int daySelected { get; set; }
+	public string SelectedValue { get; set; }
 
 	public List<int> MondaysNumbers { get; private set; }
 	public List<int> TuesdaysNumbers { get; private set; }
@@ -262,5 +272,12 @@
 	{
 		isDayPopupVisible = !isDayPopupVisible;
 		daySelected = day;
+		SelectedValue = "";
+	}
+
+	private void HandleChange(ChangeEventArgs e)
+	{
+
+		SelectedValue = (string)e.Value;
 	}
 }
