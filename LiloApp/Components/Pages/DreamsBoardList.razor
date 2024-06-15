@@ -1,13 +1,22 @@
 ﻿@page "/dreams-board/list"
 
 @inject LiloApp.Services.NavigatorService NavigatorService
+@inject LiloApp.ViewModels.MainViewModel ViewModel
 
 <h1 class="text-5xl font-medium my-12 mx-10 text-center text-white">Mapa de sueños</h1>
 
 <div class="grid h-full w-full grid-cols-2 gap-4">
-    <button @onclick="@(() => ToggleMonthsPopup("Aprender%20Inglés"))" class="w-full flex bg-white h-32 items-center justify-center font-medium rounded-xl shadow-xl">Aprender inglés</button>
-    <button @onclick="@(() => ToggleMonthsPopup("Aprender%20Origami"))" class="w-full flex bg-white h-32 items-center justify-center font-medium rounded-xl shadow-xl">Aprender origami</button>
-    <button @onclick="@(() => ToggleMonthsPopup("Lectura"))" class="w-full flex bg-white h-20 items-center justify-center font-medium rounded-xl shadow-xl col-span-2">Lectura</button>
+    @if (ViewModel.Dreams == null)
+    {
+        <p>Loading</p>
+    }
+    else 
+    {
+        @foreach (var dream in ViewModel.Dreams)
+        {
+            <button @onclick="@(() => ToggleMonthsPopup(@dream.dream))" class="w-full flex bg-white h-32 items-center justify-center font-medium rounded-xl shadow-xl">@dream.dream</button>
+        }
+    }
 </div>
 
 <div class="p-6 mt-4">
@@ -25,7 +34,6 @@
 {
     <div class="fixed inset-0 backdrop-blur-sm bg-white/30 flex items-center justify-center z-[10000]">
         <div class="bg-white rounded-2xl shadow-lg w-9/12">
-
             <div class="p-3 flex justify-between">
                 <span></span>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6" @onclick="ToggleNewDreamPopup">
@@ -59,7 +67,6 @@
 {
     <div class="fixed inset-0 backdrop-blur-sm bg-white/30 flex items-center justify-center z-[10000]">
         <div class="bg-white rounded-2xl shadow-lg w-9/12">
-
             <div class="p-3 flex justify-between">
                 <span></span>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6" @onclick="@(() => ToggleMonthsPopup(""))">
@@ -110,5 +117,10 @@
     {
         isMonthsPopupVisible = !isMonthsPopupVisible;
         Dreamparam = dream;
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await ViewModel.LoadDreamsAsync();
     }
 }
