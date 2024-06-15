@@ -957,6 +957,11 @@ body {
   color: rgb(37 21 85 / var(--tw-text-opacity));
 }
 
+.text-\[\#fda81f\] {
+  --tw-text-opacity: 1;
+  color: rgb(253 168 31 / var(--tw-text-opacity));
+}
+
 .text-purple-500 {
   --tw-text-opacity: 1;
   color: rgb(168 85 247 / var(--tw-text-opacity));
@@ -973,11 +978,6 @@ body {
 
 .text-white\/50 {
   color: rgb(255 255 255 / 0.5);
-}
-
-.text-\[\#fda81f\] {
-  --tw-text-opacity: 1;
-  color: rgb(253 168 31 / var(--tw-text-opacity));
 }
 
 .shadow {
