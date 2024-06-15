@@ -1,8 +1,7 @@
 ﻿using CommunityToolkit.Maui;
 using LiloApp.Services;
 using Microsoft.Extensions.Logging;
-
-using Microsoft.AspNetCore.Components;
+using LiloApp.ViewModels;
 
 namespace LiloApp
 {
@@ -28,6 +27,9 @@ namespace LiloApp
             builder.Services.AddBlazorWebViewDeveloperTools();
 
             builder.Services.AddSingleton<NavigatorService>();
+            builder.Services.AddSingleton<HttpClient>();
+            builder.Services.AddSingleton<ApiService>();
+            builder.Services.AddSingleton<MainViewModel>();
 
             return builder.Build();
         }
