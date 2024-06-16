@@ -1,5 +1,6 @@
-﻿using LiloApp.Models;
+﻿using LiloApp.Data;
 using Newtonsoft.Json;
+using System.Text;
 
 namespace LiloApp.Services
 {
@@ -12,16 +13,24 @@ namespace LiloApp.Services
             _httpClient = httpClient;
         }
 
-        public async Task<List<Dream>> GetDreamsAsync()
+        public async Task<List<DreamData>> GetDreamsAsync()
         {
             var response = await _httpClient.GetAsync("https://liloapp-backend.onrender.com/dreams");
             if (response.IsSuccessStatusCode)
             {
                 var json = await response.Content.ReadAsStringAsync();
-                return JsonConvert.DeserializeObject<List<Dream>>(json);
+                return JsonConvert.DeserializeObject<List<DreamData>>(json);
             }
 
-            return new List<Dream>();
+            return new List<DreamData>();
+        }
+        
+        public async Task<bool> AddDreamAsync(DreamData newDream)
+        {
+            var json = JsonConvert.SerializeObject(newDream);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var response = await _httpClient.PostAsync("https://liloapp-backend.onrender.com/dreams", content);
+            return response.IsSuccessStatusCode;
         }
     }
 }
