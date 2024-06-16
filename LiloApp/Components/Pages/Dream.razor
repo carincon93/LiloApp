@@ -1,4 +1,4 @@
-﻿@page "/dreams-board/list/{dreamparam}/{monthparam}"
+﻿@page "/dreams-board/list/{dreamparam}/{monthparam}/{dreamidparam}"
 
 @inject LiloApp.Services.NavigatorService NavigatorService
 
@@ -21,7 +21,7 @@
 				{
 					<div class="text-transparent p-2">NA</div>
 				}
-				<div class="text-[#251555] p-2 font-medium" @onclick="@(() => ToggleDayPopup(day))">@day</div>
+				<div class="text-[#251555] p-2 font-medium" @onclick="@(() => ToggleDayPopup(@Monthparam, day, @Dreamidparam))">@day</div>
 				indexSundays++;
 			}
 		</div>
@@ -36,7 +36,7 @@
 				{
 					<div class="text-transparent p-2">NA</div>
 				}
-				<div class="text-[#251555] p-2 font-medium" @onclick="@(() => ToggleDayPopup(day))">@day</div>
+				<div class="text-[#251555] p-2 font-medium" @onclick="@(() => ToggleDayPopup(@Monthparam, day, @Dreamidparam))">@day</div>
 				indexMondays++;
 			}
 		</div>
@@ -51,7 +51,7 @@
 				{
 					<div class="text-transparent p-2">NA</div>
 				}
-				<div class="text-[#251555] p-2 font-medium" @onclick="@(() => ToggleDayPopup(day))">@day</div>
+				<div class="text-[#251555] p-2 font-medium" @onclick="@(() => ToggleDayPopup(@Monthparam, day, @Dreamidparam))">@day</div>
 				indexTuesdays++;
 			}
 		</div>
@@ -66,7 +66,7 @@
 				{
 					<div class="text-transparent p-2">NA</div>
 				}
-				<div class="text-[#251555] p-2 font-medium" @onclick="@(() => ToggleDayPopup(day))">@day</div>
+				<div class="text-[#251555] p-2 font-medium" @onclick="@(() => ToggleDayPopup(@Monthparam, day, @Dreamidparam))">@day</div>
 				indexWednesdays++;
 			}
 		</div>
@@ -81,7 +81,7 @@
 				{
 					<div class="text-transparent p-2">NA</div>
 				}
-				<div class="text-[#251555] p-2 font-medium" @onclick="@(() => ToggleDayPopup(day))">@day</div>
+				<div class="text-[#251555] p-2 font-medium" @onclick="@(() => ToggleDayPopup(@Monthparam, day, @Dreamidparam))">@day</div>
 				indexThursdays++;
 			}
 		</div>
@@ -96,7 +96,7 @@
 				{
 					<div class="text-transparent p-2">NA</div>
 				}
-				<div class="text-[#251555] p-2 font-medium" @onclick="@(() => ToggleDayPopup(day))">@day</div>
+				<div class="text-[#251555] p-2 font-medium" @onclick="@(() => ToggleDayPopup(@Monthparam, day, @Dreamidparam))">@day</div>
 				indexFridays++;
 			}
 		</div>
@@ -107,7 +107,7 @@
 			}
 			@foreach (var day in SaturdaysNumbers)
 			{
-				<div class="text-[#251555] p-2 font-medium" @onclick="@(() => ToggleDayPopup(day))">@day</div>
+				<div class="text-[#251555] p-2 font-medium" @onclick="@(() => ToggleDayPopup(@Monthparam, day, @Dreamidparam))">@day</div>
 				indexStaurdays++;
 			}
 		</div>
@@ -124,7 +124,7 @@
 
 			<div class="p-3 flex justify-between">
 				<span></span>
-				<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6" @onclick="@(() => ToggleDayPopup(0))">
+				<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6" @onclick="@(() => ToggleDayPopup("0",0,"0"))">
 					<path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
 				</svg>
 			</div>
@@ -169,6 +169,9 @@
 	public string Dreamparam { get; set; }
 
 	[Parameter]
+	public string Dreamidparam { get; set; }
+
+	[Parameter]
 	public string Monthparam { get; set; }
 
 	public string FirstDayOfMonth { get; set; }
@@ -184,6 +187,8 @@
 	public int FirstSundayNumber { get; set; }
 	public bool isDayPopupVisible = false;
 	public int daySelected { get; set; }
+	public int monthSelected { get; set; }
+	public int dreamSelected { get; set; }
 	public string SelectedValue { get; set; }
 
 	public List<int> MondaysNumbers { get; private set; }
@@ -268,16 +273,17 @@
 		return days;
 	}
 
-	protected void ToggleDayPopup(int day)
+	protected void ToggleDayPopup(string monthNumber, int day, string dreamId)
 	{
 		isDayPopupVisible = !isDayPopupVisible;
 		daySelected = day;
+		monthSelected = int.Parse(monthNumber);
+		dreamSelected = int.Parse(dreamId);
 		SelectedValue = "";
 	}
 
 	private void HandleChange(ChangeEventArgs e)
 	{
-
 		SelectedValue = (string)e.Value;
 	}
 }
