@@ -13,6 +13,9 @@ namespace LiloApp.Data
 		[Column("dreamId")]
 		public int DreamId { get; set; }
 
+		[Column("numeroDia")]
+		public int NumeroDia { get; set; }
+
 		[Column("numeroMes")]
 		public int NumeroMes { get; set; }
 
@@ -21,8 +24,5 @@ namespace LiloApp.Data
 
 		[Column("comentario")]
 		public string Comentario { get; set; }
-
-		[Column("valor")]
-		public int Valor { get; set; }
 	}
 }
