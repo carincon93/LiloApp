@@ -18,5 +18,5 @@ namespace LiloApp.Data
 
 		[Column("vida")]
 		public int Vida { get; set; }
-	}
+    }
 }

@@ -38,7 +38,9 @@ namespace LiloApp
 			builder.Services.AddSingleton<DreamService>();
 			builder.Services.AddSingleton<DreamCalendarService>();
 			builder.Services.AddSingleton<GrupoMuscularService>();
-			builder.Services.AddSingleton<MainViewModel>();
+			builder.Services.AddSingleton<MascotaService>();
+			builder.Services.AddSingleton<AmoService>();
+            builder.Services.AddSingleton<MainViewModel>();
 
             //builder.Services.AddSingleton<HttpClient>();
             //builder.Services.AddSingleton<ApiService>();

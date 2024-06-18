@@ -10,12 +10,16 @@ namespace LiloApp.ViewModels
 		private readonly DreamService _dreamService;
 		private readonly DreamCalendarService _dreamCalendarService;
 		private readonly GrupoMuscularService _grupoMuscularService;
+		private readonly MascotaService _mascotaService;
+		private readonly AmoService _amoService;
 
-		private List<DreamData> _dreams;
+        private List<DreamData> _dreams;
 		private List<DreamCalendarData> _dreamCalendar;
 		private List<GrupoMuscularData> _gruposMusculares;
+		private List<MascotaData> _mascotas;
+		private List<AmoData> _amos;
 
-		public List<DreamData> Dreams
+        public List<DreamData> Dreams
 		{
 			get => _dreams;
 			set
@@ -44,14 +48,34 @@ namespace LiloApp.ViewModels
 				OnPropertyChanged();
 			}
 		}
+        public List<MascotaData> Mascotas
+        {
+            get => _mascotas;
+            set
+            {
+                _mascotas = value;
+                OnPropertyChanged();
+            }
+        }
+        public List<AmoData> Amos
+        {
+            get => _amos;
+            set
+            {
+                _amos = value;
+                OnPropertyChanged();
+            }
+        }
 
-		public MainViewModel(DreamService dreamService, DreamCalendarService dreamCalendarService, GrupoMuscularService grupoMuscularService)
+        public MainViewModel(DreamService dreamService, DreamCalendarService dreamCalendarService, GrupoMuscularService grupoMuscularService, MascotaService mascotaService, AmoService amoService)
 		{
 			_dreamService = dreamService;
 			_dreamCalendarService = dreamCalendarService;
 			_grupoMuscularService = grupoMuscularService;
+			_mascotaService = mascotaService;
+			_amoService = amoService;
 
-			LoadDataAsync().ConfigureAwait(false);
+            LoadDataAsync().ConfigureAwait(false);
 		}
 
 		public async Task LoadDataAsync()
@@ -59,7 +83,9 @@ namespace LiloApp.ViewModels
 			Dreams = await _dreamService.GetDreamsAsync();
 			DreamCalendar = await _dreamCalendarService.GetDreamCalendarAsync();
 			GruposMusculares = await _grupoMuscularService.GetGrupoMuscularAsync();
-		}
+			Mascotas = await _mascotaService.GetMascotaAsync();
+			Amos = await _amoService.GetAmoAsync();
+        }
 
 		public async Task<bool> AddDreamAsync(DreamData newDream)
 		{
@@ -91,7 +117,27 @@ namespace LiloApp.ViewModels
 			return success;
 		}
 
-		public event PropertyChangedEventHandler PropertyChanged;
+        public async Task<bool> AddMascotaAsync(MascotaData newMascota)
+        {
+			var success = await _mascotaService.SaveMascotaAsync(newMascota) > 0;
+            if (success)
+            {
+                Mascotas = await _mascotaService.GetMascotaAsync();
+            }
+            return success;
+        }
+
+        public async Task<bool> AddAmoAsync(AmoData newAmo)
+        {
+            var success = await _amoService.SaveAmoAsync(newAmo) > 0;
+            if (success)
+            {
+                Amos = await _amoService.GetAmoAsync();
+            }
+            return success;
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
 		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
