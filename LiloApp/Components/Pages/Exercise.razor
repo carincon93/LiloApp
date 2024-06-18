@@ -2,7 +2,7 @@
 
 @inject LiloApp.Services.NavigatorService NavigatorService
 
-<h2 class="font-medium text-3xl text-center my-10">@Exerciseparam</h2>
+<h2 class="font-medium text-3xl text-center my-10 select-none">@Exerciseparam</h2>
 
 <div class="grid h-full w-full grid-cols-2 gap-4">
 	<button class="w-full flex bg-white h-32 items-center justify-center rounded-xl shadow-xl px-3" onclick="@(() => ToggleExercisePopup("Press en banco plano"))">Press en banco plano</button>
@@ -36,7 +36,7 @@
             </div>
 
             <div>
-                <h1 class="text-center font-medium text-2xl">Nuevo ejercicio</h1>
+				<h1 class="text-center font-medium text-2xl select-none">Nuevo ejercicio</h1>
             </div>
   
             <div class="p-6">
@@ -70,7 +70,7 @@
 			</div>
 
 			<div>
-				<h1 class="text-center font-medium text-2xl px-4">@titleExercise</h1>
+				<h1 class="text-center font-medium text-2xl px-4 select-none">@titleExercise</h1>
 			</div>
 
 			<div class="p-6">
