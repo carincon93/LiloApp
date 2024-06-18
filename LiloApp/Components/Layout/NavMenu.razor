@@ -1,36 +1,16 @@
 ﻿@inject LiloApp.Services.NavigatorService NavigatorService
 @inject IServiceProvider ServiceProvider
-
-@code {
-    private bool isPopupVisible = false;
-
-    protected override void OnInitialized()
-    {
-        NavigatorService.OnPageChanged += UpdateState;
-    }
-
-    private void UpdateState()
-    {
-        InvokeAsync(() => StateHasChanged());
-    }
-
-    public void Dispose()
-    {
-        NavigatorService.OnPageChanged -= UpdateState;
-    }
-
-    private void TogglePopup()
-    {
-        isPopupVisible = !isPopupVisible;
-    }
-}
+@inject LiloApp.ViewModels.MainViewModel ViewModel
 
 <div class="@(NavigatorService.CurrentPage == "WorkoutPage" || NavigatorService.CurrentPage == "DreamsBoardPage" || NavigatorService.CurrentPage == "EnglishPage" ? "hidden" : "")">
     <div class="p-2 relative z-[9999] flex items-center justify-between">
         <div class="text-left leading-6 text-[20px] @(NavigatorService.CurrentPage == "DreamsBoardListPage" || NavigatorService.CurrentPage == "DreamPage" ? "text-white" : "")">
             <small>¡Hola!</small>
             <br />
-            <strong>Vanessa</strong>
+            @if (Nombre != null)
+            {
+                <strong>@Nombre</strong>
+            }
         </div>
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor" class="size-10 @(NavigatorService.CurrentPage == "DreamsBoardListPage" || NavigatorService.CurrentPage == "DreamPage" ? "text-[#fda81f]" : "text-purple-500")" @onclick="TogglePopup">
             <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
@@ -70,4 +50,39 @@
             </div>
         </div>
     </div>
+}
+
+@code {
+    private bool isPopupVisible = false;
+    private string Nombre { get; set; }
+
+    protected override void OnInitialized()
+    {
+        NavigatorService.OnPageChanged += UpdateState;
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await ViewModel.LoadDataAsync();
+
+        if (ViewModel != null && ViewModel.Amos != null)
+        {
+            Nombre = ViewModel.Amos.First().Nombre;
+        }
+    }
+
+    private void UpdateState()
+    {
+        InvokeAsync(() => StateHasChanged());
+    }
+
+    public void Dispose()
+    {
+        NavigatorService.OnPageChanged -= UpdateState;
+    }
+
+    private void TogglePopup()
+    {
+        isPopupVisible = !isPopupVisible;
+    }
 }
