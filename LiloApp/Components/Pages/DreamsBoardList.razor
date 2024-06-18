@@ -15,7 +15,7 @@
     {
         @foreach (var dream in ViewModel.Dreams)
         {
-            <button @onclick="@(() => ToggleMonthsPopup(@dream.Titulo, dream.Id))" class="w-full flex bg-white h-32 items-center justify-center font-medium rounded-xl shadow-xl">
+            <button @onclick="@(() => ToggleMonthsPopup(@dream.Titulo, dream.Id, dream.EsPrivado))" class="w-full flex bg-white h-32 items-center justify-center font-medium rounded-xl shadow-xl">
                 <span class="active:blur-none @(dream.EsPrivado ? "blur-sm" : "") select-none">@dream.Titulo</span>
             </button>
         }
@@ -23,7 +23,7 @@
 </div>
 
 <div class="p-6 mt-4">
-    <button class="block w-full relative p-[0.7em] text-lg" @onclick="ToggleNewDreamPopup">
+    <button class="block w-full relative p-[0.7em] text-lg" @onclick="@(() => ToggleNewDreamPopup(0))">
         <svg class="button__shape w-full" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
             <path class="button__path" d="M0,0 C0,-5 100,-5 100,0 C105,0 105,100 100,100 C100,105 0,105 0,100 C-5,100 -5,0 0,0 z" />
         </svg>
@@ -39,13 +39,15 @@
         <div class="bg-white rounded-2xl shadow-lg w-9/12">
             <div class="p-3 flex justify-between">
                 <span></span>
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6" @onclick="ToggleNewDreamPopup">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6" @onclick="@(() => ToggleNewDreamPopup(0))">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
                 </svg>
             </div>
 
             <div>
-                <h1 class="text-center font-medium text-2xl select-none">Nuevo sueño</h1>
+                <h1 class="text-center font-medium text-2xl select-none">
+                    @(Dreamidparam != null ? "Editar" : "Nuevo") sueño
+                </h1>
             </div>
 
             <div class="p-6">
@@ -76,19 +78,26 @@
     </div>
 }
 
+
 @if (isMonthsPopupVisible)
 {
-    <div class="fixed inset-0 backdrop-blur-sm bg-white/30 flex items-center justify-center z-[10000]">
+    <div class="fixed inset-0 backdrop-blur-sm bg-white/30 flex items-center justify-center z-[9999]">
         <div class="bg-white rounded-2xl shadow-lg w-9/12">
             <div class="p-3 flex justify-between">
                 <span></span>
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6" @onclick="@(() => ToggleMonthsPopup("", 0))">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6" @onclick="@(() => ToggleMonthsPopup("", 0, false))">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
                 </svg>
             </div>
 
             <div>
-                <h1 class="text-center font-medium text-2xl select-none">Seleccione un mes</h1>
+                <div class="flex justify-center items-center">
+                    <h1 class="text-center font-medium select-none text-2xl mb-2 @(DreamPrivado ? "blur-md" : "") active:blur-none">@Dreamparam</h1>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5 -mt-3 ml-4" @onclick="() => ToggleNewDreamPopup(Dreamidparam)">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" />
+                    </svg>
+                </div>
+                <h2 class="text-center select-none mt-4">Seleccione un mes</h2>
             </div>
 
             <div class="p-6 grid grid-cols-2 gap-4">
@@ -119,6 +128,7 @@
     private bool isMonthsPopupVisible = false;
     private string Dreamparam { get; set; }
     private int Dreamidparam { get; set; }
+    private bool DreamPrivado { get; set; }
 
     public int Month = DateTime.Now.Month;
 
@@ -132,24 +142,33 @@
         await ViewModel.LoadDataAsync();
     }
 
-    protected void ToggleNewDreamPopup()
+    protected void ToggleNewDreamPopup(int id)
     {
         isNewDreamPopupVisible = !isNewDreamPopupVisible;
     }
 
-    protected void ToggleMonthsPopup(string title, int id)
+    protected void ToggleMonthsPopup(string title, int id, bool esPrivado)
     {
         isMonthsPopupVisible = !isMonthsPopupVisible;
         Dreamparam = title;
         Dreamidparam = id;
+        DreamPrivado = esPrivado;
     }
 
     private async Task HandleValidSubmit()
     {
+        newDreamData = new DreamData
+            {
+                Id = Dreamidparam != null ? Dreamidparam : 0,
+                EsPrivado = newDreamData.EsPrivado,
+                Titulo = newDreamData.Titulo
+            };
+
         var success = await ViewModel.AddDreamAsync(newDreamData);
         if (success)
         {
-            ToggleNewDreamPopup();
+            ToggleMonthsPopup("", 0, false);
+            ToggleNewDreamPopup(0);
             newDreamData = new DreamData();
         }
     }
@@ -159,7 +178,7 @@
         var success = await ViewModel.DeleteDreamAsync(dreamData);
         if (success)
         {
-            ToggleMonthsPopup("", 0);
+            ToggleMonthsPopup("", 0, false);
             newDreamData = new DreamData();
         }
     }
