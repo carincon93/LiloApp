@@ -96,8 +96,8 @@ namespace LiloApp.ViewModels
 			}
 			return success;
 		}
-        
-		public async Task<bool> DeleteDreamAsync(DreamData newDream)
+
+        public async Task<bool> DeleteDreamAsync(DreamData newDream)
         {
             var success = await _dreamService.DeleteDreamAsync(newDream) > 0;
             if (success)
