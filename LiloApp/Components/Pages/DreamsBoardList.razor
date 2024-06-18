@@ -114,6 +114,11 @@
         NavigatorService.NavigateTo("DreamsBoardListPage");
     }
 
+    protected override async Task OnInitializedAsync()
+    {
+        await ViewModel.LoadDataAsync();
+    }
+
     protected void ToggleNewDreamPopup()
     {
         isNewDreamPopupVisible = !isNewDreamPopupVisible;
@@ -124,11 +129,6 @@
         isMonthsPopupVisible = !isMonthsPopupVisible;
         Dreamparam = title;
         Dreamidparam = id;
-    }
-
-    protected override async Task OnInitializedAsync()
-    {
-        await ViewModel.LoadDataAsync();
     }
 
     private async Task HandleValidSubmit()
