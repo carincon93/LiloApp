@@ -9,7 +9,7 @@
 
     @if (petSelected != null)
     {
-        <img src=@($"/images/{petSelected}_pixelart.png") class="m-auto block my-16" />
+        <img src=@($"/images/{petSelected}_pixelart.png") class="m-auto block my-16 select-none" />
     }
 
     <ul class="space-y-8 px-8">
@@ -50,7 +50,7 @@
 {
     <div class="bg-white w-full fixed inset-0 z-[10001] flex flex-col items-center justify-center">
         <div>
-            <h1 class="text-center font-medium text-6xl mx-8">Selecciona tu mascota</h1>
+            <h1 class="text-center font-medium text-6xl mx-8 select-none">Selecciona tu mascota</h1>
         </div>          
 
         <div class="p-6 flex items-center justify-center gap-8">
@@ -72,11 +72,11 @@
             </div>
 
             <div>
-                <h1 class="text-center font-medium text-2xl">Nueva mascota</h1>
+                <h1 class="text-center font-medium text-2xl select-none">Nueva mascota</h1>
             </div>
 
             <div class="p-6">
-                <img src="@($"/images/{petSelected}_pixelart.png")" class="m-auto block my-8" />
+                <img src="@($"/images/{petSelected}_pixelart.png")" class="m-auto block my-8 select-none" />
 
                 <EditForm Model="newMascotaData" OnValidSubmit="HandleValidSubmit">
                     <DataAnnotationsValidator />
