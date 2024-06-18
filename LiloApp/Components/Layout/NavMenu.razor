@@ -7,7 +7,7 @@
         <div class="text-left leading-6 text-[20px] @(NavigatorService.CurrentPage == "DreamsBoardListPage" || NavigatorService.CurrentPage == "DreamPage" ? "text-white" : "")">
             <small>¡Hola!</small>
             <br />
-            @if (Nombre != null)
+            @if (Nombre != "")
             {
                 <strong>@Nombre</strong>
             }
@@ -34,7 +34,7 @@
                 <div>
                     <img src="/images/pig_pixelart.png" class="w-14 mx-auto" />
 
-                    @if (petSelected != null)
+                    @if (petSelected != "")
                     {
                         <img src=@($"/images/{petSelected}_pixelart.png") class="w-10 mt-2 mx-auto" />
                     }
@@ -58,7 +58,7 @@
 
 @code {
     private bool isPopupVisible = false;
-    private string Nombre { get; set; }
+    private string Nombre { get; set; } = "Cargando";
     private string petSelected { get; set; }
 
     protected override void OnInitialized()
@@ -70,10 +70,10 @@
     {
         await ViewModel.LoadDataAsync();
 
-        if (ViewModel != null && ViewModel.Amos != null)
+        if (ViewModel != null && ViewModel.Amos != null && ViewModel.Mascotas != null)
         {
-            Nombre = ViewModel.Amos.First().Nombre;
-            petSelected = ViewModel.Mascotas.First().Animal;
+            Nombre = ViewModel.Amos.Count == 0 ? "" : ViewModel.Amos.First().Nombre;
+            petSelected = ViewModel.Mascotas.Count == 0 ? "" : ViewModel.Mascotas.First().Animal;
         }
     }
 

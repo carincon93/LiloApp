@@ -14,7 +14,7 @@
 
     <ul class="space-y-8 px-8">
         <li>
-            <NavLink href="/english" class="block relative p-[0.7em] text-lg">
+            <NavLink href="/english" class="block relative p-[0.7em] text-lg pointer-event-none">
                 <svg class="button__shape w-full" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
                     <path class="button__path" d="M0,0 C0,-5 100,-5 100,0 C105,0 105,100 100,100 C100,105 0,105 0,100 C-5,100 -5,0 0,0 z" />
                 </svg>
@@ -118,10 +118,10 @@
     {
         await ViewModel.LoadDataAsync();
 
-        if (ViewModel != null && ViewModel.Amos != null)
+        if (ViewModel != null && ViewModel.Amos != null && ViewModel.Mascotas != null)
         {
             isPetPopupVisible = ViewModel.Amos.Count == 0;
-            petSelected = ViewModel.Mascotas.First().Animal;
+            petSelected = ViewModel.Mascotas.Count == 0 ? "" : ViewModel.Mascotas.First().Animal;
         }
     }
 
@@ -152,10 +152,13 @@
                 Vida = 100,
             };
 
-
         var success = await ViewModel.AddMascotaAsync(newMascotaData);
         if (success)
         {
+            await ViewModel.LoadDataAsync();
+
+            TogglePetPopup();
+            isNewAccountPopupVisible = false;
             newMascotaData = new MascotaData();
             newAmoData = new AmoData();
         }
