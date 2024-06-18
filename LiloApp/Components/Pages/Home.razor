@@ -1,13 +1,8 @@
 ﻿@page "/"
 
 @inject LiloApp.Services.NavigatorService NavigatorService
-
-@code {
-    protected override void OnInitialized()
-    {
-        NavigatorService.NavigateTo("HomePage");
-    }
-}
+@inject LiloApp.ViewModels.MainViewModel ViewModel
+@using LiloApp.Data
 
 <div class="top-12 relative">
     <h1 class="text-5xl font-semibold text-center mb-8">¿Qué deseas hacer hoy?</h1>
@@ -46,5 +41,119 @@
             </NavLink>
         </li>
     </ul>
-
 </div>
+
+@if (isPetPopupVisible)
+{
+    <div class="bg-white w-full fixed inset-0 z-[10001] flex flex-col items-center justify-center">
+        <div>
+            <h1 class="text-center font-medium text-6xl mx-8">Selecciona tu mascota</h1>
+        </div>          
+
+        <div class="p-6 flex items-center justify-center gap-8">
+            <img src="/images/dog_pixelart.png" class="m-auto block my-16" @onclick="@(() => selectPet("dog"))" />
+            <img src="/images/cat_pixelart.png" class="m-auto block my-16" @onclick="@(() => selectPet("cat"))" />
+        </div>
+    </div>
+}
+
+@if (isNewAccountPopupVisible)
+{
+    <div class="fixed inset-0 backdrop-blur-sm bg-white/30 flex items-center justify-center z-[10002]">
+        <div class="bg-white rounded-2xl shadow-lg w-9/12">
+            <div class="p-3 flex justify-between">
+                <span></span>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6" @onclick="@(() => selectPet(""))">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                </svg>
+            </div>
+
+            <div>
+                <h1 class="text-center font-medium text-2xl">Nueva mascota</h1>
+            </div>
+
+            <div class="p-6">
+                <img src="@($"/images/{petSelected}_pixelart.png")" class="m-auto block my-8" />
+
+                <EditForm Model="newMascotaData" OnValidSubmit="HandleValidSubmit">
+                    <DataAnnotationsValidator />
+                    <ValidationSummary />
+
+                    <InputText id="mascota" @bind-Value="newMascotaData.Nombre" placeholder="Nombre de la mascota" class="bg-gray-100 p-2 rounded-md text-center" />
+
+                    <InputText id="amo" @bind-Value="newAmoData.Nombre" placeholder="Nombre del/la dueño/a" class="bg-gray-100 p-2 rounded-md text-center mt-2" />
+
+                    <button class="block w-full relative p-[0.3em] mt-8 text-lg" type="submit">
+                        <svg class="button__shape w-full" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+                            <path class="button__path" d="M0,0 C0,-5 100,-5 100,0 C105,0 105,100 100,100 C100,105 0,105 0,100 C-5,100 -5,0 0,0 z" />
+                        </svg>
+                        <span class="block relative text-center text-white">
+                            Guardar
+                        </span>
+                    </button>
+                </EditForm>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    private MascotaData newMascotaData = new MascotaData();
+    private AmoData newAmoData = new AmoData();
+
+    private bool isPetPopupVisible { get; set; }
+
+    private bool isNewAccountPopupVisible = false;
+    private string petSelected { get; set; }
+
+    protected override void OnInitialized()
+    {
+        NavigatorService.NavigateTo("HomePage");
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await ViewModel.LoadDataAsync();
+
+        if (ViewModel != null && ViewModel.Amos != null)
+        {
+            isPetPopupVisible = ViewModel.Amos.Count == 0;
+        }
+    }
+
+    protected void TogglePetPopup()
+    {
+        isPetPopupVisible = !isPetPopupVisible;
+    }
+
+    protected void selectPet(string animal)
+    {
+        petSelected = animal;
+        isNewAccountPopupVisible = !isNewAccountPopupVisible;
+    }
+
+    private async Task HandleValidSubmit()
+    {
+        newAmoData = new AmoData
+            {
+                Nombre = newAmoData.Nombre
+            };
+
+        await ViewModel.AddAmoAsync(newAmoData);
+
+        newMascotaData = new MascotaData
+            {
+                Animal = petSelected,
+                Nombre = newMascotaData.Nombre,
+                Vida = 100,
+            };
+
+
+        var success = await ViewModel.AddMascotaAsync(newMascotaData);
+        if (success)
+        {
+            newMascotaData = new MascotaData();
+            newAmoData = new AmoData();
+        }
+    }
+}
