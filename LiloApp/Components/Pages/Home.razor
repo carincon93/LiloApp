@@ -7,7 +7,10 @@
 <div class="top-12 relative">
     <h1 class="text-5xl font-semibold text-center mb-8">¿Qué deseas hacer hoy?</h1>
 
-    <img src="/images/cat_pixelart.png" class="m-auto block my-16" />
+    @if (petSelected != null)
+    {
+        <img src=@($"/images/{petSelected}_pixelart.png") class="m-auto block my-16" />
+    }
 
     <ul class="space-y-8 px-8">
         <li>
@@ -118,6 +121,7 @@
         if (ViewModel != null && ViewModel.Amos != null)
         {
             isPetPopupVisible = ViewModel.Amos.Count == 0;
+            petSelected = ViewModel.Mascotas.First().Animal;
         }
     }
 

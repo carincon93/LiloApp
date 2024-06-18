@@ -33,7 +33,11 @@
             <div class="px-6 py-2 flex bg-gray-100">
                 <div>
                     <img src="/images/pig_pixelart.png" class="w-14 mx-auto" />
-                    <img src="/images/cat_pixelart.png" class="w-10 mt-2 mx-auto" />
+
+                    @if (petSelected != null)
+                    {
+                        <img src=@($"/images/{petSelected}_pixelart.png") class="w-10 mt-2 mx-auto" />
+                    }
                 </div>
                 <div class="flex flex-col justify-center">
                     <p class="text-left ml-6 leading-4 -mt-1"><strong>10x</strong><br /> Cerditos completados</p>
@@ -55,6 +59,7 @@
 @code {
     private bool isPopupVisible = false;
     private string Nombre { get; set; }
+    private string petSelected { get; set; }
 
     protected override void OnInitialized()
     {
@@ -68,6 +73,7 @@
         if (ViewModel != null && ViewModel.Amos != null)
         {
             Nombre = ViewModel.Amos.First().Nombre;
+            petSelected = ViewModel.Mascotas.First().Animal;
         }
     }
 
