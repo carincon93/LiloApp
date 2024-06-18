@@ -4,7 +4,7 @@
 @inject LiloApp.ViewModels.MainViewModel ViewModel
 @using LiloApp.Data
 
-<h1 class="text-5xl font-medium my-12 mx-10 text-center text-white">Mapa de sueños</h1>
+<h1 class="text-5xl font-medium my-12 mx-10 text-center text-white select-none">Calendario de sueños</h1>
 
 <div class="grid h-full w-full grid-cols-2 gap-4">
    @if (ViewModel.Dreams == null)
@@ -15,7 +15,9 @@
     {
         @foreach (var dream in ViewModel.Dreams)
         {
-             <button @onclick="@(() => ToggleMonthsPopup(@dream.Title, dream.Id))" class="w-full flex bg-white h-32 items-center justify-center font-medium rounded-xl shadow-xl">@dream.Title</button>
+            <button @onclick="@(() => ToggleMonthsPopup(@dream.Titulo, dream.Id))" class="w-full flex bg-white h-32 items-center justify-center font-medium rounded-xl shadow-xl">
+                <span class="active:blur-none @(dream.EsPrivado ? "blur-sm" : "") select-none">@dream.Titulo</span>
+            </button>
         }
     }
 </div>
@@ -43,7 +45,7 @@
             </div>
 
             <div>
-                <h1 class="text-center font-medium text-2xl">Nuevo sueño</h1>
+                <h1 class="text-center font-medium text-2xl select-none">Nuevo sueño</h1>
             </div>
 
             <div class="p-6">
@@ -51,7 +53,14 @@
                     <DataAnnotationsValidator />
                     <ValidationSummary />
 
-                    <InputText id="dream" @bind-Value="newDreamData.Title" placeholder="Nombre del sueño" class="bg-gray-100 p-2 rounded-md text-center" />
+                    <InputText id="dream" @bind-Value="newDreamData.Titulo" placeholder="Nombre del sueño" class="bg-gray-100 p-2 rounded-md text-center" />
+
+                    <label class="flex items-center mt-4 text-xs">
+                        <div class="mr-2">
+                            <InputCheckbox @bind-Value="newDreamData.EsPrivado" />
+                        </div>
+                        Seleccione este ítem si quiere que el sueño sea privado
+                    </label>
 
                     <button class="block w-full relative p-[0.3em] mt-8 text-lg" type="submit">
                         <svg class="button__shape w-full" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
@@ -79,7 +88,7 @@
             </div>
 
             <div>
-                <h1 class="text-center font-medium text-2xl">Seleccione un mes</h1>
+                <h1 class="text-center font-medium text-2xl select-none">Seleccione un mes</h1>
             </div>
 
             <div class="p-6 grid grid-cols-2 gap-4">
