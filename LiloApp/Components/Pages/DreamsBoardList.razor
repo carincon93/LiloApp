@@ -83,19 +83,23 @@
             </div>
 
             <div class="p-6 grid grid-cols-2 gap-4">
-                <NavLink href="@($"/dreams-board/list/{Dreamparam}/1/{Dreamidparam}")" class="block w-full shadow p-2">Enero</NavLink>
-                <NavLink href="@($"/dreams-board/list/{Dreamparam}/2/{Dreamidparam}")" class="block w-full shadow p-2">Febrero</NavLink>
-                <NavLink href="@($"/dreams-board/list/{Dreamparam}/3/{Dreamidparam}")" class="block w-full shadow p-2">Marzo</NavLink>
-                <NavLink href="@($"/dreams-board/list/{Dreamparam}/4/{Dreamidparam}")" class="block w-full shadow p-2">Abril</NavLink>
-                <NavLink href="@($"/dreams-board/list/{Dreamparam}/5/{Dreamidparam}")" class="block w-full shadow p-2">Mayo</NavLink>
-                <NavLink href="@($"/dreams-board/list/{Dreamparam}/6/{Dreamidparam}")" class="block w-full shadow p-2">Junio</NavLink>
-                <NavLink href="@($"/dreams-board/list/{Dreamparam}/7/{Dreamidparam}")" class="block w-full shadow p-2">Julio</NavLink>
-                <NavLink href="@($"/dreams-board/list/{Dreamparam}/8/{Dreamidparam}")" class="block w-full shadow p-2">Agosto</NavLink>
-                <NavLink href="@($"/dreams-board/list/{Dreamparam}/9/{Dreamidparam}")" class="block w-full shadow p-2">Septiembre</NavLink>
-                <NavLink href="@($"/dreams-board/list/{Dreamparam}/10/{Dreamidparam}")" class="block w-full shadow p-2">Octubre</NavLink>
-                <NavLink href="@($"/dreams-board/list/{Dreamparam}/11/{Dreamidparam}")" class="block w-full shadow p-2">Noviembre</NavLink>
-                <NavLink href="@($"/dreams-board/list/{Dreamparam}/12/{Dreamidparam}")" class="block w-full shadow p-2">Diciembre</NavLink>
+                <NavLink href="@($"/dreams-board/list/{Dreamparam}/1/{Dreamidparam}")" class="block w-full shadow p-2 rounded-xl">Enero</NavLink>
+                <NavLink href="@($"/dreams-board/list/{Dreamparam}/2/{Dreamidparam}")" class="block w-full shadow p-2 rounded-xl">Febrero</NavLink>
+                <NavLink href="@($"/dreams-board/list/{Dreamparam}/3/{Dreamidparam}")" class="block w-full shadow p-2 rounded-xl">Marzo</NavLink>
+                <NavLink href="@($"/dreams-board/list/{Dreamparam}/4/{Dreamidparam}")" class="block w-full shadow p-2 rounded-xl">Abril</NavLink>
+                <NavLink href="@($"/dreams-board/list/{Dreamparam}/5/{Dreamidparam}")" class="block w-full shadow p-2 rounded-xl">Mayo</NavLink>
+                <NavLink href="@($"/dreams-board/list/{Dreamparam}/6/{Dreamidparam}")" class="block w-full shadow p-2 rounded-xl">Junio</NavLink>
+                <NavLink href="@($"/dreams-board/list/{Dreamparam}/7/{Dreamidparam}")" class="block w-full shadow p-2 rounded-xl">Julio</NavLink>
+                <NavLink href="@($"/dreams-board/list/{Dreamparam}/8/{Dreamidparam}")" class="block w-full shadow p-2 rounded-xl">Agosto</NavLink>
+                <NavLink href="@($"/dreams-board/list/{Dreamparam}/9/{Dreamidparam}")" class="block w-full shadow p-2 rounded-xl">Septiembre</NavLink>
+                <NavLink href="@($"/dreams-board/list/{Dreamparam}/10/{Dreamidparam}")" class="block w-full shadow p-2 rounded-xl">Octubre</NavLink>
+                <NavLink href="@($"/dreams-board/list/{Dreamparam}/11/{Dreamidparam}")" class="block w-full shadow p-2 rounded-xl">Noviembre</NavLink>
+                <NavLink href="@($"/dreams-board/list/{Dreamparam}/12/{Dreamidparam}")" class="block w-full shadow p-2 rounded-xl">Diciembre</NavLink>
             </div>
+
+            <hr />
+
+            <button class="text-center bg-red-100 p-4 w-full text-red-600 rounded-b-2xl" @onclick="@(() => HandleDeleteSubmit(ViewModel.Dreams.Find(value => value.Id == Dreamidparam)))">Eliminar</button>
         </div>
     </div>
 }
@@ -137,7 +141,17 @@
         if (success)
         {
             ToggleNewDreamPopup();
-            newDreamData = new DreamData(); // Reset the form
+            newDreamData = new DreamData();
+        }
+    }
+
+    private async Task HandleDeleteSubmit(DreamData dreamData)
+    {
+        var success = await ViewModel.DeleteDreamAsync(dreamData);
+        if (success)
+        {
+            ToggleMonthsPopup("", 0);
+            newDreamData = new DreamData();
         }
     }
 }

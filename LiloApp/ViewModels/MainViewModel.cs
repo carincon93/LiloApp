@@ -96,8 +96,18 @@ namespace LiloApp.ViewModels
 			}
 			return success;
 		}
+        
+		public async Task<bool> DeleteDreamAsync(DreamData newDream)
+        {
+            var success = await _dreamService.DeleteDreamAsync(newDream) > 0;
+            if (success)
+            {
+                Dreams = await _dreamService.GetDreamsAsync();
+            }
+            return success;
+        }
 
-		public async Task<bool> AddDreamCalendarAsync(DreamCalendarData newDreamCalendar)
+        public async Task<bool> AddDreamCalendarAsync(DreamCalendarData newDreamCalendar)
 		{
 			var success = await _dreamCalendarService.SaveDreamCalendarAsync(newDreamCalendar) > 0;
 			if (success)
