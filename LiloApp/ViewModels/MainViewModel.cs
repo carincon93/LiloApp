@@ -13,6 +13,7 @@ namespace LiloApp.ViewModels
 		private readonly PetService _petService;
 		private readonly OwnerService _ownerService;
 		private readonly ExerciseService _exerciseService;
+		private readonly TrainingSessionService _trainingSessionService;
 
 		private List<DreamData> _dreams;
 		private List<DreamCalendarData> _dreamCalendar;
@@ -20,7 +21,8 @@ namespace LiloApp.ViewModels
 		private List<PetData> _pets;
 		private List<OwnerData> _owners;
 		private List<ExerciseData> _exercises;
-
+		private List<TrainingSessionData> _trainingSessions;
+		
 		public List<DreamData> Dreams
 		{
 			get => _dreams;
@@ -79,7 +81,17 @@ namespace LiloApp.ViewModels
 			}
 		}
 
-		public MainViewModel(DreamService dreamService, DreamCalendarService dreamCalendarService, MuscleGroupService grupoMuscularService, PetService petService, OwnerService ownerService, ExerciseService exerciseService)
+		public List<TrainingSessionData> TrainingSessions
+		{
+			get => _trainingSessions;
+			set
+			{
+				_trainingSessions = value;
+				OnPropertyChanged();
+			}
+		}
+
+		public MainViewModel(DreamService dreamService, DreamCalendarService dreamCalendarService, MuscleGroupService grupoMuscularService, PetService petService, OwnerService ownerService, ExerciseService exerciseService, TrainingSessionService trainingSessionService)
 		{
 			_dreamService = dreamService;
 			_dreamCalendarService = dreamCalendarService;
@@ -87,6 +99,7 @@ namespace LiloApp.ViewModels
 			_petService = petService;
 			_ownerService = ownerService;
 			_exerciseService = exerciseService;
+			_trainingSessionService = trainingSessionService;
 
 			LoadDataAsync().ConfigureAwait(false);
 		}
@@ -99,7 +112,8 @@ namespace LiloApp.ViewModels
 			Pets = await _petService.GetPetAsync();
 			Owners = await _ownerService.GetOwnerAsync();
 			Exercises = await _exerciseService.GetExerciseAsync();
-		}
+			TrainingSessions = await _trainingSessionService.GetTrainingSessionAsync();
+        }
 
 		public async Task<bool> AddDreamAsync(DreamData newDream)
 		{
@@ -157,6 +171,16 @@ namespace LiloApp.ViewModels
 			if (success)
 			{
 				Exercises = await _exerciseService.GetExerciseAsync();
+			}
+			return success;
+		}
+
+		public async Task<bool> AddTrainingSessionAsync(TrainingSessionData newTrainingSession)
+		{
+			var success = await _trainingSessionService.SaveTrainingSessionAsync(newTrainingSession) > 0;
+			if (success)
+			{
+				TrainingSessions = await _trainingSessionService.GetTrainingSessionAsync();
 			}
 			return success;
 		}

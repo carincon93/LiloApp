@@ -41,6 +41,7 @@ namespace LiloApp
 			builder.Services.AddSingleton<PetService>();
 			builder.Services.AddSingleton<OwnerService>();
 			builder.Services.AddSingleton<ExerciseService>();
+			builder.Services.AddSingleton<TrainingSessionService>();
 			builder.Services.AddSingleton<MainViewModel>();
 
             //builder.Services.AddSingleton<HttpClient>();
