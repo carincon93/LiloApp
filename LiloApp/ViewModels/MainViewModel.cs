@@ -111,9 +111,9 @@ namespace LiloApp.ViewModels
 			return success;
 		}
 
-        public async Task<bool> DeleteDreamAsync(DreamData newDream)
+        public async Task<bool> DeleteDreamAsync(DreamData dreamData)
         {
-            var success = await _dreamService.DeleteDreamAsync(newDream) > 0;
+            var success = await _dreamService.DeleteDreamAsync(dreamData) > 0;
             if (success)
             {
                 Dreams = await _dreamService.GetDreamsAsync();
@@ -144,6 +144,16 @@ namespace LiloApp.ViewModels
 		public async Task<bool> AddExerciseAsync(ExerciseData newExercise)
 		{
 			var success = await _exerciseService.SaveExerciseAsync(newExercise) > 0;
+			if (success)
+			{
+				Exercises = await _exerciseService.GetExerciseAsync();
+			}
+			return success;
+		}
+
+		public async Task<bool> DeleteExerciseAsync(ExerciseData exerciseData)
+		{
+			var success = await _exerciseService.DeleteExerciseAsync(exerciseData) > 0;
 			if (success)
 			{
 				Exercises = await _exerciseService.GetExerciseAsync();
