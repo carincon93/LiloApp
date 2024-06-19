@@ -5,7 +5,7 @@
 @using LiloApp.Data
 @using System.Globalization
 
-<h2 class="font-medium text-5xl text-center my-10 text-white mx-10 select-none active:blur-none @(ViewModel.Dreams.Find(value => value.Titulo == Dreamparam && value.EsPrivado == true) != null ? "blur-md" : "")">@Dreamparam</h2>
+<h2 class="font-medium text-5xl text-center my-10 text-white mx-10 select-none active:blur-none @(ViewModel.Dreams.Find(item => item.Titulo == Dreamparam && item.EsPrivado == true) != null ? "blur-md" : "")">@Dreamparam</h2>
 
 <div class="rounded-md shadow-inner shadow-white p-4 select-none" style="background-color: rgba(71, 56, 133, 0.6);">
 	<h2 class="text-center font-medium text-3xl text-white/50 mt-2"><span class="capitalize">@MonthName</span> de @Year</h2>
@@ -22,7 +22,7 @@
 				{
 					<div class="text-transparent p-3">NA</div>
 				}
-				<div class="text-[#251555] p-3 font-medium @(ViewModel.DreamCalendar.Find(value => value.DreamId == int.Parse(Dreamidparam) && value.NumeroDia == day && value.NumeroMes == int.Parse(Monthparam)) != null ? "bg-orange-200" : "")" @onclick="@(() => ToggleDayPopup(@Monthparam, day, @Dreamidparam))">@day</div>
+				<div class="text-[#251555] p-3 font-medium @(ViewModel.DreamCalendar.Find(item => item.DreamId == int.Parse(Dreamidparam) && item.NumeroDia == day && item.NumeroMes == int.Parse(Monthparam)) != null ? "bg-orange-200" : "")" @onclick="@(() => ToggleDayPopup(@Monthparam, day, @Dreamidparam))">@day</div>
 				indexSundays++;
 			}
 		</div>
@@ -37,7 +37,7 @@
 				{
 					<div class="text-transparent p-3">NA</div>
 				}
-				<div class="text-[#251555] p-3 font-medium @(ViewModel.DreamCalendar.Find(value => value.DreamId == int.Parse(Dreamidparam) && value.NumeroDia == day && value.NumeroMes == int.Parse(Monthparam)) != null ? "bg-orange-200" : "")" @onclick="@(() => ToggleDayPopup(@Monthparam, day, @Dreamidparam))">@day</div>
+				<div class="text-[#251555] p-3 font-medium @(ViewModel.DreamCalendar.Find(item => item.DreamId == int.Parse(Dreamidparam) && item.NumeroDia == day && item.NumeroMes == int.Parse(Monthparam)) != null ? "bg-orange-200" : "")" @onclick="@(() => ToggleDayPopup(@Monthparam, day, @Dreamidparam))">@day</div>
 				indexMondays++;
 			}
 		</div>
@@ -52,7 +52,7 @@
 				{
 					<div class="text-transparent p-3">NA</div>
 				}
-				<div class="text-[#251555] p-3 font-medium @(ViewModel.DreamCalendar.Find(value => value.DreamId == int.Parse(Dreamidparam) && value.NumeroDia == day && value.NumeroMes == int.Parse(Monthparam)) != null ? "bg-orange-200" : "")" @onclick="@(() => ToggleDayPopup(@Monthparam, day, @Dreamidparam))">@day</div>
+				<div class="text-[#251555] p-3 font-medium @(ViewModel.DreamCalendar.Find(item => item.DreamId == int.Parse(Dreamidparam) && item.NumeroDia == day && item.NumeroMes == int.Parse(Monthparam)) != null ? "bg-orange-200" : "")" @onclick="@(() => ToggleDayPopup(@Monthparam, day, @Dreamidparam))">@day</div>
 				indexTuesdays++;
 			}
 		</div>
@@ -67,7 +67,7 @@
 				{
 					<div class="text-transparent p-3">NA</div>
 				}
-				<div class="text-[#251555] p-3 font-medium @(ViewModel.DreamCalendar.Find(value => value.DreamId == int.Parse(Dreamidparam) && value.NumeroDia == day && value.NumeroMes == int.Parse(Monthparam)) != null ? "bg-orange-200" : "")" @onclick="@(() => ToggleDayPopup(@Monthparam, day, @Dreamidparam))">@day</div>
+				<div class="text-[#251555] p-3 font-medium @(ViewModel.DreamCalendar.Find(item => item.DreamId == int.Parse(Dreamidparam) && item.NumeroDia == day && item.NumeroMes == int.Parse(Monthparam)) != null ? "bg-orange-200" : "")" @onclick="@(() => ToggleDayPopup(@Monthparam, day, @Dreamidparam))">@day</div>
 				indexWednesdays++;
 			}
 		</div>
@@ -82,7 +82,7 @@
 				{
 					<div class="text-transparent p-3">NA</div>
 				}
-				<div class="text-[#251555] p-3 font-medium @(ViewModel.DreamCalendar.Find(value => value.DreamId == int.Parse(Dreamidparam) && value.NumeroDia == day && value.NumeroMes == int.Parse(Monthparam)) != null ? "bg-orange-200" : "")" @onclick="@(() => ToggleDayPopup(@Monthparam, day, @Dreamidparam))">@day</div>
+				<div class="text-[#251555] p-3 font-medium @(ViewModel.DreamCalendar.Find(item => item.DreamId == int.Parse(Dreamidparam) && item.NumeroDia == day && item.NumeroMes == int.Parse(Monthparam)) != null ? "bg-orange-200" : "")" @onclick="@(() => ToggleDayPopup(@Monthparam, day, @Dreamidparam))">@day</div>
 				indexThursdays++;
 			}
 		</div>
@@ -97,7 +97,7 @@
 				{
 					<div class="text-transparent p-3">NA</div>
 				}
-				<div class="text-[#251555] p-3 font-medium @(ViewModel.DreamCalendar.Find(value => value.DreamId == int.Parse(Dreamidparam) && value.NumeroDia == day && value.NumeroMes == int.Parse(Monthparam)) != null ? "bg-orange-200" : "")" @onclick="@(() => ToggleDayPopup(@Monthparam, day, @Dreamidparam))">@day</div>
+				<div class="text-[#251555] p-3 font-medium @(ViewModel.DreamCalendar.Find(item => item.DreamId == int.Parse(Dreamidparam) && item.NumeroDia == day && item.NumeroMes == int.Parse(Monthparam)) != null ? "bg-orange-200" : "")" @onclick="@(() => ToggleDayPopup(@Monthparam, day, @Dreamidparam))">@day</div>
 				indexFridays++;
 			}
 		</div>
@@ -108,7 +108,7 @@
 			}
 			@foreach (var day in SaturdaysNumbers)
 			{
-				<div class="text-[#251555] p-3 font-medium @(ViewModel.DreamCalendar.Find(value => value.DreamId == int.Parse(Dreamidparam) && value.NumeroDia == day && value.NumeroMes == int.Parse(Monthparam)) != null ? "bg-orange-200" : "")" @onclick="@(() => ToggleDayPopup(@Monthparam, day, @Dreamidparam))">@day</div>
+				<div class="text-[#251555] p-3 font-medium @(ViewModel.DreamCalendar.Find(item => item.DreamId == int.Parse(Dreamidparam) && item.NumeroDia == day && item.NumeroMes == int.Parse(Monthparam)) != null ? "bg-orange-200" : "")" @onclick="@(() => ToggleDayPopup(@Monthparam, day, @Dreamidparam))">@day</div>
 				indexStaurdays++;
 			}
 		</div>
