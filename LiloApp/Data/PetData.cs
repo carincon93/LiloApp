@@ -11,12 +11,12 @@ namespace LiloApp.Data
 		public int Id { get; set; }
 
 		[Column("animal")]
-		public string Animal { get; set; }
+		public string Animal { get; set; } = string.Empty;
 
-		[Column("name")]
-		public string Name { get; set; }
+        [Column("name")]
+		public string Name { get; set; } = string.Empty;
 
-		[Column("life")]
+        [Column("life")]
 		public int Life { get; set; }
     }
 }

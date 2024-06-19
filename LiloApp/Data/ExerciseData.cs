@@ -11,9 +11,9 @@ namespace LiloApp.Data
 		public int Id { get; set; }
 
 		[Column("name")]
-		public string Name { get; set; }
+		public string Name { get; set; } = string.Empty;
 
-		[Column("muscleGroupId")]
+        [Column("muscleGroupId")]
 		public int MuscleGroupId { get; set; }
 	}
 }

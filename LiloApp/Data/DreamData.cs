@@ -10,10 +10,10 @@ namespace LiloApp.Data
         [Column("id")]
         public int Id { get; set; }
         
-        [Column("titulo")]
-        public string Titulo { get; set; }
+        [Column("title")]
+        public string Title { get; set; } = string.Empty;
 
-        [Column("esPrivado")]
-        public bool EsPrivado { get; set; }
+        [Column("isPrivate")]
+        public bool IsPrivate { get; set; }
     }
 }
