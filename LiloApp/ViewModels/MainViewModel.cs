@@ -9,17 +9,19 @@ namespace LiloApp.ViewModels
 	{
 		private readonly DreamService _dreamService;
 		private readonly DreamCalendarService _dreamCalendarService;
-		private readonly GrupoMuscularService _grupoMuscularService;
-		private readonly MascotaService _mascotaService;
-		private readonly AmoService _amoService;
+		private readonly MuscleGroupService _muscleGroupService;
+		private readonly PetService _petService;
+		private readonly OwnerService _ownerService;
+		private readonly ExerciseService _exerciseService;
 
-        private List<DreamData> _dreams;
+		private List<DreamData> _dreams;
 		private List<DreamCalendarData> _dreamCalendar;
-		private List<GrupoMuscularData> _gruposMusculares;
-		private List<MascotaData> _mascotas;
-		private List<AmoData> _amos;
+		private List<MuscleGroupData> _muscleGroups;
+		private List<PetData> _pets;
+		private List<OwnerData> _owners;
+		private List<ExerciseData> _exercises;
 
-        public List<DreamData> Dreams
+		public List<DreamData> Dreams
 		{
 			get => _dreams;
 			set
@@ -39,53 +41,65 @@ namespace LiloApp.ViewModels
 			}
 		}
 
-		public List<GrupoMuscularData> GruposMusculares
+		public List<MuscleGroupData> MuscleGroups
 		{
-			get => _gruposMusculares;
+			get => _muscleGroups;
 			set
 			{
-				_gruposMusculares = value;
+                _muscleGroups = value;
 				OnPropertyChanged();
 			}
 		}
-        public List<MascotaData> Mascotas
+        public List<PetData> Pets
         {
-            get => _mascotas;
+            get => _pets;
             set
             {
-                _mascotas = value;
+                _pets = value;
                 OnPropertyChanged();
             }
         }
-        public List<AmoData> Amos
+        public List<OwnerData> Owners
         {
-            get => _amos;
+            get => _owners;
             set
             {
-                _amos = value;
+                _owners = value;
                 OnPropertyChanged();
             }
         }
 
-        public MainViewModel(DreamService dreamService, DreamCalendarService dreamCalendarService, GrupoMuscularService grupoMuscularService, MascotaService mascotaService, AmoService amoService)
+		public List<ExerciseData> Exercises
+		{
+			get => _exercises;
+			set
+			{
+				_exercises = value;
+				OnPropertyChanged();
+			}
+		}
+
+		public MainViewModel(DreamService dreamService, DreamCalendarService dreamCalendarService, MuscleGroupService grupoMuscularService, PetService petService, OwnerService ownerService, ExerciseService exerciseService)
 		{
 			_dreamService = dreamService;
 			_dreamCalendarService = dreamCalendarService;
-			_grupoMuscularService = grupoMuscularService;
-			_mascotaService = mascotaService;
-			_amoService = amoService;
+			_muscleGroupService = grupoMuscularService;
+			_petService = petService;
+			_ownerService = ownerService;
+			_exerciseService = exerciseService;
 
-            LoadDataAsync().ConfigureAwait(false);
+			LoadDataAsync().ConfigureAwait(false);
 		}
 
 		public async Task LoadDataAsync()
 		{
 			Dreams = await _dreamService.GetDreamsAsync();
 			DreamCalendar = await _dreamCalendarService.GetDreamCalendarAsync();
-			GruposMusculares = await _grupoMuscularService.GetGrupoMuscularAsync();
-			Mascotas = await _mascotaService.GetMascotaAsync();
-			Amos = await _amoService.GetAmoAsync();
-        }
+			MuscleGroups = await _muscleGroupService.GetMuscleGroupAsync();
+			Pets = await _petService.GetPetAsync();
+			Owners = await _ownerService.GetOwnerAsync();
+			Exercises = await _exerciseService.GetExerciseAsync();
+		}
 
 		public async Task<bool> AddDreamAsync(DreamData newDream)
 		{
@@ -117,32 +131,42 @@ namespace LiloApp.ViewModels
 			return success;
 		}
 
-		public async Task<bool> AddGrupoMuscularAsync(GrupoMuscularData newGrupoMuscular)
+		public async Task<bool> AddMuscleGroupAsync(MuscleGroupData newMuscleGroup)
 		{
-			var success = await _grupoMuscularService.SaveGrupoMuscularAsync(newGrupoMuscular) > 0;
+			var success = await _muscleGroupService.SaveMuscleGroupAsync(newMuscleGroup) > 0;
 			if (success)
 			{
-				GruposMusculares = await _grupoMuscularService.GetGrupoMuscularAsync();
+				MuscleGroups = await _muscleGroupService.GetMuscleGroupAsync();
 			}
 			return success;
 		}
 
-        public async Task<bool> AddMascotaAsync(MascotaData newMascota)
+		public async Task<bool> AddExerciseAsync(ExerciseData newExercise)
+		{
+			var success = await _exerciseService.SaveExerciseAsync(newExercise) > 0;
+			if (success)
+			{
+				Exercises = await _exerciseService.GetExerciseAsync();
+			}
+			return success;
+		}
+
+		public async Task<bool> AddPetAsync(PetData newPet)
         {
-			var success = await _mascotaService.SaveMascotaAsync(newMascota) > 0;
+			var success = await _petService.SavePetAsync(newPet) > 0;
             if (success)
             {
-                Mascotas = await _mascotaService.GetMascotaAsync();
+                Pets = await _petService.GetPetAsync();
             }
             return success;
         }
 
-        public async Task<bool> AddAmoAsync(AmoData newAmo)
+        public async Task<bool> AddOwnerAsync(OwnerData newOwner)
         {
-            var success = await _amoService.SaveAmoAsync(newAmo) > 0;
+            var success = await _ownerService.SaveOwnerAsync(newOwner) > 0;
             if (success)
             {
-                Amos = await _amoService.GetAmoAsync();
+                Owners = await _ownerService.GetOwnerAsync();
             }
             return success;
         }
