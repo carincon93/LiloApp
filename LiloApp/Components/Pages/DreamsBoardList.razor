@@ -117,7 +117,7 @@
 
             <hr />
 
-            <button class="text-center bg-red-100 p-4 w-full text-red-600 rounded-b-2xl" @onclick="@(() => HandleDeleteSubmit(ViewModel.Dreams.Find(value => value.Id == Dreamidparam)))">Eliminar</button>
+            <button class="text-center bg-red-100 p-4 w-full text-red-600 rounded-b-2xl" @onclick="@(() => HandleDeleteSubmit(ViewModel.Dreams.Find(item => item.Id == Dreamidparam)))">Eliminar</button>
         </div>
     </div>
 }
