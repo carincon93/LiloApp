@@ -609,6 +609,18 @@ body {
   top: 3rem;
 }
 
+.-top-10 {
+  top: -2.5rem;
+}
+
+.-top-20 {
+  top: -5rem;
+}
+
+.-top-40 {
+  top: -10rem;
+}
+
 .z-\[10000\] {
   z-index: 10000;
 }
@@ -894,14 +906,6 @@ body {
   background-repeat: no-repeat;
 }
 
-.fill-gray-200 {
-  fill: #e5e7eb;
-}
-
-.fill-gray-400 {
-  fill: #9ca3af;
-}
-
 .fill-gray-300 {
   fill: #d1d5db;
 }
@@ -1105,6 +1109,10 @@ body {
   --tw-backdrop-blur: blur(4px);
   -webkit-backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
           backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
+}
+
+.focus-within\:-top-40:focus-within {
+  top: -10rem;
 }
 
 .active\:blur-none:active {
