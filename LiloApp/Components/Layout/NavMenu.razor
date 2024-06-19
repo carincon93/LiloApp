@@ -1,6 +1,7 @@
 ﻿@inject LiloApp.Services.NavigatorService NavigatorService
 @inject IServiceProvider ServiceProvider
 @inject LiloApp.ViewModels.MainViewModel ViewModel
+@using LiloApp.Data
 
 <div class="@(NavigatorService.CurrentPage == "WorkoutPage" || NavigatorService.CurrentPage == "DreamsBoardPage" || NavigatorService.CurrentPage == "EnglishPage" ? "hidden" : "")">
     <div class="p-2 relative z-[9999] flex items-center justify-between select-none">
@@ -34,14 +35,17 @@
                 <div>
                     <img src="/images/pig_pixelart.png" class="w-14 mx-auto" />
 
-                    @if (petSelected != "")
+                    @if (petSelected != null)
                     {
-                        <img src=@($"/images/{petSelected}_pixelart.png") class="w-10 mt-2 mx-auto select-none" />
+                        <img src=@($"/images/{petSelected.Animal}_pixelart.png") class="w-10 mt-2 mx-auto select-none" />
                     }
                 </div>
                 <div class="flex flex-col justify-center">
                     <p class="text-left ml-6 leading-4 -mt-1"><strong>10x</strong><br /> Cerditos completados</p>
-                    <p class="text-left ml-6 mt-8">¡Tengo hambre!</p>
+                    @if (petSelected != null)
+                    {
+                        <p class="text-left ml-6 mt-8">❤️ @petSelected.Life de vida</p>
+                    }
                 </div>
             </div>
             <hr />
@@ -59,7 +63,7 @@
 @code {
     private bool isPopupVisible = false;
     private string Name { get; set; } = "Loading";
-    private string petSelected { get; set; }
+    private PetData petSelected { get; set; }
 
     protected override void OnInitialized()
     {
@@ -73,7 +77,7 @@
         if (ViewModel != null && ViewModel.Owners != null && ViewModel.Pets != null)
         {
             Name = ViewModel.Owners.Count == 0 ? "" : ViewModel.Owners.First().Name;
-            petSelected = ViewModel.Pets.Count == 0 ? "" : ViewModel.Pets.First().Animal;
+            petSelected = ViewModel.Pets.Count == 0 ? null : ViewModel.Pets.First();
         }
     }
 

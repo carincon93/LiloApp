@@ -9,7 +9,7 @@
 
     @if (petSelected != null)
     {
-        <img src=@($"/images/{petSelected}_pixelart.png") class="m-auto block my-16 select-none" />
+        <img src=@($"/images/{petSelected.Animal}_pixelart.png") class="m-auto block my-16 select-none" />
     }
 
     <ul class="space-y-8 px-8">
@@ -103,11 +103,11 @@
 @code {
     private PetData newPetData = new PetData();
     private OwnerData newOwnerData = new OwnerData();
+    private PetData petSelected { get; set; }
 
     private bool isPetPopupVisible { get; set; }
 
     private bool isNewAccountPopupVisible = false;
-    private string petSelected { get; set; } = string.Empty;
 
     protected override void OnInitialized()
     {
@@ -121,7 +121,7 @@
         if (ViewModel != null && ViewModel.Owners != null && ViewModel.Pets != null)
         {
             isPetPopupVisible = ViewModel.Owners.Count == 0;
-            petSelected = ViewModel.Pets.Count == 0 ? "" : ViewModel.Pets.First().Animal;
+            petSelected = ViewModel.Pets.Count == 0 ? null : ViewModel.Pets.First();
         }
     }
 
@@ -132,7 +132,7 @@
 
     protected void selectPet(string animal)
     {
-        petSelected = animal;
+        petSelected.Animal = animal;
         isNewAccountPopupVisible = !isNewAccountPopupVisible;
     }
 
@@ -147,7 +147,7 @@
 
         newPetData = new PetData
             {
-                Animal = petSelected,
+                Animal = petSelected.Animal,
                 Name = newPetData.Name,
                 Life = 100,
             };
