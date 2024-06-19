@@ -4,34 +4,37 @@
 @inject LiloApp.ViewModels.MainViewModel ViewModel
 @using LiloApp.Data
 
-<h1 class="text-5xl font-medium my-16 text-center select-none">Mi progreso físico</h1>
 
-@if (petSelected != null)
-{
-    <div class="relative">
-        <img src=@($"/images/{petSelected.Animal}_pixelart.png") class="m-auto block my-16 select-none" />
-        <img src=@($"/images/dumbbell_pixelart.png") class="m-auto block my-16 select-none w-20 absolute inset-0 left-10" />
-    </div>
-}
+<div class="wrapper">
+    <h1 class="text-5xl font-medium mb-16 text-center select-none">Mi progreso físico</h1>
 
-<article class="px-2 mt-10">
-    <h3 class="text-3xl font-medium my-4 select-none">¿Sabías qué?</h3>
+    @if (petSelected != null)
+    {
+        <div class="relative">
+            <img src=@($"/images/{petSelected.Animal}_pixelart.png") class="m-auto block my-16 select-none" />
+            <img src=@($"/images/dumbbell_pixelart.png") class="m-auto block my-16 select-none w-20 absolute inset-0 left-10" />
+        </div>
+    }
 
-    <p class="text-left text-[16px] leading-5 select-none">
-        Ser constante en ir al gimnasio y hacer ejercicio transforma tu vida de maneras increíbles. No solo mejoras tu salud física, fortaleciendo músculos y aumentando tu resistencia, sino que también beneficias tu bienestar mental. La disciplina diaria reduce el estrés, mejora el estado de ánimo y fomenta una actitud positiva. Además, alcanzar tus metas de fitness te proporciona una sensación de logro y confianza. ¡Recuerda, cada pequeño paso en el gimnasio te acerca a una vida más saludable y feliz!
-    </p>
+    <article class="px-2 mt-10">
+        <h3 class="text-3xl font-medium my-4 select-none">¿Sabías qué?</h3>
 
-    <div class="px-6">
-        <NavLink href="/workout/muscle-groups" class="block relative p-[0.7em] text-lg mt-8">
-            <svg class="button__shape w-full" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-                <path class="button__path" d="M0,0 C0,-5 100,-5 100,0 C105,0 105,100 100,100 C100,105 0,105 0,100 C-5,100 -5,0 0,0 z" />
-            </svg>
-            <span class="block relative text-center text-white">
-                Empezar rutina
-            </span>
-        </NavLink>
-    </div>
-</article>
+        <p class="text-left text-[16px] leading-5 select-none">
+            Ser constante en ir al gimnasio y hacer ejercicio transforma tu vida de maneras increíbles. No solo mejoras tu salud física, fortaleciendo músculos y aumentando tu resistencia, sino que también beneficias tu bienestar mental. La disciplina diaria reduce el estrés, mejora el estado de ánimo y fomenta una actitud positiva. Además, alcanzar tus metas de fitness te proporciona una sensación de logro y confianza. ¡Recuerda, cada pequeño paso en el gimnasio te acerca a una vida más saludable y feliz!
+        </p>
+
+        <div class="px-6">
+            <NavLink href="/workout/muscle-groups" class="block relative p-[0.7em] text-lg mt-8">
+                <svg class="button__shape w-full" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+                    <path class="button__path" d="M0,0 C0,-5 100,-5 100,0 C105,0 105,100 100,100 C100,105 0,105 0,100 C-5,100 -5,0 0,0 z" />
+                </svg>
+                <span class="block relative text-center text-white">
+                    Empezar rutina
+                </span>
+            </NavLink>
+        </div>
+    </article>
+</div>
 
 @code {
     private PetData petSelected { get; set; }

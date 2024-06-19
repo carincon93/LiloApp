@@ -4,7 +4,7 @@
 @inject LiloApp.ViewModels.MainViewModel ViewModel
 @using LiloApp.Data
 
-<div class="top-12 relative">
+<div class="top-12 relative wrapper">
     <h1 class="text-5xl font-semibold text-center mb-8 select-none">¿Qué deseas hacer hoy?</h1>
 
     @if (Pet != null)
@@ -44,61 +44,61 @@
             </NavLink>
         </li>
     </ul>
-</div>
 
-@if (isPetPopupVisible)
-{
-    <div class="bg-white w-full fixed inset-0 z-[10001] flex flex-col items-center justify-center">
-        <div>
-            <h1 class="text-center font-medium text-6xl mx-8 select-none">Selecciona tu mascota</h1>
-        </div>
-
-        <div class="p-6 flex items-center justify-center gap-8">
-            <img src="/images/dog_pixelart.png" class="m-auto block my-16" @onclick="@(() => selectPet("dog"))" />
-            <img src="/images/cat_pixelart.png" class="m-auto block my-16" @onclick="@(() => selectPet("cat"))" />
-        </div>
-    </div>
-}
-
-@if (isNewAccountPopupVisible)
-{
-    <div class="fixed inset-0 backdrop-blur-sm bg-white/30 flex items-center justify-center z-[10002] focus-within:-top-40">
-        <div class="bg-white rounded-2xl shadow-lg w-9/12">
-            <div class="p-3 flex justify-between">
-                <span></span>
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6" @onclick="@(() => selectPet(""))">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
-                </svg>
-            </div>
-
+    @if (isPetPopupVisible)
+    {
+        <div class="bg-white w-full fixed inset-0 z-[10001] flex flex-col items-center justify-center">
             <div>
-                <h1 class="text-center font-medium text-2xl select-none">Nueva mascota</h1>
+                <h1 class="text-center font-medium text-6xl mx-8 select-none">Selecciona tu mascota</h1>
             </div>
 
-            <div class="p-6">
-                <img src="@($"/images/{petSelected}_pixelart.png")" class="m-auto block my-8 select-none" />
-
-                <EditForm Model="newPetData" OnValidSubmit="HandleValidSubmit">
-                    <DataAnnotationsValidator />
-                    <ValidationSummary />
-
-                    <InputText id="pet" @bind-Value="newPetData.Name" placeholder="Nombre de la mascota" class="bg-gray-100 p-2 rounded-md text-center" />
-
-                    <InputText id="owner" @bind-Value="newOwnerData.Name" placeholder="Nombre del/la dueño/a" class="bg-gray-100 p-2 rounded-md text-center mt-2" />
-
-                    <button class="block w-full relative p-[0.3em] mt-8 text-lg" type="submit">
-                        <svg class="button__shape w-full" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-                            <path class="button__path" d="M0,0 C0,-5 100,-5 100,0 C105,0 105,100 100,100 C100,105 0,105 0,100 C-5,100 -5,0 0,0 z" />
-                        </svg>
-                        <span class="block relative text-center text-white">
-                            Guardar
-                        </span>
-                    </button>
-                </EditForm>
+            <div class="p-6 flex items-center justify-center gap-8">
+                <img src="/images/dog_pixelart.png" class="m-auto block my-16" @onclick="@(() => selectPet("dog"))" />
+                <img src="/images/cat_pixelart.png" class="m-auto block my-16" @onclick="@(() => selectPet("cat"))" />
             </div>
         </div>
-    </div>
-}
+    }
+
+    @if (isNewAccountPopupVisible)
+    {
+        <div class="fixed inset-0 backdrop-blur-sm bg-white/30 flex items-center justify-center z-[10002] focus-within:-top-40">
+            <div class="bg-white rounded-2xl shadow-lg w-9/12">
+                <div class="p-3 flex justify-between">
+                    <span></span>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6" @onclick="@(() => selectPet(""))">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                    </svg>
+                </div>
+
+                <div>
+                    <h1 class="text-center font-medium text-2xl select-none">Nueva mascota</h1>
+                </div>
+
+                <div class="p-6">
+                    <img src="@($"/images/{petSelected}_pixelart.png")" class="m-auto block my-8 select-none" />
+
+                    <EditForm Model="newPetData" OnValidSubmit="HandleValidSubmit">
+                        <DataAnnotationsValidator />
+                        <ValidationSummary />
+
+                        <InputText id="pet" @bind-Value="newPetData.Name" placeholder="Nombre de la mascota" class="bg-gray-100 p-2 rounded-md text-center" />
+
+                        <InputText id="owner" @bind-Value="newOwnerData.Name" placeholder="Nombre del/la dueño/a" class="bg-gray-100 p-2 rounded-md text-center mt-2" />
+
+                        <button class="block w-full relative p-[0.3em] mt-8 text-lg" type="submit">
+                            <svg class="button__shape w-full" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+                                <path class="button__path" d="M0,0 C0,-5 100,-5 100,0 C105,0 105,100 100,100 C100,105 0,105 0,100 C-5,100 -5,0 0,0 z" />
+                            </svg>
+                            <span class="block relative text-center text-white">
+                                Guardar
+                            </span>
+                        </button>
+                    </EditForm>
+                </div>
+            </div>
+        </div>
+    }
+</div>
 
 @code {
     private PetData newPetData = new PetData();

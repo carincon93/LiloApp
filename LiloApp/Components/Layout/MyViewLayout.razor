@@ -1,0 +1,15 @@
+﻿@inherits TransitionableLayoutComponent
+
+<div class="@transitioningClass min-h-[100vh]">
+    @Body
+</div>
+
+@code {
+    // private string transitioningDirection => Transition.Backwards ? "Up" : "Down";
+
+    private string transitioningClass => Transition.FirstRender ? "" : Transition.IntoView
+        ? (!Transition.Backwards ? $"slide-left" : "slide-right")
+     : (!Transition.Backwards ? $"slide-left-out" : "slide-right-out");
+}
+
+

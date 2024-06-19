@@ -1,6 +1,17 @@
 ﻿<Router AppAssembly="@typeof(MauiProgram).Assembly">
     <Found Context="routeData">
-        <RouteView RouteData="@routeData" DefaultLayout="@typeof(Layout.MainLayout)" />
-        <FocusOnNavigate RouteData="@routeData" Selector="h1" />
+        <LayoutView Layout="@typeof(Layout.MainLayout)">
+            <TransitionableRoutePrimary RouteData="@routeData" ForgetStateOnTransition="true">
+                <TransitionableRouteView DefaultLayout="@typeof(Layout.MyViewLayout)" />
+            </TransitionableRoutePrimary>
+            <TransitionableRouteSecondary RouteData="@routeData" ForgetStateOnTransition="true">
+                <TransitionableRouteView DefaultLayout="@typeof(Layout.MyViewLayout)" />
+            </TransitionableRouteSecondary>
+        </LayoutView>
     </Found>
+    <NotFound>
+        <LayoutView Layout="@typeof(Layout.MainLayout)">
+            <p>Sorry, there's nothing at this address.</p>
+        </LayoutView>
+    </NotFound>
 </Router>
