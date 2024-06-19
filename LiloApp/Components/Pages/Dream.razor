@@ -15,7 +15,6 @@
 			<div class="text-white/50 font-medium">D</div>
 			@{
 				int indexSundays = 0;
-				List<DreamCalendarData> daysWithData = ViewModel.DreamCalendar.Select(dream => new DreamCalendarData { NumeroDia = dream.NumeroDia }).ToList();
 			}
 			@foreach (var day in SundaysNumbers)
 			{
@@ -191,7 +190,6 @@
 	public int daySelected { get; set; }
 	public int monthSelected { get; set; }
 	public int dreamSelected { get; set; }
-	public string SelectedValue { get; set; }
 
 	public List<int> MondaysNumbers { get; private set; }
 	public List<int> TuesdaysNumbers { get; private set; }
@@ -285,7 +283,6 @@
 		daySelected = day;
 		monthSelected = int.Parse(monthNumber);
 		dreamSelected = int.Parse(dreamId);
-		SelectedValue = "";
 	}
 
 	protected override async Task OnInitializedAsync()
