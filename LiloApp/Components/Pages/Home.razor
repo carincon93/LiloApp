@@ -7,9 +7,9 @@
 <div class="top-12 relative">
     <h1 class="text-5xl font-semibold text-center mb-8 select-none">¿Qué deseas hacer hoy?</h1>
 
-    @if (petSelected != null)
+    @if (Pet != null)
     {
-        <img src=@($"/images/{petSelected.Animal}_pixelart.png") class="m-auto block my-16 select-none" />
+        <img src=@($"/images/{Pet.Animal}_pixelart.png") class="m-auto block my-16 select-none" />
     }
 
     <ul class="space-y-8 px-8">
@@ -103,7 +103,8 @@
 @code {
     private PetData newPetData = new PetData();
     private OwnerData newOwnerData = new OwnerData();
-    private PetData petSelected { get; set; }
+    private PetData Pet { get; set; }
+    private string petSelected { get; set; }
 
     private bool isPetPopupVisible { get; set; }
 
@@ -121,7 +122,7 @@
         if (ViewModel != null && ViewModel.Owners != null && ViewModel.Pets != null)
         {
             isPetPopupVisible = ViewModel.Owners.Count == 0;
-            petSelected = ViewModel.Pets.Count == 0 ? null : ViewModel.Pets.First();
+            Pet = ViewModel.Pets.Count == 0 ? null : ViewModel.Pets.First();
         }
     }
 
@@ -132,7 +133,7 @@
 
     protected void selectPet(string animal)
     {
-        petSelected.Animal = animal;
+        petSelected = animal;
         isNewAccountPopupVisible = !isNewAccountPopupVisible;
     }
 
@@ -147,7 +148,7 @@
 
         newPetData = new PetData
             {
-                Animal = petSelected.Animal,
+                Animal = petSelected,
                 Name = newPetData.Name,
                 Life = 100,
             };

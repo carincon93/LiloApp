@@ -1,6 +1,16 @@
 ﻿@page "/workout/muscle-groups"
 
 @inject LiloApp.Services.NavigatorService NavigatorService
+@inject LiloApp.ViewModels.MainViewModel ViewModel
+@using LiloApp.Data
+
+@if (petSelected != null)
+{
+	<div class="relative">
+		<img src=@($"/images/{petSelected.Animal}_pixelart.png") class="m-auto block my-16 select-none" />
+		<img src=@($"/images/dumbbell_pixelart.png") class="m-auto block my-16 select-none w-20 absolute inset-0 left-10" />
+	</div>
+}
 
 <article class="mt-10">
 	<div class="grid h-full w-full grid-cols-2 gap-4">
@@ -14,8 +24,20 @@
 </article>
 
 @code {
+	private PetData petSelected { get; set; }
+
 	protected override void OnInitialized()
 	{
 		NavigatorService.NavigateTo("MuscleGroupsPage");
+	}
+
+	protected override async Task OnInitializedAsync()
+	{
+		await ViewModel.LoadDataAsync();
+
+		if (ViewModel != null && ViewModel.Owners != null && ViewModel.Pets != null)
+		{
+			petSelected = ViewModel.Pets.Count == 0 ? null : ViewModel.Pets.First();
+		}
 	}
 }

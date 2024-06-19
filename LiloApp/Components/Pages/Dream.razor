@@ -134,14 +134,22 @@
 				<h1 class="text-center font-medium text-2xl px-4 select-none">@daySelected de @MonthName de @Year</h1>
 			</div>
 
-			@foreach (var dreamCalendar in ViewModel.DreamCalendar)
+			@{
+				// Filter and order DreamCalendar records
+				var filteredDreams = ViewModel.DreamCalendar
+				.Where(dreamCalendar =>
+				dreamCalendar.Year == Year &&
+				dreamCalendar.DayNumber == daySelected &&
+				dreamCalendar.DreamId == int.Parse(Dreamidparam))
+				.OrderByDescending(dreamCalendar => dreamCalendar.Id) // Assuming Id is a unique identifier or timestamp
+				.Take(4) // Take only the last 4 records
+				.ToList();
+			}
+			@foreach (var dreamCalendar in filteredDreams)
 			{
-				@if (dreamCalendar.Year == Year && dreamCalendar.DayNumber == daySelected && dreamCalendar.DreamId == int.Parse(Dreamidparam))
-				{
-					<div class="text-xs px-6 pt-2">
-						@dreamCalendar.Comment
-					</div>
-				}
+				<div class="text-xs px-6 pt-2 mt-2">
+					· Comentario: @dreamCalendar.Comment
+				</div>
 			}
 
 			<div class="p-6">

@@ -31,7 +31,7 @@
 
 @if (isNewExercisePopupVisible)
 {
-	<div class="fixed inset-0 backdrop-blur-sm bg-white/30 flex items-center justify-center z-[10000] focus-within:-top-40">
+	<div class="fixed inset-0 backdrop-blur-sm bg-white/30 flex items-center justify-center z-[10002] focus-within:-top-40">
         <div class="bg-white rounded-2xl shadow-lg w-9/12">
 
             <div class="p-3 flex justify-between">
@@ -42,7 +42,9 @@
             </div>
 
             <div>
-				<h1 class="text-center font-medium text-2xl select-none">Nuevo ejercicio</h1>
+				<h1 class="text-center font-medium text-2xl select-none">
+					@(exerciseId != null ? "Editar" : "Nuevo") ejercicio
+				</h1>
             </div>
   
             <div class="p-6">
@@ -81,8 +83,11 @@
 				</svg>
 			</div>
 
-			<div>
-				<h1 class="text-center font-medium text-2xl px-4 select-none">@titleExercise</h1>
+			<div class="flex justify-center items-center">
+				<h1 class="text-center font-medium select-none text-2xl mb-2">@titleExercise</h1>
+				<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5 -mt-3 ml-4" @onclick="() => ToggleNewExercisePopup()">
+					<path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" />
+				</svg>
 			</div>
 
 			@{
@@ -206,7 +211,7 @@
 	{
 		newExerciseData = new ExerciseData
 			{
-				Id = 0,
+				Id = exerciseId != null ? exerciseId : 0,
 				Name = newExerciseData.Name,
 				MuscleGroupId = int.Parse(Musclegroupidparam)
 			};
@@ -215,6 +220,8 @@
 		if (success)
 		{
 			ToggleNewExercisePopup();
+			isExercisePopupVisible = false;
+			exerciseId = 0;
 			newExerciseData = new ExerciseData();
 		}
 	}
