@@ -13,16 +13,16 @@ namespace LiloApp.Data
 		[Column("dreamId")]
 		public int DreamId { get; set; }
 
-		[Column("numeroDia")]
-		public int NumeroDia { get; set; }
+		[Column("dayNumber")]
+		public int DayNumber { get; set; }
 
-		[Column("numeroMes")]
-		public int NumeroMes { get; set; }
+		[Column("monthNumber")]
+		public int MonthNumber { get; set; }
 
 		[Column("year")]
 		public int Year { get; set; }
 
-		[Column("comentario")]
-		public string Comentario { get; set; }
+		[Column("comment")]
+		public string Comment { get; set; } = string.Empty;
 	}
 }
