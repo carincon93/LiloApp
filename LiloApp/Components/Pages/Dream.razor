@@ -5,7 +5,7 @@
 @using LiloApp.Data
 @using System.Globalization
 
-<h2 class="font-medium text-5xl text-center my-10 text-white mx-10 select-none active:blur-none @(ViewModel.Dreams.Find(item => item.Titulo == Dreamparam && item.EsPrivado == true) != null ? "blur-md" : "")">@Dreamparam</h2>
+<h2 class="font-medium text-5xl text-center my-10 text-white mx-10 select-none active:blur-none @(ViewModel.Dreams.Find(item => item.Title == Dreamparam && item.IsPrivate == true) != null ? "blur-md" : "")">@Dreamparam</h2>
 
 <div class="rounded-md shadow-inner shadow-white p-4 select-none" style="background-color: rgba(71, 56, 133, 0.6);">
 	<h2 class="text-center font-medium text-3xl text-white/50 mt-2"><span class="capitalize">@MonthName</span> de @Year</h2>
@@ -22,7 +22,7 @@
 				{
 					<div class="text-transparent p-3">NA</div>
 				}
-				<div class="text-[#251555] p-3 font-medium @(ViewModel.DreamCalendar.Find(item => item.DreamId == int.Parse(Dreamidparam) && item.NumeroDia == day && item.NumeroMes == int.Parse(Monthparam)) != null ? "bg-orange-200" : "")" @onclick="@(() => ToggleDayPopup(@Monthparam, day, @Dreamidparam))">@day</div>
+				<div class="text-[#251555] p-3 font-medium @(ViewModel.DreamCalendar.Find(item => item.DreamId == int.Parse(Dreamidparam) && item.DayNumber == day && item.MonthNumber == int.Parse(Monthparam)) != null ? "bg-orange-200" : "")" @onclick="@(() => ToggleDayPopup(@Monthparam, day, @Dreamidparam))">@day</div>
 				indexSundays++;
 			}
 		</div>
@@ -37,7 +37,7 @@
 				{
 					<div class="text-transparent p-3">NA</div>
 				}
-				<div class="text-[#251555] p-3 font-medium @(ViewModel.DreamCalendar.Find(item => item.DreamId == int.Parse(Dreamidparam) && item.NumeroDia == day && item.NumeroMes == int.Parse(Monthparam)) != null ? "bg-orange-200" : "")" @onclick="@(() => ToggleDayPopup(@Monthparam, day, @Dreamidparam))">@day</div>
+				<div class="text-[#251555] p-3 font-medium @(ViewModel.DreamCalendar.Find(item => item.DreamId == int.Parse(Dreamidparam) && item.DayNumber == day && item.MonthNumber == int.Parse(Monthparam)) != null ? "bg-orange-200" : "")" @onclick="@(() => ToggleDayPopup(@Monthparam, day, @Dreamidparam))">@day</div>
 				indexMondays++;
 			}
 		</div>
@@ -52,7 +52,7 @@
 				{
 					<div class="text-transparent p-3">NA</div>
 				}
-				<div class="text-[#251555] p-3 font-medium @(ViewModel.DreamCalendar.Find(item => item.DreamId == int.Parse(Dreamidparam) && item.NumeroDia == day && item.NumeroMes == int.Parse(Monthparam)) != null ? "bg-orange-200" : "")" @onclick="@(() => ToggleDayPopup(@Monthparam, day, @Dreamidparam))">@day</div>
+				<div class="text-[#251555] p-3 font-medium @(ViewModel.DreamCalendar.Find(item => item.DreamId == int.Parse(Dreamidparam) && item.DayNumber == day && item.MonthNumber == int.Parse(Monthparam)) != null ? "bg-orange-200" : "")" @onclick="@(() => ToggleDayPopup(@Monthparam, day, @Dreamidparam))">@day</div>
 				indexTuesdays++;
 			}
 		</div>
@@ -67,7 +67,7 @@
 				{
 					<div class="text-transparent p-3">NA</div>
 				}
-				<div class="text-[#251555] p-3 font-medium @(ViewModel.DreamCalendar.Find(item => item.DreamId == int.Parse(Dreamidparam) && item.NumeroDia == day && item.NumeroMes == int.Parse(Monthparam)) != null ? "bg-orange-200" : "")" @onclick="@(() => ToggleDayPopup(@Monthparam, day, @Dreamidparam))">@day</div>
+				<div class="text-[#251555] p-3 font-medium @(ViewModel.DreamCalendar.Find(item => item.DreamId == int.Parse(Dreamidparam) && item.DayNumber == day && item.MonthNumber == int.Parse(Monthparam)) != null ? "bg-orange-200" : "")" @onclick="@(() => ToggleDayPopup(@Monthparam, day, @Dreamidparam))">@day</div>
 				indexWednesdays++;
 			}
 		</div>
@@ -82,7 +82,7 @@
 				{
 					<div class="text-transparent p-3">NA</div>
 				}
-				<div class="text-[#251555] p-3 font-medium @(ViewModel.DreamCalendar.Find(item => item.DreamId == int.Parse(Dreamidparam) && item.NumeroDia == day && item.NumeroMes == int.Parse(Monthparam)) != null ? "bg-orange-200" : "")" @onclick="@(() => ToggleDayPopup(@Monthparam, day, @Dreamidparam))">@day</div>
+				<div class="text-[#251555] p-3 font-medium @(ViewModel.DreamCalendar.Find(item => item.DreamId == int.Parse(Dreamidparam) && item.DayNumber == day && item.MonthNumber == int.Parse(Monthparam)) != null ? "bg-orange-200" : "")" @onclick="@(() => ToggleDayPopup(@Monthparam, day, @Dreamidparam))">@day</div>
 				indexThursdays++;
 			}
 		</div>
@@ -97,7 +97,7 @@
 				{
 					<div class="text-transparent p-3">NA</div>
 				}
-				<div class="text-[#251555] p-3 font-medium @(ViewModel.DreamCalendar.Find(item => item.DreamId == int.Parse(Dreamidparam) && item.NumeroDia == day && item.NumeroMes == int.Parse(Monthparam)) != null ? "bg-orange-200" : "")" @onclick="@(() => ToggleDayPopup(@Monthparam, day, @Dreamidparam))">@day</div>
+				<div class="text-[#251555] p-3 font-medium @(ViewModel.DreamCalendar.Find(item => item.DreamId == int.Parse(Dreamidparam) && item.DayNumber == day && item.MonthNumber == int.Parse(Monthparam)) != null ? "bg-orange-200" : "")" @onclick="@(() => ToggleDayPopup(@Monthparam, day, @Dreamidparam))">@day</div>
 				indexFridays++;
 			}
 		</div>
@@ -108,7 +108,7 @@
 			}
 			@foreach (var day in SaturdaysNumbers)
 			{
-				<div class="text-[#251555] p-3 font-medium @(ViewModel.DreamCalendar.Find(item => item.DreamId == int.Parse(Dreamidparam) && item.NumeroDia == day && item.NumeroMes == int.Parse(Monthparam)) != null ? "bg-orange-200" : "")" @onclick="@(() => ToggleDayPopup(@Monthparam, day, @Dreamidparam))">@day</div>
+				<div class="text-[#251555] p-3 font-medium @(ViewModel.DreamCalendar.Find(item => item.DreamId == int.Parse(Dreamidparam) && item.DayNumber == day && item.MonthNumber == int.Parse(Monthparam)) != null ? "bg-orange-200" : "")" @onclick="@(() => ToggleDayPopup(@Monthparam, day, @Dreamidparam))">@day</div>
 				indexStaurdays++;
 			}
 		</div>
@@ -120,7 +120,7 @@
 
 @if (isDayPopupVisible)
 {
-	<div class="fixed inset-0 backdrop-blur-sm bg-white/30 flex items-center justify-center z-[10000]">
+	<div class="fixed inset-0 backdrop-blur-sm bg-white/30 flex items-center justify-center z-[10000] focus-within:-top-40">
 		<div class="bg-white rounded-2xl shadow-lg w-9/12">
 
 			<div class="p-3 flex justify-between">
@@ -136,10 +136,10 @@
 
 			@foreach (var dreamCalendar in ViewModel.DreamCalendar)
 			{
-				@if (dreamCalendar.Year == Year && dreamCalendar.NumeroDia == daySelected && dreamCalendar.DreamId == int.Parse(Dreamidparam))
+				@if (dreamCalendar.Year == Year && dreamCalendar.DayNumber == daySelected && dreamCalendar.DreamId == int.Parse(Dreamidparam))
 				{
 					<div class="text-xs px-6 pt-2">
-						@dreamCalendar.Comentario
+						@dreamCalendar.Comment
 					</div>
 				}
 			}
@@ -149,7 +149,7 @@
                     <DataAnnotationsValidator />
                     <ValidationSummary />
 
-					<InputTextArea name="comentario" @bind-Value="newDreamCalendarData.Comentario" class="bg-gray-100 p-2 rounded-md mt-2" placeholder="Ingrese un comentario" />
+					<InputTextArea name="comentario" @bind-Value="newDreamCalendarData.Comment" class="bg-gray-100 p-2 rounded-md mt-2" placeholder="Ingrese un comentario" />
 
                     <button class="block w-full relative p-[0.3em] mt-8 text-lg" type="submit">
                         <svg class="button__shape w-full" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
@@ -167,18 +167,18 @@
 
 @code {
 	[Parameter]
-	public string Dreamparam { get; set; }
+	public string Dreamparam { get; set; } = string.Empty;
 
 	[Parameter]
-	public string Dreamidparam { get; set; }
+	public string Dreamidparam { get; set; } = string.Empty;
 
 	[Parameter]
-	public string Monthparam { get; set; }
+	public string Monthparam { get; set; } = string.Empty;
 
-	public string FirstDayOfMonth { get; set; }
+	public string FirstDayOfMonth { get; set; } = string.Empty;
 	public int DaysInMonth { get; set; }
 	public int Year { get; set; }
-	public string MonthName { get; set; }
+	public string MonthName { get; set; } = string.Empty;
 	public int FirstMondayNumber { get; set; }
 	public int FirstTuesDayNumber { get; set; }
 	public int FirstWednesdayNumber { get; set; }
@@ -295,9 +295,9 @@
 		newDreamCalendarData = new DreamCalendarData
 			{
 				Year = DateTime.Now.Year,
-				NumeroMes = int.Parse(Monthparam),
-				NumeroDia = daySelected,
-				Comentario = newDreamCalendarData.Comentario,
+				MonthNumber = int.Parse(Monthparam),
+				DayNumber = daySelected,
+				Comment = newDreamCalendarData.Comment,
 				DreamId = int.Parse(Dreamidparam),
 			};
 
