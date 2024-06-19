@@ -14,11 +14,22 @@ namespace LiloApp
 
             if (Build.VERSION.SdkInt >= BuildVersionCodes.Lollipop)
             {
-                Window.SetStatusBarColor(Android.Graphics.Color.White);
+                Window.SetStatusBarColor(Android.Graphics.Color.Transparent);
 
                 if (Build.VERSION.SdkInt >= BuildVersionCodes.M)
                 {
-                    Window.DecorView.SystemUiVisibility = (StatusBarVisibility)SystemUiFlags.LightStatusBar;
+                    Window.DecorView.SystemUiVisibility = (StatusBarVisibility)(
+                        SystemUiFlags.LayoutStable
+                        | SystemUiFlags.LayoutFullscreen
+                        | SystemUiFlags.LightStatusBar // Para iconos oscuros en la barra de estado
+                    );
+                }
+                else
+                {
+                    Window.DecorView.SystemUiVisibility = (StatusBarVisibility)(
+                        SystemUiFlags.LayoutStable
+                        | SystemUiFlags.LayoutFullscreen
+                    );
                 }
             }
         }
