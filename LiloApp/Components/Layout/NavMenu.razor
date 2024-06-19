@@ -7,9 +7,9 @@
         <div class="text-left leading-6 text-[20px] @(NavigatorService.CurrentPage == "DreamsBoardListPage" || NavigatorService.CurrentPage == "DreamPage" ? "text-white" : "")">
             <small>¡Hola!</small>
             <br />
-            @if (Nombre != "")
+            @if (Name != "")
             {
-                <strong>@Nombre</strong>
+                <strong>@Name</strong>
             }
         </div>
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor" class="size-10 @(NavigatorService.CurrentPage == "DreamsBoardListPage" || NavigatorService.CurrentPage == "DreamPage" ? "text-white" : "text-purple-500")" @onclick="TogglePopup">
@@ -58,7 +58,7 @@
 
 @code {
     private bool isPopupVisible = false;
-    private string Nombre { get; set; } = "Cargando";
+    private string Name { get; set; } = "Loading";
     private string petSelected { get; set; }
 
     protected override void OnInitialized()
@@ -70,10 +70,10 @@
     {
         await ViewModel.LoadDataAsync();
 
-        if (ViewModel != null && ViewModel.Amos != null && ViewModel.Mascotas != null)
+        if (ViewModel != null && ViewModel.Owners != null && ViewModel.Pets != null)
         {
-            Nombre = ViewModel.Amos.Count == 0 ? "" : ViewModel.Amos.First().Nombre;
-            petSelected = ViewModel.Mascotas.Count == 0 ? "" : ViewModel.Mascotas.First().Animal;
+            Name = ViewModel.Owners.Count == 0 ? "" : ViewModel.Owners.First().Name;
+            petSelected = ViewModel.Pets.Count == 0 ? "" : ViewModel.Pets.First().Animal;
         }
     }
 
