@@ -167,16 +167,16 @@
                         Life = ViewModel.Pets.First().Life - (ViewModel.PetLife.First().Diff * 2)
                     };
                 await ViewModel.AddPetAsync(petData);
-
-                petLifeData = new PetLifeData
-                    {
-                        Id = 1,
-                        DayNumber = currentDate.Day,
-                        Diff = 1
-                    };
-
-                await ViewModel.AddPetLifeAsync(petLifeData);
             }
+
+            petLifeData = new PetLifeData
+                {
+                    Id = 1,
+                    DayNumber = currentDate.Day,
+                    Diff = 1
+                };
+
+            await ViewModel.AddPetLifeAsync(petLifeData);
         }
     }
 
