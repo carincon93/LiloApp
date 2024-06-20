@@ -21,11 +21,10 @@ namespace LiloApp
 
             #if DEBUG
                 builder.Logging.AddDebug();
-            #endif
+                builder.Services.AddBlazorWebViewDeveloperTools();
+             #endif
 
             builder.Services.AddMauiBlazorWebView();
-
-            builder.Services.AddBlazorWebViewDeveloperTools();
 
             builder.Services.AddSingleton<NavigatorService>();
 
