@@ -42,7 +42,8 @@ namespace LiloApp
 			builder.Services.AddSingleton<OwnerService>();
 			builder.Services.AddSingleton<ExerciseService>();
 			builder.Services.AddSingleton<TrainingSessionService>();
-			builder.Services.AddSingleton<MainViewModel>();
+			builder.Services.AddSingleton<PetLifeService>();
+            builder.Services.AddSingleton<MainViewModel>();
             builder.Services.AddScoped<BlazorTransitionableRoute.IRouteTransitionInvoker, BlazorTransitionableRoute.DefaultRouteTransitionInvoker>();
 
             //builder.Services.AddSingleton<HttpClient>();
