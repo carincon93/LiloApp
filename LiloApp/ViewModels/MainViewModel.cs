@@ -14,16 +14,18 @@ namespace LiloApp.ViewModels
 		private readonly OwnerService _ownerService;
 		private readonly ExerciseService _exerciseService;
 		private readonly TrainingSessionService _trainingSessionService;
+		private readonly PetLifeService _petLifeService;
 
-		private List<DreamData> _dreams;
+        private List<DreamData> _dreams;
 		private List<DreamCalendarData> _dreamCalendar;
 		private List<MuscleGroupData> _muscleGroups;
 		private List<PetData> _pets;
 		private List<OwnerData> _owners;
 		private List<ExerciseData> _exercises;
 		private List<TrainingSessionData> _trainingSessions;
-		
-		public List<DreamData> Dreams
+		private List<PetLifeData> _petLife;
+
+        public List<DreamData> Dreams
 		{
 			get => _dreams;
 			set
@@ -91,7 +93,17 @@ namespace LiloApp.ViewModels
 			}
 		}
 
-		public MainViewModel(DreamService dreamService, DreamCalendarService dreamCalendarService, MuscleGroupService grupoMuscularService, PetService petService, OwnerService ownerService, ExerciseService exerciseService, TrainingSessionService trainingSessionService)
+        public List<PetLifeData> PetLife
+        {
+            get => _petLife;
+            set
+            {
+                _petLife = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public MainViewModel(DreamService dreamService, DreamCalendarService dreamCalendarService, MuscleGroupService grupoMuscularService, PetService petService, OwnerService ownerService, ExerciseService exerciseService, TrainingSessionService trainingSessionService, PetLifeService petLifeService)
 		{
 			_dreamService = dreamService;
 			_dreamCalendarService = dreamCalendarService;
@@ -100,8 +112,9 @@ namespace LiloApp.ViewModels
 			_ownerService = ownerService;
 			_exerciseService = exerciseService;
 			_trainingSessionService = trainingSessionService;
+			_petLifeService = petLifeService;
 
-			LoadDataAsync().ConfigureAwait(false);
+            LoadDataAsync().ConfigureAwait(false);
 		}
 
 		public async Task LoadDataAsync()
@@ -113,6 +126,7 @@ namespace LiloApp.ViewModels
 			Owners = await _ownerService.GetOwnerAsync();
 			Exercises = await _exerciseService.GetExerciseAsync();
 			TrainingSessions = await _trainingSessionService.GetTrainingSessionAsync();
+			PetLife = await _petLifeService.GetPetLifeAsync();
         }
 
 		public async Task<bool> AddDreamAsync(DreamData newDream)
@@ -201,6 +215,16 @@ namespace LiloApp.ViewModels
             if (success)
             {
                 Owners = await _ownerService.GetOwnerAsync();
+            }
+            return success;
+        }
+
+        public async Task<bool> AddPetLifeAsync(PetLifeData newPetLife)
+        {
+            var success = await _petLifeService.SavePetLifeAsync(newPetLife) > 0;
+            if (success)
+            {
+                PetLife = await _petLifeService.GetPetLifeAsync();
             }
             return success;
         }
