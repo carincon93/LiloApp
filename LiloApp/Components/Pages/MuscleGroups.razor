@@ -4,7 +4,9 @@
 @inject LiloApp.ViewModels.MainViewModel ViewModel
 @using LiloApp.Data
 
-<div class="wrapper">
+<div>
+	<span class="blur-popup-wrapper fixed inset-0 backdrop-blur-sm bg-white/30 z-10 w-full h-full"></span>
+
 	@if (petSelected != null)
 	{
 		<div class="relative">

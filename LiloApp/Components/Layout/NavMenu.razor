@@ -1,10 +1,11 @@
 ﻿@inject LiloApp.Services.NavigatorService NavigatorService
 @inject IServiceProvider ServiceProvider
 @inject LiloApp.ViewModels.MainViewModel ViewModel
+@inject IJSRuntime JSRuntime
 @using LiloApp.Data
 
-<div class="@(NavigatorService.CurrentPage == "WorkoutPage" || NavigatorService.CurrentPage == "DreamsBoardPage" || NavigatorService.CurrentPage == "EnglishPage" ? "hidden" : "") sticky z-[9998] inset-0 mt-8">
-    <div class="p-2 relative z-[9999] flex items-center justify-between select-none">
+<div class="@(NavigatorService.CurrentPage == "WorkoutPage" || NavigatorService.CurrentPage == "DreamsBoardPage" || NavigatorService.CurrentPage == "EnglishPage" ? "hidden" : "") mt-6">
+    <div class="p-6 z-1 relative flex items-center justify-between select-none">
         <div class="text-left leading-6 text-[20px] @(NavigatorService.CurrentPage == "DreamsBoardListPage" || NavigatorService.CurrentPage == "DreamPage" ? "text-white" : "")">
             <small>¡Hola!</small>
             <br />
@@ -18,7 +19,7 @@
 
 @if (isPopupVisible)
 {
-    <div class="fixed inset-0 backdrop-blur-sm bg-white/30 flex items-center justify-center z-[10000]">
+    <div class="fixed inset-0 flex items-center justify-center z-[10000]">
         <div class="bg-white rounded-2xl shadow-lg w-9/12">
 
             <div class="p-3 flex justify-between">
@@ -125,6 +126,15 @@
         NavigatorService.OnPageChanged += UpdateState;
     }
 
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            // Ensure the class is removed on initial load
+            await JSRuntime.InvokeVoidAsync("removeBodyNoScroll");
+        }
+    }
+
     protected override async Task OnInitializedAsync()
     {
         DateTime currentDate = DateTime.Now;
@@ -190,12 +200,21 @@
         NavigatorService.OnPageChanged -= UpdateState;
     }
 
-    private void TogglePopup()
+    private async void TogglePopup()
     {
         isPopupVisible = !isPopupVisible;
+
+        if (isPopupVisible)
+        {
+            await JSRuntime.InvokeVoidAsync("addBodyNoScroll");
+        }
+        else
+        {
+            await JSRuntime.InvokeVoidAsync("removeBodyNoScroll");
+        }
     }
 
-    protected void TogglePetPopup()
+    protected  void TogglePetPopup()
     {
         isPetPopupVisible = !isPetPopupVisible;
     }

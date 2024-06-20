@@ -4,26 +4,26 @@
 @inject LiloApp.ViewModels.MainViewModel ViewModel
 @using LiloApp.Data
 
-<div class="wrapper">
-    <h1 class="text-5xl font-medium mb-16 text-center mx-4 select-none mt-8">¿Qué deseas hacer hoy?</h1>
+<div>
+    <h1 class="text-5xl font-medium text-center select-none mx-3">¿Qué deseas hacer hoy?</h1>
 
-    @if (Pet != null)
+    @if (ViewModel?.Pets != null && ViewModel?.Pets?.Count() > 0)
     {
         <div class="relative">
-            <img src=@($"/images/{Pet.Animal}_pixelart.png") class="m-auto block my-16 select-none" />
+            <img src=@($"/images/{ViewModel?.Pets?.First().Animal}_pixelart.png") class="m-auto block my-16 select-none" />
 
-            @if (Pet.Life > 50)
+            @if (ViewModel?.Pets?.First().Life > 50)
             {
                 <img src="/images/heart-emoji.png" class="absolute inset-0 mx-auto top-14 size-8 left-16" />
             }
-            else if (Pet.Life < 50)
+            else if (ViewModel?.Pets?.First().Life < 50)
             {
                 <img src="/images/Skull-3d-icon.png" class="absolute inset-0 mx-auto top-20 size-4 left-16" />
             }
         </div>
     }
 
-    <ul class="space-y-8 px-8">
+    <ul class="space-y-8">
         <li>
             <div class="block relative p-[0.7em] text-lg pointer-event-none">
                 <svg class="button__shape w-full fill-gray-300 pointer-event-none" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
@@ -71,10 +71,5 @@
     protected override async Task OnInitializedAsync()
     {
         await ViewModel.LoadDataAsync();
-
-        if (ViewModel != null && ViewModel.Owners != null && ViewModel.Pets != null)
-        {
-            Pet = ViewModel.Pets.Count == 0 ? null : ViewModel.Pets.First();
-        }
     }
 }

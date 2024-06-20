@@ -3,24 +3,41 @@
 @inject LiloApp.Services.NavigatorService NavigatorService
 @inject LiloApp.ViewModels.MainViewModel ViewModel
 @using LiloApp.Data
+@inject IJSRuntime JSRuntime
 
-<div class="wrapper">
-
+<div>
 	<h2 class="font-medium text-3xl text-center my-10 select-none">@Exerciseparam</h2>
 
-	<div class="grid h-full w-full grid-cols-2 gap-4">
+	<div>
 		@if (ViewModel.Exercises != null)
 		{
-			@foreach (var exercise in GetFilteredExercises())
-			{
-				<button @onclick="@(() => ToggleExercisePopup(exercise.Name, exercise.Id))" class="w-full flex bg-white h-32 items-center justify-center font-medium rounded-xl shadow-xl">
-					<span class="active:blur-none select-none">@exercise.Name</span>
-				</button>
-			}
+			<div class="grid h-full w-full grid-cols-2 gap-4">
+				@{
+					var buttonClasses = new[]
+					{
+						"row-span-2 h-48",
+						"h-20",
+						"row-span-2 h-48",
+						"row-span-2",
+						"h-20",
+						"col-span-2 h-20"
+					};
+
+					int index = 0;
+				}
+				@foreach (var exercise in GetFilteredExercises())
+				{
+					<button @onclick="@(() => ToggleExercisePopup(exercise.Name, exercise.Id))" class="flex items-center justify-center bg-white p-4 rounded-xl shadow-xl @buttonClasses[index]">
+						<span class="select-none">@exercise.Name</span>
+					</button>
+
+					index = (index + 1) % buttonClasses.Length;
+				}
+			</div>
 		}
 	</div>
 
-	<div class="p-6 mt-4">
+	<div class="mt-4">
 		<button class="block w-full relative p-[0.7em] text-lg" onclick="@(() => ToggleNewExercisePopup())">
 			<svg class="button__shape w-full" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
 				<path class="button__path" d="M0,0 C0,-5 100,-5 100,0 C105,0 105,100 100,100 C100,105 0,105 0,100 C-5,100 -5,0 0,0 z" />
@@ -33,7 +50,7 @@
 
 	@if (isNewExercisePopupVisible)
 	{
-		<div class="fixed inset-0 backdrop-blur-sm bg-white/30 flex items-center justify-center z-[10002] focus-within:-top-40">
+		<div class="fixed inset-0 flex items-center justify-center z-[10002] focus-within:-top-40">
 			<div class="bg-white rounded-2xl shadow-lg w-9/12">
 
 				<div class="p-3 flex justify-between">
@@ -72,7 +89,7 @@
 
 	@if (isExercisePopupVisible)
 	{
-		<div class="fixed inset-0 backdrop-blur-sm bg-white/30 flex items-center justify-center z-[10000] focus-within:-top-40">
+		<div class="fixed inset-0 flex items-center justify-center z-[10000] focus-within:-top-40">
 			<div class="bg-white rounded-2xl shadow-lg w-9/12">
 
 				<div class="p-3 flex justify-between">
@@ -164,6 +181,15 @@
 		await ViewModel.LoadDataAsync();
 	}
 
+	protected override async Task OnAfterRenderAsync(bool firstRender)
+	{
+		if (firstRender)
+		{
+			// Ensure the class is removed on initial load
+			await JSRuntime.InvokeVoidAsync("removeBodyNoScroll");
+		}
+	}
+
 	private List<ExerciseData> GetFilteredExercises()
 	{
 		if (int.TryParse(Musclegroupidparam, out int exerciseId))
@@ -199,16 +225,34 @@
 						.ToList();
 	}
 
-	private void ToggleNewExercisePopup()
+	private async void ToggleNewExercisePopup()
 	{
 		isNewExercisePopupVisible = !isNewExercisePopupVisible;
+
+		if (isNewExercisePopupVisible)
+		{
+			await JSRuntime.InvokeVoidAsync("addBodyNoScroll");
+		}
+		else
+		{
+			await JSRuntime.InvokeVoidAsync("removeBodyNoScroll");
+		}
 	}
 
-	private void ToggleExercisePopup(string excerciseName, int id)
+	private async void ToggleExercisePopup(string excerciseName, int id)
 	{
-		titleExercise = excerciseName;
 		isExercisePopupVisible = !isExercisePopupVisible;
+		titleExercise = excerciseName;
 		exerciseId = id;
+
+		if (isExercisePopupVisible)
+		{
+			await JSRuntime.InvokeVoidAsync("addBodyNoScroll");
+		}
+		else
+		{
+			await JSRuntime.InvokeVoidAsync("removeBodyNoScroll");
+		}
 	}
 
 	private async Task HandleValidSubmit()
