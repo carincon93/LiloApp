@@ -139,6 +139,7 @@
 </div>
 
 @code {
+	private PetData petData = new PetData();
 	private ExerciseData newExerciseData = new ExerciseData();
 	private TrainingSessionData newTrainingSession = new TrainingSessionData();
 
@@ -248,6 +249,15 @@
 		{
 			ToggleExercisePopup("", 0);
 			newTrainingSession = new TrainingSessionData();
+
+			petData = new PetData
+				{
+					Id = 1,
+					Animal = ViewModel.Pets.First().Animal,
+					Name = ViewModel.Pets.First().Name,
+					Life = ViewModel.Pets.First().Life + 0.1
+				};
+			await ViewModel.AddPetAsync(petData);
 		}
 	}
 
