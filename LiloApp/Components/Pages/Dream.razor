@@ -138,13 +138,13 @@
 				@{
 					// Filter and order DreamCalendar records
 					var filteredDreams = ViewModel.DreamCalendar
-					.Where(dreamCalendar =>
-					dreamCalendar.Year == Year &&
-					dreamCalendar.DayNumber == daySelected &&
-					dreamCalendar.DreamId == int.Parse(Dreamidparam))
-					.OrderByDescending(dreamCalendar => dreamCalendar.Id) // Assuming Id is a unique identifier or timestamp
-					.Take(4) // Take only the last 4 records
-					.ToList();
+						.Where(dreamCalendar =>
+							dreamCalendar.Year == Year &&
+							dreamCalendar.DayNumber == daySelected &&
+							dreamCalendar.DreamId == int.Parse(Dreamidparam))
+						.OrderByDescending(dreamCalendar => dreamCalendar.Id) // Assuming Id is a unique identifier or timestamp
+						.Take(4) // Take only the last 4 records
+						.ToList();
 				}
 				@foreach (var dreamCalendar in filteredDreams)
 				{
@@ -210,6 +210,7 @@
 	public List<int> SundaysNumbers { get; private set; }
 
 	private DreamCalendarData newDreamCalendarData;
+	private PetData petData;
 
 	protected override void OnInitialized()
 	{
@@ -316,6 +317,15 @@
         {
 			ToggleDayPopup("0", 0, "0");
             newDreamCalendarData = new DreamCalendarData();
+
+			petData = new PetData
+				{
+					Id = 1,
+					Animal = ViewModel.Pets.First().Animal,
+					Name = ViewModel.Pets.First().Name,
+					Life = ViewModel.Pets.First().Life + 0.2
+				};
+			await ViewModel.AddPetAsync(petData);
         }
     }
 }
