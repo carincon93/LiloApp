@@ -17,6 +17,6 @@ namespace LiloApp.Data
 		public string Name { get; set; } = string.Empty;
 
         [Column("life")]
-		public int Life { get; set; }
+		public double Life { get; set; }
     }
 }
