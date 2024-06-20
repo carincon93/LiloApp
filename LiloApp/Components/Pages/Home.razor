@@ -9,7 +9,18 @@
 
     @if (Pet != null)
     {
-        <img src=@($"/images/{Pet.Animal}_pixelart.png") class="m-auto block my-16 select-none" />
+        <div class="relative">
+            <img src=@($"/images/{Pet.Animal}_pixelart.png") class="m-auto block my-16 select-none" />
+
+            @if (Pet.Life > 50)
+            {
+                <img src="/images/heart-emoji.png" class="absolute inset-0 mx-auto top-14 size-8 left-16" />
+            }
+            else if (Pet.Life < 50)
+            {
+                <img src="/images/Skull-3d-icon.png" class="absolute inset-0 mx-auto top-20 size-4 left-16" />
+            }
+        </div>
     }
 
     <ul class="space-y-8 px-8">
