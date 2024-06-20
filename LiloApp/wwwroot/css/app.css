@@ -100,7 +100,7 @@ valid.modified:not([type=checkbox]) {
 }
 
 .wrapper {
-    height: 100vh;
+    max-height: 100vh;
     padding: 6em 1em 0 1em;
 }
 

@@ -605,6 +605,10 @@ body {
   position: relative;
 }
 
+.sticky {
+  position: sticky;
+}
+
 .inset-0 {
   inset: 0px;
 }
@@ -625,10 +629,6 @@ body {
   left: 2.5rem;
 }
 
-.top-12 {
-  top: 3rem;
-}
-
 .z-\[10000\] {
   z-index: 10000;
 }
@@ -643,6 +643,10 @@ body {
 
 .z-\[9999\] {
   z-index: 9999;
+}
+
+.z-\[9998\] {
+  z-index: 9998;
 }
 
 .col-span-2 {
@@ -707,20 +711,16 @@ body {
   margin-bottom: 2rem;
 }
 
-.-mt-1 {
-  margin-top: -0.25rem;
-}
-
 .-mt-3 {
   margin-top: -0.75rem;
 }
 
-.mb-2 {
-  margin-bottom: 0.5rem;
+.mb-16 {
+  margin-bottom: 4rem;
 }
 
-.mb-8 {
-  margin-bottom: 2rem;
+.mb-2 {
+  margin-bottom: 0.5rem;
 }
 
 .ml-4 {
@@ -733,6 +733,10 @@ body {
 
 .mr-2 {
   margin-right: 0.5rem;
+}
+
+.mt-1 {
+  margin-top: 0.25rem;
 }
 
 .mt-10 {
@@ -749,10 +753,6 @@ body {
 
 .mt-8 {
   margin-top: 2rem;
-}
-
-.mb-16 {
-  margin-bottom: 4rem;
 }
 
 .block {
@@ -808,10 +808,6 @@ body {
 
 .w-10 {
   width: 2.5rem;
-}
-
-.w-14 {
-  width: 3.5rem;
 }
 
 .w-20 {
@@ -1039,16 +1035,8 @@ body {
   font-weight: 500;
 }
 
-.font-semibold {
-  font-weight: 600;
-}
-
 .capitalize {
   text-transform: capitalize;
-}
-
-.leading-4 {
-  line-height: 1rem;
 }
 
 .leading-5 {
