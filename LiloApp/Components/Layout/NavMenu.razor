@@ -3,15 +3,12 @@
 @inject LiloApp.ViewModels.MainViewModel ViewModel
 @using LiloApp.Data
 
-<div class="@(NavigatorService.CurrentPage == "WorkoutPage" || NavigatorService.CurrentPage == "DreamsBoardPage" || NavigatorService.CurrentPage == "EnglishPage" ? "hidden" : "") mt-8">
+<div class="@(NavigatorService.CurrentPage == "WorkoutPage" || NavigatorService.CurrentPage == "DreamsBoardPage" || NavigatorService.CurrentPage == "EnglishPage" ? "hidden" : "") sticky z-[9998] inset-0 mt-8">
     <div class="p-2 relative z-[9999] flex items-center justify-between select-none">
         <div class="text-left leading-6 text-[20px] @(NavigatorService.CurrentPage == "DreamsBoardListPage" || NavigatorService.CurrentPage == "DreamPage" ? "text-white" : "")">
             <small>¡Hola!</small>
             <br />
-            @if (Name != "")
-            {
-                <strong>@Name</strong>
-            }
+            <strong>@(ViewModel != null && ViewModel?.Owners?.Count() == 0 ? "" : ViewModel?.Owners?.First().Name)</strong>
         </div>
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor" class="size-10 @(NavigatorService.CurrentPage == "DreamsBoardListPage" || NavigatorService.CurrentPage == "DreamPage" ? "text-white" : "text-purple-500")" @onclick="TogglePopup">
             <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
@@ -32,21 +29,16 @@
             </div>
 
             <div class="px-6 py-2 flex bg-gray-100">
-                <div>
-                    <img src="/images/pig_pixelart.png" class="w-14 mx-auto" />
-
-                    @if (petSelected != null)
-                    {
-                        <img src=@($"/images/{petSelected.Animal}_pixelart.png") class="w-10 mt-2 mx-auto select-none" />
-                    }
-                </div>
-                <div class="flex flex-col justify-center">
-                    <p class="text-left ml-6 leading-4 -mt-1"><strong>10x</strong><br /> Cerditos completados</p>
-                    @if (petSelected != null)
-                    {
-                        <p class="text-left ml-6 mt-8">❤️ @petSelected.Life de vida</p>
-                    }
-                </div>
+                @if (ViewModel?.Pets != null)
+                {
+                    <div>
+                        <img src=@($"/images/{ViewModel.Pets.First().Animal}_pixelart.png") class="w-10 mt-2 mx-auto select-none" />
+                    </div>
+                    <div class="flex flex-col justify-center">
+                        <strong class="ml-6 mt-1">@ViewModel.Pets.First().Name</strong>
+                        <p class="text-left ml-6">❤️ @ViewModel.Pets.First().Life de vida</p>
+                    </div>
+                }
             </div>
             <hr />
             <div class="p-6">
@@ -60,10 +52,73 @@
     </div>
 }
 
+@if (isPetPopupVisible)
+{
+    <div class="bg-white w-full fixed inset-0 z-[10001] flex flex-col items-center justify-center">
+        <div>
+            <h1 class="text-center font-medium text-6xl mx-8 select-none">Selecciona tu mascota</h1>
+        </div>
+
+        <div class="p-6 flex items-center justify-center gap-8">
+            <img src="/images/dog_pixelart.png" class="m-auto block my-16" @onclick="@(() => selectPet("dog"))" />
+            <img src="/images/cat_pixelart.png" class="m-auto block my-16" @onclick="@(() => selectPet("cat"))" />
+        </div>
+    </div>
+}
+
+@if (isNewAccountPopupVisible)
+{
+    <div class="fixed inset-0 backdrop-blur-sm bg-white/30 flex items-center justify-center z-[10002] focus-within:-top-40">
+        <div class="bg-white rounded-2xl shadow-lg w-9/12">
+            <div class="p-3 flex justify-between">
+                <span></span>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6" @onclick="@(() => selectPet(""))">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                </svg>
+            </div>
+
+            <div>
+                <h1 class="text-center font-medium text-2xl select-none">Nueva mascota</h1>
+            </div>
+
+            <div class="p-6">
+                <img src="@($"/images/{petSelected}_pixelart.png")" class="m-auto block my-8 select-none" />
+
+                <EditForm Model="newPetData" OnValidSubmit="HandleValidSubmit">
+                    <DataAnnotationsValidator />
+                    <ValidationSummary />
+
+                    <InputText id="pet" @bind-Value="newPetData.Name" placeholder="Nombre de la mascota" class="bg-gray-100 p-2 rounded-md text-center" />
+
+                    <InputText id="owner" @bind-Value="newOwnerData.Name" placeholder="Nombre del/la dueño/a" class="bg-gray-100 p-2 rounded-md text-center mt-2" />
+
+                    <button class="block w-full relative p-[0.3em] mt-8 text-lg" type="submit">
+                        <svg class="button__shape w-full" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+                            <path class="button__path" d="M0,0 C0,-5 100,-5 100,0 C105,0 105,100 100,100 C100,105 0,105 0,100 C-5,100 -5,0 0,0 z" />
+                        </svg>
+                        <span class="block relative text-center text-white">
+                            Guardar
+                        </span>
+                    </button>
+                </EditForm>
+            </div>
+        </div>
+    </div>
+}
+
 @code {
+    private bool isPetPopupVisible { get; set; }
+
+    private bool isNewAccountPopupVisible = false;
+
+    private PetData newPetData = new PetData();
+    private OwnerData newOwnerData = new OwnerData();
+    private PetLifeData petLifeData = new PetLifeData();
+    private PetData petData = new PetData();
+  
     private bool isPopupVisible = false;
-    private string Name { get; set; } = "Loading";
-    private PetData petSelected { get; set; }
+    private int DaysInMonth { get; set; }
+    private string petSelected { get; set; }
 
     protected override void OnInitialized()
     {
@@ -72,12 +127,56 @@
 
     protected override async Task OnInitializedAsync()
     {
+        DateTime currentDate = DateTime.Now;
+        DaysInMonth = DateTime.DaysInMonth(currentDate.Year, currentDate.Month);
+
         await ViewModel.LoadDataAsync();
 
-        if (ViewModel != null && ViewModel.Owners != null && ViewModel.Pets != null)
+        if (ViewModel != null && ViewModel.Owners != null)
         {
-            Name = ViewModel.Owners.Count == 0 ? "" : ViewModel.Owners.First().Name;
-            petSelected = ViewModel.Pets.Count == 0 ? null : ViewModel.Pets.First();
+            isPetPopupVisible = ViewModel.Owners.Count == 0;
+        }
+
+        if (ViewModel.PetLife.Count() == 0)
+        {
+            petLifeData = new PetLifeData
+                {
+                    DayNumber = currentDate.Day,
+                    Diff = 1
+                };
+
+            await ViewModel.AddPetLifeAsync(petLifeData);
+        }
+        else
+        {
+            if (ViewModel.PetLife.First().DayNumber != currentDate.Day && ViewModel.Pets.Count() > 0)
+            {
+                petLifeData = new PetLifeData
+                    {
+                        Id = 1,
+                        Diff = ViewModel.PetLife.First().DayNumber - currentDate.Day < 0 ? (ViewModel.PetLife.First().DayNumber - currentDate.Day) * -1 : (DaysInMonth - ViewModel.PetLife.First().DayNumber) + currentDate.Day,
+                    };
+
+                await ViewModel.AddPetLifeAsync(petLifeData);
+
+                petData = new PetData
+                    {
+                        Id = 1,
+                        Animal = ViewModel.Pets.First().Animal,
+                        Name = ViewModel.Pets.First().Name,
+                        Life = ViewModel.Pets.First().Life - (ViewModel.PetLife.First().Diff * 2)
+                    };
+                await ViewModel.AddPetAsync(petData);
+
+                petLifeData = new PetLifeData
+                    {
+                        Id = 1,
+                        DayNumber = currentDate.Day,
+                        Diff = 1
+                    };
+
+                await ViewModel.AddPetLifeAsync(petLifeData);
+            }
         }
     }
 
@@ -94,5 +193,44 @@
     private void TogglePopup()
     {
         isPopupVisible = !isPopupVisible;
+    }
+
+    protected void TogglePetPopup()
+    {
+        isPetPopupVisible = !isPetPopupVisible;
+    }
+
+    protected void selectPet(string animal)
+    {
+        petSelected = animal;
+        isNewAccountPopupVisible = !isNewAccountPopupVisible;
+    }
+
+    private async Task HandleValidSubmit()
+    {
+        newOwnerData = new OwnerData
+            {
+                Name = newOwnerData.Name
+            };
+
+        await ViewModel.AddOwnerAsync(newOwnerData);
+
+        newPetData = new PetData
+            {
+                Animal = petSelected,
+                Name = newPetData.Name,
+                Life = 100,
+            };
+
+        var success = await ViewModel.AddPetAsync(newPetData);
+        if (success)
+        {
+            await ViewModel.LoadDataAsync();
+
+            TogglePetPopup();
+            isNewAccountPopupVisible = false;
+            newPetData = new PetData();
+            newOwnerData = new OwnerData();
+        }
     }
 }
