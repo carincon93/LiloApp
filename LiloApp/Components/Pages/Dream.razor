@@ -12,7 +12,7 @@
 	<div class="rounded-md shadow-inner shadow-white p-4 select-none mt-10" style="background-color: rgba(71, 56, 133, 0.6);">
 		<h2 class="text-center font-medium text-3xl text-white/50 mt-2"><span class="capitalize">@MonthName</span> de @Year</h2>
 
-		<div class="flex mt-10 mx-4 text-center text-lg">
+		<div class="flex mt-12 -mt-2 text-center text-lg">
 			<div>
 				<div class="text-white/50 font-medium">D</div>
 				@{
@@ -260,7 +260,7 @@
 		if (firstRender)
 		{
 			// Ensure the class is removed on initial load
-			await JSRuntime.InvokeVoidAsync("removeBodyNoScroll");
+			await JSRuntime.InvokeVoidAsync("removeBodyBlurPopup");
 		}
 	}
 
@@ -312,11 +312,11 @@
 
 		if (isDayPopupVisible)
 		{
-			await JSRuntime.InvokeVoidAsync("addBodyNoScroll");
+			await JSRuntime.InvokeVoidAsync("addBodyBlurPopup");
 		}
 		else
 		{
-			await JSRuntime.InvokeVoidAsync("removeBodyNoScroll");
+			await JSRuntime.InvokeVoidAsync("removeBodyBlurPopup");
 		}
 	}
 

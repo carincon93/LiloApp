@@ -131,7 +131,7 @@
         if (firstRender)
         {
             // Ensure the class is removed on initial load
-            await JSRuntime.InvokeVoidAsync("removeBodyNoScroll");
+            await JSRuntime.InvokeVoidAsync("removeBodyBlurPopup");
         }
     }
 
@@ -206,11 +206,11 @@
 
         if (isPopupVisible)
         {
-            await JSRuntime.InvokeVoidAsync("addBodyNoScroll");
+            await JSRuntime.InvokeVoidAsync("addBodyBlurPopup");
         }
         else
         {
-            await JSRuntime.InvokeVoidAsync("removeBodyNoScroll");
+            await JSRuntime.InvokeVoidAsync("removeBodyBlurPopup");
         }
     }
 
