@@ -14,7 +14,7 @@
         {
             @if (word.index == indexSelectedCard)
             {
-                <li class="card relative z-10" @onclick="() => ToggleFlip(word.index)">
+                <li class="card relative z-6" @onclick="() => ToggleFlip(word.index)">
                     <div class="card-inner @(flippedStates.ContainsKey(word.index) && flippedStates[word.index] ? "card-flipped" : "")">
                         <div class="card-face card-front shadow-lg rounded-lg bg-white">
                             <p class="capitalize">@word.word.Word</p>
@@ -40,7 +40,7 @@
             </button>
         </div>
 
-        <EditForm Model="newLanguagePracticeData" OnValidSubmit="HandleValidSubmit" class="focus-within:-top-[20rem] relative z-[10002]">
+        <EditForm Model="newLanguagePracticeData" OnValidSubmit="HandleValidSubmit" class="focus-within:-top-[20rem] relative z-8">
             <DataAnnotationsValidator />
             <ValidationSummary />
 
