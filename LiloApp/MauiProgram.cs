@@ -45,8 +45,8 @@ namespace LiloApp
             builder.Services.AddSingleton<MainViewModel>();
             builder.Services.AddScoped<BlazorTransitionableRoute.IRouteTransitionInvoker, BlazorTransitionableRoute.DefaultRouteTransitionInvoker>();
 
-            //builder.Services.AddSingleton<HttpClient>();
-            //builder.Services.AddSingleton<ApiService>();
+            builder.Services.AddSingleton<HttpClient>();
+            builder.Services.AddSingleton<ApiService>();
 
             return builder.Build();
         }

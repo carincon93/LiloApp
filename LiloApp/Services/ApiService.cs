@@ -13,24 +13,16 @@ namespace LiloApp.Services
             _httpClient = httpClient;
         }
 
-        public async Task<List<DreamData>> GetDreamsAsync()
+        public async Task<List<EnglishWordData>> GetEnglishWordsByWeekAsync(string week)
         {
-            var response = await _httpClient.GetAsync("https://liloapp-backend.onrender.com/dreams");
+            var response = await _httpClient.GetAsync($"https://liloapp-backend.onrender.com/english-words/week/{week}");
             if (response.IsSuccessStatusCode)
             {
                 var json = await response.Content.ReadAsStringAsync();
-                return JsonConvert.DeserializeObject<List<DreamData>>(json);
+                return JsonConvert.DeserializeObject<List<EnglishWordData>>(json);
             }
 
-            return new List<DreamData>();
-        }
-        
-        public async Task<bool> AddDreamAsync(DreamData newDream)
-        {
-            var json = JsonConvert.SerializeObject(newDream);
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
-            var response = await _httpClient.PostAsync("https://liloapp-backend.onrender.com/dreams", content);
-            return response.IsSuccessStatusCode;
+            return new List<EnglishWordData>();
         }
     }
 }
