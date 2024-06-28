@@ -24,5 +24,17 @@ namespace LiloApp.Services
 
             return new List<EnglishWordData>();
         }
+
+        public async Task<List<ItalianWordData>> GetItalianWordsByWeekAsync(string week)
+        {
+            var response = await _httpClient.GetAsync($"https://liloapp-backend.onrender.com/italian-words/week/{week}");
+            if (response.IsSuccessStatusCode)
+            {
+                var json = await response.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<List<ItalianWordData>>(json);
+            }
+
+            return new List<ItalianWordData>();
+        }
     }
 }
