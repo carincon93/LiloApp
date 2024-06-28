@@ -1,4 +1,4 @@
-﻿@page "/italian/daily-deck/{selectedweek}/{selectedday}"
+﻿@page "/english/daily-deck/{selectedweek}/{selectedday}"
 
 @inject LiloApp.Services.NavigatorService NavigatorService
 @inject LiloApp.Services.ApiService ApiService
@@ -7,10 +7,10 @@
 @using LiloApp.Data
 
 <ul>
-    @if (italianWords.Count > 0 && int.Parse(selectedday) < italianWords.Count)
+    @if (englishWords.Count > 0 && int.Parse(selectedday) < englishWords.Count)
     {
-        <p class="text-center mt-10 text-gray-400">Objetivo de la semana @selectedweek: <br />Aprender @italianWords.Count palabras</p>
-        @foreach (var word in italianWords.Select((word, index) => new { word, index }))
+        <p class="text-center mt-10 text-gray-400">Objetivo de la semana @selectedweek: <br />Aprender @englishWords.Count palabras</p>
+        @foreach (var word in englishWords.Select((word, index) => new { word, index }))
         {
             @if (word.index == indexSelectedCard)
             {
@@ -44,7 +44,7 @@
             <DataAnnotationsValidator />
             <ValidationSummary />
 
-            <InputTextArea name="comentario" @bind-Value="newLanguagePracticeData.Text" class="bg-white shadow p-2 rounded-md mt-2 min-h-32" placeholder="Ingrese un texto" />
+            <InputTextArea name="comentario" @bind-Value="newLanguagePracticeData.Text" class="bg-white shadow p-2 rounded-md mt-2 min-h-32" placeholder="Ingrese un texto"  />
 
             <button class="block w-full relative p-[0.3em] mt-8 text-lg" type="submit">
                 <svg class="button__shape w-full" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
@@ -73,10 +73,9 @@
     public string selectedday { get; set; } = string.Empty;
 
     private bool isFlipped = false;
-
-    private Dictionary<int, bool> flippedStates = new Dictionary<int, bool>();
     private LanguagePracticeData newLanguagePracticeData = new LanguagePracticeData();
-    private List<ItalianWordData> italianWords = new List<ItalianWordData>();
+    private Dictionary<int, bool> flippedStates = new Dictionary<int, bool>();
+    private List<EnglishWordData> englishWords = new List<EnglishWordData>();
     private int indexSelectedCard = 0;
 
     protected override void OnInitialized()
@@ -88,7 +87,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        italianWords = await ApiService.GetItalianWordsByWeekAsync(selectedweek);
+        englishWords = await ApiService.GetEnglishWordsByWeekAsync(selectedweek);
         await LoadSelectedLanguagePractice();
     }
 
@@ -96,14 +95,13 @@
     {
         if (firstRender)
         {
-            // Ensure the class is removed on initial load
             await JSRuntime.InvokeVoidAsync("removeBodyBlurPopup");
         }
     }
 
     private void IncrementIndex()
     {
-        if (indexSelectedCard < italianWords.Count - 1 && indexSelectedCard < int.Parse(selectedday) + 14)
+        if (indexSelectedCard < englishWords.Count - 1 && indexSelectedCard < int.Parse(selectedday) + 14)
         {
             indexSelectedCard++;
         }
@@ -131,12 +129,12 @@
 
     private async Task LoadSelectedLanguagePractice()
     {
-        var existingPractice = await ViewModel.GetLanguagePracticeByDayAndWeekAsync(int.Parse(selectedday), int.Parse(selectedweek), "Italian");
+        var existingPractice = await ViewModel.GetLanguagePracticeByDayAndWeekAsync(int.Parse(selectedday), int.Parse(selectedweek), "English");
         newLanguagePracticeData = existingPractice ?? new LanguagePracticeData
             {
                 Day = int.Parse(selectedday),
                 Week = int.Parse(selectedweek),
-                Language = "Italian"
+                Language = "English"
             };
     }
 
@@ -144,7 +142,7 @@
     {
         newLanguagePracticeData.Day = int.Parse(selectedday);
         newLanguagePracticeData.Week = int.Parse(selectedweek);
-        newLanguagePracticeData.Language = "Italian";
+        newLanguagePracticeData.Language = "English";
 
         var success = await ViewModel.AddLanguagePracticeAsync(newLanguagePracticeData);
     }

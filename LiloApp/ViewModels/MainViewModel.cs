@@ -15,6 +15,7 @@ namespace LiloApp.ViewModels
 		private readonly ExerciseService _exerciseService;
 		private readonly TrainingSessionService _trainingSessionService;
 		private readonly PetLifeService _petLifeService;
+		private readonly LanguagePracticeService _languagePracticeService;
 
         private List<DreamData> _dreams;
 		private List<DreamCalendarData> _dreamCalendar;
@@ -24,6 +25,7 @@ namespace LiloApp.ViewModels
 		private List<ExerciseData> _exercises;
 		private List<TrainingSessionData> _trainingSessions;
 		private List<PetLifeData> _petLife;
+		private List<LanguagePracticeData> _languagePractice;
 
         public List<DreamData> Dreams
 		{
@@ -103,7 +105,17 @@ namespace LiloApp.ViewModels
             }
         }
 
-        public MainViewModel(DreamService dreamService, DreamCalendarService dreamCalendarService, MuscleGroupService grupoMuscularService, PetService petService, OwnerService ownerService, ExerciseService exerciseService, TrainingSessionService trainingSessionService, PetLifeService petLifeService)
+        public List<LanguagePracticeData> LanguagePractice
+        {
+            get => _languagePractice;
+            set
+            {
+                _languagePractice = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public MainViewModel(DreamService dreamService, DreamCalendarService dreamCalendarService, MuscleGroupService grupoMuscularService, PetService petService, OwnerService ownerService, ExerciseService exerciseService, TrainingSessionService trainingSessionService, PetLifeService petLifeService, LanguagePracticeService languagePracticeService)
 		{
 			_dreamService = dreamService;
 			_dreamCalendarService = dreamCalendarService;
@@ -113,6 +125,7 @@ namespace LiloApp.ViewModels
 			_exerciseService = exerciseService;
 			_trainingSessionService = trainingSessionService;
 			_petLifeService = petLifeService;
+			_languagePracticeService = languagePracticeService;
 
             LoadDataAsync().ConfigureAwait(false);
 		}
@@ -127,6 +140,7 @@ namespace LiloApp.ViewModels
 			Exercises = await _exerciseService.GetExerciseAsync();
 			TrainingSessions = await _trainingSessionService.GetTrainingSessionAsync();
 			PetLife = await _petLifeService.GetPetLifeAsync();
+			LanguagePractice = await _languagePracticeService.GetLanguagePracticeAsync();
         }
 
 		public async Task<bool> AddDreamAsync(DreamData newDream)
@@ -227,6 +241,37 @@ namespace LiloApp.ViewModels
                 PetLife = await _petLifeService.GetPetLifeAsync();
             }
             return success;
+        }
+
+        public async Task<bool> AddLanguagePracticeAsync(LanguagePracticeData newLanguagePractice)
+        {
+            var success = await _languagePracticeService.SaveLanguagePracticeAsync(newLanguagePractice) > 0;
+            if (success)
+            {
+                LanguagePractice = await _languagePracticeService.GetLanguagePracticeAsync();
+            }
+            return success;
+        }
+
+        private LanguagePracticeData _selectedLanguagePractice;
+        public LanguagePracticeData SelectedLanguagePractice
+        {
+            get => _selectedLanguagePractice;
+            set
+            {
+                _selectedLanguagePractice = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public async Task<LanguagePracticeData> GetLanguagePracticeByDayAndWeekAsync(int day, int week, string language)
+        {
+            var practice = await _languagePracticeService.GetLanguagePracticeByDayAndWeekAsync(day, week, language);
+            if (practice != null)
+            {
+                SelectedLanguagePractice = practice;
+            }
+            return practice;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
