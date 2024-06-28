@@ -1,10 +1,12 @@
 ﻿@page "/english"
 
 @inject LiloApp.Services.NavigatorService NavigatorService
+@using LiloApp.Data
+@inject IJSRuntime JSRuntime
 
 <h1 class="text-5xl font-medium my-16 text-center">Inglés</h1>
 
-<article class="px-2">
+<div class="px-2">
     <h3 class="text-3xl font-medium my-4">¿Sabías qué?</h3>
 
     <p class="text-left text-[16px] leading-5">
@@ -12,20 +14,90 @@
     </p>
 
     <div class="px-6">
-        <NavLink href="/english/daily-deck" class="block relative p-[0.7em] text-lg mt-8">
+        <div class="block relative p-[0.7em] text-lg mt-8" @onclick="@(() => TogglePopup())">
             <svg class="button__shape w-full" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
                 <path class="button__path" d="M0,0 C0,-5 100,-5 100,0 C105,0 105,100 100,100 C100,105 0,105 0,100 C-5,100 -5,0 0,0 z" />
             </svg>
             <span class="block relative text-center text-white">
                 Continuar aprendiendo
             </span>
-        </NavLink>
+        </div>
     </div>
-</article>
+
+	@if (isPopupVisible)
+	{
+		<div class="fixed inset-0 flex items-center justify-center z-[10000] focus-within:-top-40">
+			<div class="bg-white rounded-2xl shadow-lg w-9/12">
+
+				<div class="p-3 flex justify-between">
+					<span></span>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6" @onclick="@(() => TogglePopup())">
+						<path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+					</svg>
+				</div>
+
+				<div class="p-6">
+                    <div>
+                        <label for="week-select">Seleccione una semana:</label>
+                        <InputSelect id="week-select" @bind-Value="SelectedWeek" class="bg-gray-100 p-2 rounded-md text-center">
+                            @foreach (var week in weeks)
+                            {
+                                <option value="@week">@week</option>
+                            }
+                        </InputSelect>
+                    </div>
+
+                    <div class="mt-6">
+                        <label for="day-select">Seleccione un día:</label>
+                        <InputSelect id="day-select" @bind-Value="SelectedDay" class="bg-gray-100 p-2 rounded-md text-center">
+                            <option value="0">1</option>
+                                <option value="15">2</option>
+                                <option value="30">3</option>
+                            <option value="45">4</option>
+                                <option value="60">5</option>
+                                <option value="75">6</option>
+                                <option value="90">7</option>
+                        </InputSelect>
+                    </div>
+
+                    <NavLink href="@($"/english/daily-deck/{SelectedWeek}/{SelectedDay}")" class="block relative p-[0.7em] text-lg mt-4">
+                        <svg class="button__shape w-full" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+                            <path class="button__path" d="M0,0 C0,-5 100,-5 100,0 C105,0 105,100 100,100 C100,105 0,105 0,100 C-5,100 -5,0 0,0 z" />
+                        </svg>
+                        <span class="block relative text-center text-white">
+                            Continuar
+                        </span>
+                    </NavLink>
+				</div>
+			</div>
+		</div>
+	}
+</div>
 
 @code {
+    private EnglishWordData englishWordData = new EnglishWordData();
+
+    public bool isPopupVisible = false;
+    public int SelectedWeek;
+    public int SelectedDay;
+    private List<int> weeks = Enumerable.Range(1, 30).ToList();
+
     protected override void OnInitialized()
     {
         NavigatorService.NavigateTo("EnglishPage");
+    }
+
+    protected async void TogglePopup()
+    {
+        isPopupVisible = !isPopupVisible;
+
+        if (isPopupVisible)
+        {
+            await JSRuntime.InvokeVoidAsync("addBodyBlurPopup");
+        }
+        else
+        {
+            await JSRuntime.InvokeVoidAsync("removeBodyBlurPopup");
+        }
     }
 }

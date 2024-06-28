@@ -1,12 +1,112 @@
-﻿@page "/english/daily-deck"
+﻿@page "/english/daily-deck/{selectedweek}/{selectedday}"
 
 @inject LiloApp.Services.NavigatorService NavigatorService
+@inject LiloApp.Services.ApiService ApiService
+@using LiloApp.Data
+@inject IJSRuntime JSRuntime
 
-<h3>DailyDeck</h3>
+<ul>
+    @if (englishWords.Count > 0 && int.Parse(selectedday) < englishWords.Count)
+    {
+        <p class="text-center mt-10 text-gray-400">Objetivo de la semana @selectedweek: <br />Aprender @englishWords.Count palabras</p>
+        @foreach (var word in englishWords.Select((word, index) => new { word, index }))
+        {
+            @if (word.index == indexSelectedCard)
+            {
+                <li class="card relative z-10" @onclick="() => ToggleFlip(word.index)">
+                    <div class="card-inner @(flippedStates.ContainsKey(word.index) && flippedStates[word.index] ? "card-flipped" : "")">
+                        <div class="card-face card-front shadow-lg rounded-lg bg-white">
+                            <p class="capitalize">@word.word.Word</p>
+                        </div>
+                        <div class="card-face card-back shadow-lg rounded-lg bg-white">
+                            <p class="capitalize">@word.word.Translation</p>
+                        </div>
+                    </div>
+                </li>
+            }
+        }
+
+        <div class="flex items-center justify-between relative z-1 -top-[12rem]">
+            <button @onclick="DecrementIndex" class="@(indexSelectedCard > int.Parse(selectedday) ? "" : "text-gray-400")">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+                </svg>
+            </button>
+            <button @onclick="IncrementIndex" class="@(indexSelectedCard < int.Parse(selectedday) + 14 ? "" : "text-gray-400")">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+                </svg>
+            </button>
+        </div>
+    }
+    else
+    {
+        <div class="flex items-center justify-center flex-col min-h-[70vh] z-[10002]">
+            <img src="images/catdog_pixelart.svg" class="w-20" />
+            <h1 class="font-medium mt-4">Cargando...</h1>
+        </div>
+    }
+</ul>
 
 @code {
+    [Parameter]
+    public string selectedweek { get; set; } = string.Empty;
+
+    [Parameter]
+    public string selectedday { get; set; } = string.Empty;
+
+    private bool isFlipped = false;
+
+    private Dictionary<int, bool> flippedStates = new Dictionary<int, bool>();
+    private List<EnglishWordData> englishWords = new List<EnglishWordData>();
+    private int indexSelectedCard = 0;
+
     protected override void OnInitialized()
     {
+        indexSelectedCard = int.Parse(selectedday);
+
         NavigatorService.NavigateTo("DailyDeckPage");
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        englishWords = await ApiService.GetEnglishWordsByWeekAsync(selectedweek);
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            // Ensure the class is removed on initial load
+            await JSRuntime.InvokeVoidAsync("removeBodyBlurPopup");
+        }
+    }
+
+    private void IncrementIndex()
+    {
+        if (indexSelectedCard < englishWords.Count - 1 && indexSelectedCard < int.Parse(selectedday) + 14)
+        {
+            indexSelectedCard++;
+        }
+    }
+
+    private void DecrementIndex()
+    {
+        if (indexSelectedCard > int.Parse(selectedday))
+        {
+            indexSelectedCard--;
+        }
+    }
+
+    private void ToggleFlip(int index)
+    {
+        if (flippedStates.ContainsKey(index))
+        {
+            flippedStates[index] = !flippedStates[index];
+        }
+        else
+        {
+            flippedStates[index] = true;
+        }
     }
 }
