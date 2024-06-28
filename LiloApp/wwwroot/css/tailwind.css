@@ -637,6 +637,22 @@ body {
   top: 5rem;
 }
 
+.top-\[5rem\] {
+  top: 5rem;
+}
+
+.-top-\[5rem\] {
+  top: -5rem;
+}
+
+.-top-\[15rem\] {
+  top: -15rem;
+}
+
+.-top-\[12rem\] {
+  top: -12rem;
+}
+
 .z-10 {
   z-index: 10;
 }
@@ -830,6 +846,18 @@ body {
   min-height: 100vh;
 }
 
+.min-h-\[90vh\] {
+  min-height: 90vh;
+}
+
+.min-h-\[60vh\] {
+  min-height: 60vh;
+}
+
+.min-h-\[70vh\] {
+  min-height: 70vh;
+}
+
 .w-10 {
   width: 2.5rem;
 }
@@ -900,6 +928,10 @@ body {
 
 .rounded-xl {
   border-radius: 0.75rem;
+}
+
+.rounded-lg {
+  border-radius: var(--radius);
 }
 
 .rounded-b-2xl {
@@ -1101,6 +1133,16 @@ body {
 
 .text-white\/50 {
   color: rgb(255 255 255 / 0.5);
+}
+
+.text-gray-400 {
+  --tw-text-opacity: 1;
+  color: rgb(156 163 175 / var(--tw-text-opacity));
+}
+
+.text-green-400 {
+  --tw-text-opacity: 1;
+  color: rgb(74 222 128 / var(--tw-text-opacity));
 }
 
 .underline {
