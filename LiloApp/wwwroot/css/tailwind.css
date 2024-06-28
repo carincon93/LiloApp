@@ -621,6 +621,10 @@ body {
   top: -6rem;
 }
 
+.-top-\[12rem\] {
+  top: -12rem;
+}
+
 .left-10 {
   left: 2.5rem;
 }
@@ -635,22 +639,6 @@ body {
 
 .top-20 {
   top: 5rem;
-}
-
-.top-\[5rem\] {
-  top: 5rem;
-}
-
-.-top-\[5rem\] {
-  top: -5rem;
-}
-
-.-top-\[15rem\] {
-  top: -15rem;
-}
-
-.-top-\[12rem\] {
-  top: -12rem;
 }
 
 .z-10 {
@@ -846,16 +834,12 @@ body {
   min-height: 100vh;
 }
 
-.min-h-\[90vh\] {
-  min-height: 90vh;
-}
-
-.min-h-\[60vh\] {
-  min-height: 60vh;
-}
-
 .min-h-\[70vh\] {
   min-height: 70vh;
+}
+
+.min-h-32 {
+  min-height: 8rem;
 }
 
 .w-10 {
@@ -922,16 +906,16 @@ body {
   border-radius: 1rem;
 }
 
+.rounded-lg {
+  border-radius: var(--radius);
+}
+
 .rounded-md {
   border-radius: calc(var(--radius) - 2px);
 }
 
 .rounded-xl {
   border-radius: 0.75rem;
-}
-
-.rounded-lg {
-  border-radius: var(--radius);
 }
 
 .rounded-b-2xl {
@@ -942,6 +926,11 @@ body {
 .bg-gray-100 {
   --tw-bg-opacity: 1;
   background-color: rgb(243 244 246 / var(--tw-bg-opacity));
+}
+
+.bg-gray-200 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(229 231 235 / var(--tw-bg-opacity));
 }
 
 .bg-orange-200 {
@@ -981,10 +970,6 @@ body {
 
 .bg-no-repeat {
   background-repeat: no-repeat;
-}
-
-.fill-gray-300 {
-  fill: #d1d5db;
 }
 
 .p-2 {
@@ -1107,6 +1092,11 @@ body {
   color: rgb(37 21 85 / var(--tw-text-opacity));
 }
 
+.text-gray-400 {
+  --tw-text-opacity: 1;
+  color: rgb(156 163 175 / var(--tw-text-opacity));
+}
+
 .text-purple-500 {
   --tw-text-opacity: 1;
   color: rgb(168 85 247 / var(--tw-text-opacity));
@@ -1133,16 +1123,6 @@ body {
 
 .text-white\/50 {
   color: rgb(255 255 255 / 0.5);
-}
-
-.text-gray-400 {
-  --tw-text-opacity: 1;
-  color: rgb(156 163 175 / var(--tw-text-opacity));
-}
-
-.text-green-400 {
-  --tw-text-opacity: 1;
-  color: rgb(74 222 128 / var(--tw-text-opacity));
 }
 
 .underline {
@@ -1191,6 +1171,22 @@ body {
 
 .focus-within\:-top-40:focus-within {
   top: -10rem;
+}
+
+.focus-within\:-top-\[10rem\]:focus-within {
+  top: -10rem;
+}
+
+.focus-within\:-top-\[25rem\]:focus-within {
+  top: -25rem;
+}
+
+.focus-within\:-top-\[15rem\]:focus-within {
+  top: -15rem;
+}
+
+.focus-within\:-top-\[20rem\]:focus-within {
+  top: -20rem;
 }
 
 .active\:blur-none:active {
