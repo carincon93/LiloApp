@@ -37,7 +37,7 @@
                     </div>
                     <div class="flex flex-col justify-center">
                         <strong class="ml-6 mt-1">@ViewModel.Pets.First().Name</strong>
-                        <p class="text-left ml-6">❤️ @ViewModel.Pets.First().Life de vida</p>
+                        <p class="text-left ml-6">❤️ @Math.Round(ViewModel.Pets.First().Life, 2) de vida</p>
                     </div>
                 }
             </div>
