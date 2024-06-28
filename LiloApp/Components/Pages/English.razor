@@ -1,10 +1,19 @@
 ﻿@page "/english"
 
 @inject LiloApp.Services.NavigatorService NavigatorService
-@using LiloApp.Data
+@inject LiloApp.ViewModels.MainViewModel ViewModel
 @inject IJSRuntime JSRuntime
+@using LiloApp.Data
 
 <h1 class="text-5xl font-medium my-16 text-center">Inglés</h1>
+
+@if (petSelected != null)
+{
+    <div class="relative">
+        <img src=@($"/images/{petSelected.Animal}_pixelart.png") class="m-auto block my-16 select-none" />
+        <span class="m-auto block my-16 select-none w-20 absolute inset-0 left-32">🇬🇧</span>
+    </div>
+}
 
 <div class="px-2">
     <h3 class="text-3xl font-medium my-4">¿Sabías qué?</h3>
@@ -76,6 +85,7 @@
 
 @code {
     private EnglishWordData englishWordData = new EnglishWordData();
+    private PetData petSelected { get; set; }
 
     public bool isPopupVisible = false;
     public int SelectedWeek;
@@ -85,6 +95,16 @@
     protected override void OnInitialized()
     {
         NavigatorService.NavigateTo("EnglishPage");
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await ViewModel.LoadDataAsync();
+
+        if (ViewModel != null && ViewModel.Owners != null && ViewModel.Pets != null)
+        {
+            petSelected = ViewModel.Pets.Count == 0 ? null : ViewModel.Pets.First();
+        }
     }
 
     protected async void TogglePopup()

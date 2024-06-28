@@ -1,16 +1,25 @@
 ﻿@page "/italian"
 
 @inject LiloApp.Services.NavigatorService NavigatorService
-@using LiloApp.Data
+@inject LiloApp.ViewModels.MainViewModel ViewModel
 @inject IJSRuntime JSRuntime
+@using LiloApp.Data
 
 <h1 class="text-5xl font-medium my-16 text-center">Italiano</h1>
+
+@if (petSelected != null)
+{
+    <div class="relative">
+        <img src=@($"/images/{petSelected.Animal}_pixelart.png") class="m-auto block my-16 select-none" />
+        <span class="m-auto block my-16 select-none w-20 absolute inset-0 left-32">🇮🇹</span>
+    </div>
+}
 
 <div class="px-2">
     <h3 class="text-3xl font-medium my-4">¿Sabías qué?</h3>
 
     <p class="text-left text-[16px] leading-5">
-        Con un vocabulario de 1000 palabras, podrás comprender el 90% de las conversaciones cotidianas en inglés, así como los artículos de periódicos y revistas, y el inglés utilizado en el entorno laboral. El 10% restante lo podrás aprender a través del contexto o formulando preguntas. Sin embargo, es crucial aprender las palabras adecuadas para no perder tiempo memorizando una cantidad enorme de palabras con poco beneficio.
+        Con un vocabulario de 1000 palabras, podrás comprender el 90% de las conversaciones cotidianas en italiano, así como los artículos de periódicos y revistas, y el italiano utilizado en el entorno laboral. El 10% restante lo podrás aprender a través del contexto o formulando preguntas. Sin embargo, es crucial aprender las palabras adecuadas para no perder tiempo memorizando una cantidad enorme de palabras con poco beneficio.
     </p>
 
     <div class="px-6">
@@ -76,6 +85,7 @@
 
 @code {
     private EnglishWordData englishWordData = new EnglishWordData();
+    private PetData petSelected { get; set; }
 
     public bool isPopupVisible = false;
     public int SelectedWeek;
@@ -85,6 +95,16 @@
     protected override void OnInitialized()
     {
         NavigatorService.NavigateTo("ItalianPage");
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await ViewModel.LoadDataAsync();
+
+        if (ViewModel != null && ViewModel.Owners != null && ViewModel.Pets != null)
+        {
+            petSelected = ViewModel.Pets.Count == 0 ? null : ViewModel.Pets.First();
+        }
     }
 
     protected async void TogglePopup()
@@ -100,4 +120,6 @@
             await JSRuntime.InvokeVoidAsync("removeBodyBlurPopup");
         }
     }
+
+
 }

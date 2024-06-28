@@ -641,6 +641,30 @@ body {
   top: 5rem;
 }
 
+.right-10 {
+  right: 2.5rem;
+}
+
+.-bottom-2 {
+  bottom: -0.5rem;
+}
+
+.-bottom-4 {
+  bottom: -1rem;
+}
+
+.left-0 {
+  left: 0px;
+}
+
+.left-20 {
+  left: 5rem;
+}
+
+.left-32 {
+  left: 8rem;
+}
+
 .z-10 {
   z-index: 10;
 }
